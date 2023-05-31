@@ -1,0 +1,17 @@
+{
+    // TypeScript configuration
+    "typescript.suggest.completeFunctionCalls": true,
+    "typescript.format.semicolons": "insert",
+    // Editor configuration
+    "editor.insertSpaces": true,
+    "editor.trimAutoWhitespace": true,
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    "editor.minimap.enabled": false,
+    "files.insertFinalNewline": true,
+    "files.exclude": {
+        "**/*.log": true,
+        "**/.angular": true,
+        "**/node_modules": true
+    }
+}
