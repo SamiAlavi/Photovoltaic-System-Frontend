@@ -1,3 +1,5 @@
+<p-toast position="bottom-center" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+
 <div class="container-fluid bg-black px-0">
     <div class="row">
         <div class="col-lg-8 d-none d-lg-block px-0">
@@ -6,9 +8,23 @@
         </div>
         <div class="col-lg-4 px-0">
             <div class="w-full h-screen">
-                <p-card header="Log in to your account" class="text-center" [styleClass]="'h-full'">
-                    <div class="w-full h-full flex items-center justify-center">
-                        <p-button label="Login with Google" (click)="loginWithGoogle()" icon="pi pi-google"></p-button>
+                <p-card header="Log in to your account" [styleClass]="'h-full'">
+                    <div class="w-full h-full">
+                        <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+
+                            <span class="p-float-label mb-6">
+                                <input pInputText id="email" class="w-full" formControlName="Email" />
+                                <label htmlFor="email">Email</label>
+                            </span>
+
+                            <span class="p-float-label mb-6">
+                                <p-password [toggleMask]="true" [feedback]="true" inputStyleClass="w-full"
+                                    styleClass="w-full" formControlName="Password"></p-password>
+                                <label for="password">Password</label>
+                            </span>
+
+                            <p-button label="Submit" (click)="submitForm()" [disabled]="!loginForm.valid"></p-button>
+                        </form>
                     </div>
                 </p-card>
             </div>
