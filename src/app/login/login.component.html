@@ -1,0 +1,17 @@
+<div class="container-fluid bg-black px-0">
+    <div class="row">
+        <div class="col-lg-8 d-none d-lg-block px-0">
+            <!-- Content for the first column (visible on screens larger than small) -->
+            <img src="assets/solar-panels.jpg" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="col-lg-4 px-0">
+            <div class="w-full h-screen">
+                <p-card header="Log in to your account" class="text-center" [styleClass]="'h-full'">
+                    <div class="w-full h-full flex items-center justify-center">
+                        <p-button label="Login with Google" (click)="loginWithGoogle()" icon="pi pi-google"></p-button>
+                    </div>
+                </p-card>
+            </div>
+        </div>
+    </div>
+</div>
