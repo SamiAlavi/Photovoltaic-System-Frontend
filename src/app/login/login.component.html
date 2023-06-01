@@ -13,17 +13,17 @@
                         <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
 
                             <span class="p-float-label mb-6">
-                                <input pInputText id="email" class="w-full" formControlName="Email" />
+                                <input pInputText id="email" class="w-full" formControlName="email" />
                                 <label htmlFor="email">Email</label>
                             </span>
 
                             <span class="p-float-label mb-6">
                                 <p-password [toggleMask]="true" [feedback]="true" inputStyleClass="w-full"
-                                    styleClass="w-full" formControlName="Password"></p-password>
+                                    styleClass="w-full" formControlName="password"></p-password>
                                 <label for="password">Password</label>
                             </span>
 
-                            <p-button label="Submit" (click)="submitForm()" [disabled]="!loginForm.valid"></p-button>
+                            <p-button label="Submit" (onClick)="submitForm()" [disabled]="!loginForm.valid"></p-button>
                         </form>
                     </div>
                 </p-card>

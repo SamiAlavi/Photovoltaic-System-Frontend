@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgPrimeModule } from './ngprime.module';
 import { LoginComponent } from './login/login.component';
+import { UserService } from './services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -14,13 +16,15 @@ import { LoginComponent } from './login/login.component';
     ],
     imports: [
         BrowserModule,
-        FormsModule,
         ReactiveFormsModule,
+        HttpClientModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         NgPrimeModule,
     ],
-    providers: [],
+    providers: [
+        UserService,
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
