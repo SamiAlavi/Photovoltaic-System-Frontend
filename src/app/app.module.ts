@@ -5,17 +5,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgPrimeModule } from './ngprime.module';
-import { LoginComponent } from './login/login.component';
+import { AuthComponent } from './auth/auth.component';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
         AppComponent,
-        LoginComponent,
+        AuthComponent,
     ],
     imports: [
         BrowserModule,
+        FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
         AppRoutingModule,

@@ -8,9 +8,9 @@
         </div>
         <div class="col-lg-4 px-0">
             <div class="w-full h-screen">
-                <p-card header="Log in to your account" [styleClass]="'h-full'">
+                <p-card header="Sign {{formType}} to your account" [styleClass]="'h-full'">
                     <div class="w-full h-full">
-                        <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+                        <form [formGroup]="authForm" (ngSubmit)="submitForm()">
 
                             <span class="p-float-label mb-6">
                                 <input pInputText id="email" class="w-full" formControlName="email" />
@@ -18,12 +18,13 @@
                             </span>
 
                             <span class="p-float-label mb-6">
-                                <p-password [toggleMask]="true" [feedback]="true" inputStyleClass="w-full"
-                                    styleClass="w-full" formControlName="password"></p-password>
+                                <p-password [toggleMask]="true" [feedback]="true" [minlength]="6"
+                                    inputStyleClass="w-full" styleClass="w-full"
+                                    formControlName="password"></p-password>
                                 <label for="password">Password</label>
                             </span>
 
-                            <p-button label="Submit" (onClick)="submitForm()" [disabled]="!loginForm.valid"></p-button>
+                            <p-button label="Submit" (onClick)="submitForm()" [disabled]="!authForm.valid"></p-button>
                         </form>
                     </div>
                 </p-card>
