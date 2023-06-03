@@ -8,6 +8,8 @@ import { NgPrimeModule } from './ngprime.module';
 import { AuthComponent } from './auth/auth.component';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
+import { ToastService } from './services/toast.service';
 
 @NgModule({
     declarations: [
@@ -24,7 +26,9 @@ import { HttpClientModule } from '@angular/common/http';
         NgPrimeModule,
     ],
     providers: [
+        MessageService,
         UserService,
+        ToastService,
     ],
     bootstrap: [AppComponent]
 })

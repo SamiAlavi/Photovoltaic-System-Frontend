@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { TOAST_SEVERITY } from '../helpers/enums';
 import { UserService } from '../services/user.service';
 import { IUserCredentials } from '../helpers/interfaces';
 import { Observable } from 'rxjs';
 import AppSettings from '../AppSettings';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ToastService } from '../services/toast.service';
 
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
     styleUrls: ['./auth.component.scss'],
-    providers: [MessageService],
 })
 export class AuthComponent {
     authForm: FormGroup;
@@ -24,7 +23,7 @@ export class AuthComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        private messageService: MessageService,
+        private toastService: ToastService,
         private userService: UserService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
@@ -38,11 +37,7 @@ export class AuthComponent {
             this.submitFn = this.userService.signin.bind(userService);
             this.nextFn = (response) => {
                 console.log(response);
-                this.messageService.add({
-                    severity: TOAST_SEVERITY.SUCCCESS,
-                    summary: 'Success',
-                    detail: 'Signed In Successfully'
-                });
+                this.toastService.showSuccessToast("Signed In Successfully");
             };
             this.formType = "In";
         }
@@ -50,11 +45,7 @@ export class AuthComponent {
             this.submitFn = this.userService.signup.bind(userService);
             this.nextFn = async (response) => {
                 console.log(response);
-                this.messageService.add({
-                    severity: TOAST_SEVERITY.SUCCCESS,
-                    summary: 'Success',
-                    detail: 'Signed Up Successfully'
-                });
+                this.toastService.showSuccessToast("Signed Up Successfully");
                 setTimeout(() => {
                     this.navigateByUrl(AppSettings.RouteSignin);
                 }, 1000);
@@ -69,11 +60,7 @@ export class AuthComponent {
             this.submitFn(userCredentials).subscribe({
                 next: this.nextFn,
                 error: (error: HttpErrorResponse) => {
-                    this.messageService.add({
-                        severity: TOAST_SEVERITY.ERROR,
-                        summary: 'Error',
-                        detail: error.error.message,
-                    });
+                    this.toastService.showErrorToast(error.error.message);
                 }
             });
         }
@@ -86,11 +73,7 @@ export class AuthComponent {
         Object.entries(this.authForm.controls).forEach(([controlName, value]) => {
             if (value.status === "INVALID") {
                 value.markAsDirty();
-                this.messageService.add({
-                    severity: TOAST_SEVERITY.ERROR,
-                    summary: 'Error',
-                    detail: `${controlName}: ${value.status.toLowerCase()}`
-                });
+                this.toastService.showErrorToast(`${controlName}: ${value.status.toLowerCase()}`);
             }
         });
     }
