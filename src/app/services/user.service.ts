@@ -14,11 +14,11 @@ export class UserService {
     }
 
     signup(userCredentials: IUserCredentials): Observable<Object> {
-        return this.http.post(AppSettings.signupUrl, userCredentials);
+        return this.http.post(AppSettings.SignupUrl, userCredentials);
     }
 
     signin(userCredentials: IUserCredentials): Observable<Object> {
-        return this.http.post(AppSettings.signinUrl, userCredentials);
+        return this.http.post(AppSettings.SigninUrl, userCredentials);
     }
 
 }

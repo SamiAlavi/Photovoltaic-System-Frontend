@@ -1,8 +1,9 @@
 class AppSettings {
-    private static serverUrl = "http://localhost:3000/";
-    private static authUrl = `${this.serverUrl}auth/`;
-    static signupUrl = `${this.authUrl}signup/`;
-    static signinUrl = `${this.authUrl}signin/`;
+    private static BaseUrl = "http://localhost:3000/";
+
+    private static AuthUrl = `${this.BaseUrl}auth/`;
+    static SignupUrl = `${this.AuthUrl}signup/`;
+    static SigninUrl = `${this.AuthUrl}signin/`;
 
     static RouteDefault = "";
     static RouteSignup = "signup";
