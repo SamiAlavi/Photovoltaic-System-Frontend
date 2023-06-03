@@ -3,6 +3,10 @@ class AppSettings {
     private static authUrl = `${this.serverUrl}auth/`;
     static signupUrl = `${this.authUrl}signup/`;
     static signinUrl = `${this.authUrl}signin/`;
+
+    static RouteDefault = "";
+    static RouteSignup = "signup";
+    static RouteSignin = "signin";
 }
 
 export default AppSettings;

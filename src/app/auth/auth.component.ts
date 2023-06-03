@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { TOAST_SEVERITY } from '../helpers/enums';
 import { UserService } from '../services/user.service';
 import { IUserCredentials } from '../helpers/interfaces';
 import { Observable } from 'rxjs';
+import AppSettings from '../AppSettings';
 
 @Component({
     selector: 'app-auth',
@@ -16,13 +17,15 @@ import { Observable } from 'rxjs';
 export class AuthComponent {
     authForm: FormGroup;
     formType: string;
-    private submit: (userCredentials: IUserCredentials) => Observable<Object>;
+    private submitFn: (userCredentials: IUserCredentials) => Observable<Object>;
+    private callbackFn: (response: Object) => void;
 
     constructor(
         private formBuilder: FormBuilder,
         private messageService: MessageService,
         private userService: UserService,
         private route: ActivatedRoute,
+        private router: Router,
     ) {
         this.authForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
@@ -30,11 +33,18 @@ export class AuthComponent {
         });
         const routeString = this.route.snapshot.url.join('/');
         if (routeString === "signin") {
-            this.submit = this.userService.signin.bind(userService);
+            this.submitFn = this.userService.signin.bind(userService);
+            this.callbackFn = (response) => {
+                console.log(response);
+            };
             this.formType = "In";
         }
         else {
-            this.submit = this.userService.signup.bind(userService);
+            this.submitFn = this.userService.signup.bind(userService);
+            this.callbackFn = async (response) => {
+                console.log(response);
+                await this.router.navigateByUrl(AppSettings.RouteSignin);
+            };
             this.formType = "Up";
         }
     }
@@ -42,9 +52,7 @@ export class AuthComponent {
     submitForm() {
         if (this.authForm.valid) {
             const userCredentials: IUserCredentials = this.authForm.value;
-            this.submit(userCredentials).subscribe((res) => {
-                console.log(res);
-            });
+            this.submitFn(userCredentials).subscribe(this.callbackFn);
         }
         else {
             this.generateErrorMessages();

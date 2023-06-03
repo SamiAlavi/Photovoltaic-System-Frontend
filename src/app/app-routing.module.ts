@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
+import AppSettings from './AppSettings';
 
 const routes: Routes = [
-    { path: '', redirectTo: '/auth/signup', pathMatch: 'full' },
-    {
-        path: 'auth', children: [
-            { path: 'signin', component: AuthComponent },
-            { path: 'signup', component: AuthComponent },
-        ]
-    },
+    { path: AppSettings.RouteDefault, redirectTo: AppSettings.RouteSignup, pathMatch: 'full' },
+    { path: AppSettings.RouteSignup, component: AuthComponent },
+    { path: AppSettings.RouteSignin, component: AuthComponent },
 ];
 
 
