@@ -17,6 +17,7 @@ import AppSettings from '../AppSettings';
 export class AuthComponent {
     authForm: FormGroup;
     formType: string;
+    route: string;
     private submitFn: (userCredentials: IUserCredentials) => Observable<Object>;
     private callbackFn: (response: Object) => void;
 
@@ -24,15 +25,15 @@ export class AuthComponent {
         private formBuilder: FormBuilder,
         private messageService: MessageService,
         private userService: UserService,
-        private route: ActivatedRoute,
+        private activatedRoute: ActivatedRoute,
         private router: Router,
     ) {
         this.authForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6)]]
         });
-        const routeString = this.route.snapshot.url.join('/');
-        if (routeString === "signin") {
+        this.route = this.activatedRoute.snapshot.url.join('/');
+        if (this.route === "signin") {
             this.submitFn = this.userService.signin.bind(userService);
             this.callbackFn = (response) => {
                 console.log(response);
@@ -43,7 +44,7 @@ export class AuthComponent {
             this.submitFn = this.userService.signup.bind(userService);
             this.callbackFn = async (response) => {
                 console.log(response);
-                await this.router.navigateByUrl(AppSettings.RouteSignin);
+                this.navigateByUrl(AppSettings.RouteSignin);
             };
             this.formType = "Up";
         }
@@ -70,5 +71,9 @@ export class AuthComponent {
                 });
             }
         });
+    }
+
+    async navigateByUrl(route: string) {
+        await this.router.navigateByUrl(route);
     }
 }

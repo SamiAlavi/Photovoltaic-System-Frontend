@@ -26,9 +26,24 @@
 
                             <p-button label="Submit" (onClick)="submitForm()" [disabled]="!authForm.valid"></p-button>
                         </form>
+
+                        <div class="pt-6">
+                            <ng-container *ngIf="route === 'signin'; then signin else signup"></ng-container>
+                        </div>
+
                     </div>
                 </p-card>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #signin>
+    <span>Don't have an account yet? </span>
+    <a (click)="navigateByUrl('signup')">Sign Up</a>
+</ng-template>
+
+<ng-template #signup>
+    <span>Already have an account? </span>
+    <a (click)="navigateByUrl('signin')">Sign In</a>
+</ng-template>
