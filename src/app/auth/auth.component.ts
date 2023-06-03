@@ -37,6 +37,11 @@ export class AuthComponent {
             this.submitFn = this.userService.signin.bind(userService);
             this.callbackFn = (response) => {
                 console.log(response);
+                this.messageService.add({
+                    severity: TOAST_SEVERITY.SUCCCESS,
+                    summary: 'Success',
+                    detail: `Signed In Successfully`
+                });
             };
             this.formType = "In";
         }
@@ -44,7 +49,14 @@ export class AuthComponent {
             this.submitFn = this.userService.signup.bind(userService);
             this.callbackFn = async (response) => {
                 console.log(response);
-                this.navigateByUrl(AppSettings.RouteSignin);
+                this.messageService.add({
+                    severity: TOAST_SEVERITY.SUCCCESS,
+                    summary: 'Success',
+                    detail: `Signed Up Successfully`
+                });
+                setTimeout(() => {
+                    this.navigateByUrl(AppSettings.RouteSignin);
+                }, 1000);
             };
             this.formType = "Up";
         }
@@ -73,7 +85,7 @@ export class AuthComponent {
         });
     }
 
-    async navigateByUrl(route: string) {
+    async navigateByUrl(route: string): Promise<void> {
         await this.router.navigateByUrl(route);
     }
 }
