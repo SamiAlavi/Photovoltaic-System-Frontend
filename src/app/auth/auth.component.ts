@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 import { IUserCredentials } from '../helpers/interfaces';
 import { Observable } from 'rxjs';
 import AppSettings from '../AppSettings';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-auth',
@@ -19,7 +20,7 @@ export class AuthComponent {
     formType: string;
     route: string;
     private submitFn: (userCredentials: IUserCredentials) => Observable<Object>;
-    private callbackFn: (response: Object) => void;
+    private nextFn: (response: Object) => void;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -35,24 +36,24 @@ export class AuthComponent {
         this.route = this.activatedRoute.snapshot.url.join('/');
         if (this.route === "signin") {
             this.submitFn = this.userService.signin.bind(userService);
-            this.callbackFn = (response) => {
+            this.nextFn = (response) => {
                 console.log(response);
                 this.messageService.add({
                     severity: TOAST_SEVERITY.SUCCCESS,
                     summary: 'Success',
-                    detail: `Signed In Successfully`
+                    detail: 'Signed In Successfully'
                 });
             };
             this.formType = "In";
         }
         else {
             this.submitFn = this.userService.signup.bind(userService);
-            this.callbackFn = async (response) => {
+            this.nextFn = async (response) => {
                 console.log(response);
                 this.messageService.add({
                     severity: TOAST_SEVERITY.SUCCCESS,
                     summary: 'Success',
-                    detail: `Signed Up Successfully`
+                    detail: 'Signed Up Successfully'
                 });
                 setTimeout(() => {
                     this.navigateByUrl(AppSettings.RouteSignin);
@@ -65,7 +66,16 @@ export class AuthComponent {
     submitForm() {
         if (this.authForm.valid) {
             const userCredentials: IUserCredentials = this.authForm.value;
-            this.submitFn(userCredentials).subscribe(this.callbackFn);
+            this.submitFn(userCredentials).subscribe({
+                next: this.nextFn,
+                error: (error: HttpErrorResponse) => {
+                    this.messageService.add({
+                        severity: TOAST_SEVERITY.ERROR,
+                        summary: 'Error',
+                        detail: error.error.message,
+                    });
+                }
+            });
         }
         else {
             this.generateErrorMessages();
