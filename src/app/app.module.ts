@@ -10,11 +10,13 @@ import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { ToastService } from './services/toast.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         AuthComponent,
+        DashboardComponent,
     ],
     imports: [
         BrowserModule,

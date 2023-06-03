@@ -8,6 +8,7 @@ class AppSettings {
     static RouteDefault = "";
     static RouteSignup = "signup";
     static RouteSignin = "signin";
+    static RouteDashboard = "dashboard";
 }
 
 export default AppSettings;

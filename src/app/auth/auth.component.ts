@@ -38,6 +38,8 @@ export class AuthComponent {
             this.nextFn = (response) => {
                 console.log(response);
                 this.toastService.showSuccessToast("Signed In Successfully");
+                this.navigateByUrl(AppSettings.RouteDashboard);
+
             };
             this.formType = "In";
         }
@@ -46,9 +48,7 @@ export class AuthComponent {
             this.nextFn = async (response) => {
                 console.log(response);
                 this.toastService.showSuccessToast("Signed Up Successfully");
-                setTimeout(() => {
-                    this.navigateByUrl(AppSettings.RouteSignin);
-                }, 1000);
+                this.navigateByUrl(AppSettings.RouteSignin);
             };
             this.formType = "Up";
         }
@@ -78,7 +78,9 @@ export class AuthComponent {
         });
     }
 
-    async navigateByUrl(route: string): Promise<void> {
-        await this.router.navigateByUrl(route);
+    navigateByUrl(route: string) {
+        setTimeout(async () => {
+            await this.router.navigateByUrl(route);
+        }, 1000);
     }
 }
