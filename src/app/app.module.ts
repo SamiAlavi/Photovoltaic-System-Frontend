@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgPrimeModule } from './ngprime.module';
 import { AuthComponent } from './auth/auth.component';
-import { UserService } from './services/user.service';
+import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { ToastService } from './services/toast.service';
@@ -29,7 +29,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ],
     providers: [
         MessageService,
-        UserService,
+        AuthService,
         ToastService,
     ],
     bootstrap: [AppComponent]

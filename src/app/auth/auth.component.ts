@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TOAST_SEVERITY } from '../helpers/enums';
-import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 import { IUserCredentials } from '../helpers/interfaces';
 import { Observable } from 'rxjs';
 import AppSettings from '../AppSettings';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../services/toast.service';
+import { SessionService } from '../services/session.service';
 
 @Component({
     selector: 'app-auth',
@@ -24,9 +24,10 @@ export class AuthComponent {
     constructor(
         private formBuilder: FormBuilder,
         private toastService: ToastService,
-        private userService: UserService,
+        private authService: AuthService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
+        private sessionService: SessionService,
     ) {
         this.authForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
@@ -34,17 +35,18 @@ export class AuthComponent {
         });
         this.route = this.activatedRoute.snapshot.url.join('/');
         if (this.route === "signin") {
-            this.submitFn = this.userService.signin.bind(userService);
+            this.submitFn = this.authService.signin.bind(authService);
             this.nextFn = (response) => {
                 console.log(response);
                 this.toastService.showSuccessToast("Signed In Successfully");
+                this.sessionService.saveSession(response);
                 this.navigateByUrl(AppSettings.RouteDashboard);
 
             };
             this.formType = "In";
         }
         else {
-            this.submitFn = this.userService.signup.bind(userService);
+            this.submitFn = this.authService.signup.bind(authService);
             this.nextFn = async (response) => {
                 console.log(response);
                 this.toastService.showSuccessToast("Signed Up Successfully");
