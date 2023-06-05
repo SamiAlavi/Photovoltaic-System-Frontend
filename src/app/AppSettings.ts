@@ -1,4 +1,6 @@
 class AppSettings {
+    static SESSION_KEY = "token";
+
     private static BaseUrl = "http://localhost:3000/";
 
     private static AuthUrl = `${this.BaseUrl}`;

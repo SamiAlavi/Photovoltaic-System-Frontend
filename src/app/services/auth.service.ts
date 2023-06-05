@@ -13,15 +13,15 @@ export class AuthService {
 
     }
 
-    signup(userCredentials: IUserCredentials): Observable<Object> {
+    signup(userCredentials: IUserCredentials): Observable<any> {
         return this.http.post(AppSettings.SignupUrl, userCredentials);
     }
 
-    signin(userCredentials: IUserCredentials): Observable<Object> {
+    signin(userCredentials: IUserCredentials): Observable<any> {
         return this.http.post(AppSettings.SigninUrl, userCredentials);
     }
 
-    signout(): Observable<Object> {
+    signout(): Observable<any> {
         return this.http.get(AppSettings.SignoutUrl);
     }
 

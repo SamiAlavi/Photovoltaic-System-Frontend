@@ -36,10 +36,10 @@ export class AuthComponent {
         this.route = this.activatedRoute.snapshot.url.join('/');
         if (this.route === "signin") {
             this.submitFn = this.authService.signin.bind(authService);
-            this.nextFn = (response) => {
+            this.nextFn = (response: any) => {
                 console.log(response);
                 this.toastService.showSuccessToast("Signed In Successfully");
-                this.sessionService.saveSession(response);
+                this.sessionService.saveSession(response.accessToken);
                 this.navigateByUrl(AppSettings.RouteDashboard);
 
             };

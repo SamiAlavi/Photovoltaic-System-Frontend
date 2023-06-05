@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
+import AppSettings from '../AppSettings';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SessionService {
-    private readonly SESSION_KEY = 'session';
+    private readonly SESSION_KEY = AppSettings.SESSION_KEY;
 
-    saveSession(sessionData: any): void {
-        localStorage.setItem(this.SESSION_KEY, JSON.stringify(sessionData));
+    saveSession(accessToken: any): void {
+        localStorage.setItem(this.SESSION_KEY, JSON.stringify(accessToken));
     }
 
     getSession(): any {
-        const sessionData = localStorage.getItem(this.SESSION_KEY);
-        return sessionData ? JSON.parse(sessionData) : null;
+        const accessToken = localStorage.getItem(this.SESSION_KEY);
+        return accessToken ? JSON.parse(accessToken) : null;
     }
 
     isAuthenticated(): boolean {
