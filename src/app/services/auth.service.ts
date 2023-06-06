@@ -27,7 +27,7 @@ export class AuthService {
     }
 
     signout(): Observable<any> {
-        return this.http.get(AppSettings.SignoutUrl).pipe(map(() => {
+        return this.http.delete(AppSettings.SignoutUrl).pipe(map(() => {
             this.sessionService.clearSession();
             return of();
         }));
