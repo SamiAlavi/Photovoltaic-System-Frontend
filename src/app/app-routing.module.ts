@@ -4,6 +4,7 @@ import { AuthComponent } from './auth/auth.component';
 import AppSettings from './AppSettings';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ProjectComponent } from './project/project.component';
 
 const routes: Routes = [
     {
@@ -18,6 +19,11 @@ const routes: Routes = [
     {
         path: AppSettings.RouteSignin,
         component: AuthComponent
+    },
+    {
+        path: AppSettings.RouteProject,
+        component: ProjectComponent,
+        canActivate: [AuthGuard],
     },
     {
         path: AppSettings.RouteDashboard,

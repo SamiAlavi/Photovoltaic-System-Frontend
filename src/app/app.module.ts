@@ -12,12 +12,14 @@ import { MessageService } from 'primeng/api';
 import { ToastService } from './services/toast.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { ProjectComponent } from './project/project.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         AuthComponent,
         DashboardComponent,
+        ProjectComponent,
     ],
     imports: [
         BrowserModule,

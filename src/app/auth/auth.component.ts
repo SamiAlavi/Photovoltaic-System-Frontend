@@ -40,7 +40,7 @@ export class AuthComponent {
                 console.log(response);
                 this.toastService.showSuccessToast("Signed In Successfully");
                 this.sessionService.saveSession(response.accessToken);
-                this.navigateByUrl(AppSettings.RouteDashboard);
+                this.navigateByUrl(AppSettings.RouteProject, 1000);
 
             };
             this.formType = "In";
@@ -50,11 +50,18 @@ export class AuthComponent {
             this.nextFn = async (response) => {
                 console.log(response);
                 this.toastService.showSuccessToast("Signed Up Successfully");
-                this.navigateByUrl(AppSettings.RouteSignin);
+                this.navigateByUrl(AppSettings.RouteSignin, 1000);
             };
             this.formType = "Up";
         }
     }
+
+    ngOnInit() {
+        if (this.route === "signin" && this.sessionService.isAuthenticated()) {
+            this.navigateByUrl(AppSettings.RouteProject);
+        }
+    }
+
 
     submitForm() {
         if (this.authForm.valid) {
@@ -80,9 +87,9 @@ export class AuthComponent {
         });
     }
 
-    navigateByUrl(route: string) {
+    navigateByUrl(route: string, timeout = 0) {
         setTimeout(async () => {
             await this.router.navigateByUrl(route);
-        }, 1000);
+        }, timeout);
     }
 }

@@ -11,6 +11,7 @@ class AppSettings {
     static RouteDefault = "";
     static RouteSignup = "signup";
     static RouteSignin = "signin";
+    static RouteProject = "project";
     static RouteDashboard = "dashboard";
 }
 
