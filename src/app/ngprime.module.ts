@@ -7,6 +7,8 @@ import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { FieldsetModule } from 'primeng/fieldset';
 import { DropdownModule } from 'primeng/dropdown';
+import { MenubarModule } from 'primeng/menubar';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { DropdownModule } from 'primeng/dropdown';
         ToastModule,
         FieldsetModule,
         DropdownModule,
+        MenubarModule,
+        TooltipModule,
     ],
 })
 export class NgPrimeModule { }

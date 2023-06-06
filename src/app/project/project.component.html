@@ -1,21 +1,20 @@
-<div class="w-screen h-screen animGradientSwap center-div">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <p-card header="Projects">
-                    <p-fieldset legend="Create Project">
-                        <span class="p-float-label mb-6">
-                            <input type="text" id="projectName" class="w-full" pInputText [(ngModel)]="projectName" />
-                            <label htmlFor="projectName">Project Name</label>
-                        </span>
-                    </p-fieldset>
-                    <p-fieldset legend="Choose Project">
-                        <span class="mb-6">
-                            <p-dropdown styleClass="w-full"></p-dropdown>
-                        </span>
-                    </p-fieldset>
-                </p-card>
-            </div>
+<div class="w-screen h-screen">
+    <app-header></app-header>
+    <div class="flex items-center justify-center w-full h-full">
+        <div class="w-full h-full">
+            <p-card header="Projects" styleClass="h-full">
+                <p-fieldset legend="Create Project" styleClass="mb-6">
+                    <span class="p-float-label mb-6">
+                        <input type="text" id="projectName" class="w-full" pInputText [(ngModel)]="projectName" />
+                        <label htmlFor="projectName">Project Name</label>
+                    </span>
+                </p-fieldset>
+                <p-fieldset legend="Choose Project">
+                    <span class="mb-6">
+                        <p-dropdown styleClass="w-full"></p-dropdown>
+                    </span>
+                </p-fieldset>
+            </p-card>
         </div>
     </div>
 </div>

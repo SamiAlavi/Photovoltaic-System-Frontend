@@ -13,6 +13,7 @@ import { ToastService } from './services/toast.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { ProjectComponent } from './project/project.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import { ProjectComponent } from './project/project.component';
         AuthComponent,
         DashboardComponent,
         ProjectComponent,
+        HeaderComponent,
     ],
     imports: [
         BrowserModule,
