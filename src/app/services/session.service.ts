@@ -7,17 +7,18 @@ import AppSettings from '../AppSettings';
 export class SessionService {
     private readonly SESSION_KEY = AppSettings.SESSION_KEY;
 
-    saveSession(accessToken: any): void {
-        localStorage.setItem(this.SESSION_KEY, accessToken);
+    saveSession(user: any): void {
+        localStorage.setItem(this.SESSION_KEY, JSON.stringify(user));
     }
 
     getSession(): any {
-        const accessToken = localStorage.getItem(this.SESSION_KEY);
-        return accessToken ?? null;
+        const user = JSON.parse(localStorage.getItem(this.SESSION_KEY) ?? "{}");
+        return user;
     }
 
     isAuthenticated(): boolean {
-        return !!this.getSession();
+        const user = this.getSession();
+        return (user.accessToken && user.uid);
     }
 
     clearSession(): void {

@@ -3,11 +3,13 @@ class AppSettings {
 
     private static BaseUrl = "http://localhost:3000/";
     private static ApiUrl = `${this.BaseUrl}api/`;
-    private static AuthUrl = `${this.ApiUrl}`;
 
+    private static AuthUrl = `${this.ApiUrl}`;
     static SignupUrl = `${this.AuthUrl}signup`;
     static SigninUrl = `${this.AuthUrl}signin`;
     static SignoutUrl = `${this.AuthUrl}signout`;
+
+    static ProjectUrl = `${this.ApiUrl}project`;
 
     static RouteDefault = "";
     static RouteSignup = "signup";

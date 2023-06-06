@@ -39,7 +39,7 @@ export class AuthComponent {
             this.nextFn = (response: any) => {
                 console.log(response);
                 this.toastService.showSuccessToast("Signed In Successfully");
-                this.sessionService.saveSession(response.accessToken);
+                this.sessionService.saveSession(response);
                 this.navigateByUrl(AppSettings.RouteProject, 1000);
 
             };
