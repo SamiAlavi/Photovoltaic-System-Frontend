@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProjectService } from '../services/project.service';
+import { IProject } from '../helpers/interfaces';
 
 @Component({
     selector: 'app-project',
@@ -8,15 +9,23 @@ import { ProjectService } from '../services/project.service';
 })
 export class ProjectComponent {
     projectName = "";
-    projects: any[] = [];
+    selectedProject!: IProject;
+    projects: IProject[] = [];
 
     constructor(private projectService: ProjectService) {
         this.getProjects();
     }
 
     private getProjects() {
-        this.projectService.getProjects().subscribe((projects: any[]) => {
-            this.projects = projects;
+        // for (let i = 0; i < 10; i++) {
+        //     this.projects.push({ id: i, name: `test_${i}` });
+        // }
+        // this.selectedProject = this.projects[0];
+        this.projectService.getProjects().subscribe((projects) => {
+            if (projects.length) {
+                this.projects = projects;
+                this.selectedProject = projects[0];
+            }
         });
     }
 }

@@ -11,7 +11,9 @@
                 </p-fieldset>
                 <p-fieldset legend="Choose Project">
                     <span class="mb-6">
-                        <p-dropdown styleClass="w-full"></p-dropdown>
+                        <p-dropdown styleClass="w-full" placeholder="Project Name" optionLabel="name" filterBy="name"
+                            [options]="projects" [(ngModel)]="selectedProject" [filter]="true" [showClear]="true">
+                        </p-dropdown>
                     </span>
                 </p-fieldset>
             </p-card>
