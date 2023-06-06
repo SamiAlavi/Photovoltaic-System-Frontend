@@ -2,8 +2,9 @@ class AppSettings {
     static SESSION_KEY = "token";
 
     private static BaseUrl = "http://localhost:3000/";
+    private static ApiUrl = `${this.BaseUrl}api/`;
+    private static AuthUrl = `${this.ApiUrl}`;
 
-    private static AuthUrl = `${this.BaseUrl}`;
     static SignupUrl = `${this.AuthUrl}signup`;
     static SigninUrl = `${this.AuthUrl}signin`;
     static SignoutUrl = `${this.AuthUrl}signout`;

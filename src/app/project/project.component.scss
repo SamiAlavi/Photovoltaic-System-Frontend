@@ -1,0 +1,22 @@
+.center-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.animGradientSwap {
+    background: radial-gradient(#ffcf11, #e49101, #fc1900, #000000);
+    background-size: 300% 300%;
+    animation: gradientSwap 10s ease infinite alternate;
+}
+
+@keyframes gradientSwap {
+    0% {
+        background-position: 0% 88%
+    }
+
+    100% {
+        background-position: 100% 13%;
+    }
+}

@@ -57,7 +57,7 @@ export class AuthComponent {
     }
 
     ngOnInit() {
-        if (this.route === "signin" && this.sessionService.isAuthenticated()) {
+        if (this.sessionService.isAuthenticated()) {
             this.navigateByUrl(AppSettings.RouteProject);
         }
     }
