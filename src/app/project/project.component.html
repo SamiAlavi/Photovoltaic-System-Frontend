@@ -3,13 +3,17 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <p-card header="Projects">
-                    <span class="p-float-label mb-6">
-                        <input type="text" id="projectName" class="w-full" pInputText [(ngModel)]="projectName" />
-                        <label htmlFor="projectName">Project Name</label>
-                    </span>
-                    <span class="mb-6">
-                        <p-dropdown styleClass="w-full"></p-dropdown>
-                    </span>
+                    <p-fieldset legend="Create Project">
+                        <span class="p-float-label mb-6">
+                            <input type="text" id="projectName" class="w-full" pInputText [(ngModel)]="projectName" />
+                            <label htmlFor="projectName">Project Name</label>
+                        </span>
+                    </p-fieldset>
+                    <p-fieldset legend="Choose Project">
+                        <span class="mb-6">
+                            <p-dropdown styleClass="w-full"></p-dropdown>
+                        </span>
+                    </p-fieldset>
                 </p-card>
             </div>
         </div>
