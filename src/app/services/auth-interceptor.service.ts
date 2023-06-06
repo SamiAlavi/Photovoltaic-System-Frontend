@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'; // imports the class that provides local storage for token
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { catchError, filter, take, switchMap } from "rxjs/operators";
-import { Observable, throwError } from 'rxjs';
+import { HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from "rxjs/operators";
+import { throwError } from 'rxjs';
 import AppSettings from '../AppSettings';
 
 @Injectable({

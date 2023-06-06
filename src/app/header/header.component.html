@@ -6,7 +6,7 @@
         <ng-template pTemplate="end">
             <p-button icon="pi pi-user" class="mr-4" size="large" shape="circle" pTooltip="View Profile"
                 tooltipPosition="left"></p-button>
-            <p-button icon="pi pi-sign-out" pTooltip="Sign Out" tooltipPosition="left"></p-button>
+            <p-button icon="pi pi-sign-out" pTooltip="Sign Out" tooltipPosition="left" (onClick)="signout()"></p-button>
         </ng-template>
     </p-menubar>
 </div>

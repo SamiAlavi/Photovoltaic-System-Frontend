@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import AppSettings from '../AppSettings';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../services/toast.service';
-import { SessionService } from '../services/session.service';
 
 @Component({
     selector: 'app-auth',
@@ -27,7 +26,6 @@ export class AuthComponent {
         private authService: AuthService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private sessionService: SessionService,
     ) {
         this.authForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
@@ -36,10 +34,8 @@ export class AuthComponent {
         this.route = this.activatedRoute.snapshot.url.join('/');
         if (this.route === "signin") {
             this.submitFn = this.authService.signin.bind(authService);
-            this.nextFn = (response: any) => {
-                console.log(response);
+            this.nextFn = () => {
                 this.toastService.showSuccessToast("Signed In Successfully");
-                this.sessionService.saveSession(response);
                 this.navigateByUrl(AppSettings.RouteProject, 1000);
 
             };
@@ -47,8 +43,7 @@ export class AuthComponent {
         }
         else {
             this.submitFn = this.authService.signup.bind(authService);
-            this.nextFn = async (response) => {
-                console.log(response);
+            this.nextFn = () => {
                 this.toastService.showSuccessToast("Signed Up Successfully");
                 this.navigateByUrl(AppSettings.RouteSignin, 1000);
             };
@@ -57,7 +52,7 @@ export class AuthComponent {
     }
 
     ngOnInit() {
-        if (this.sessionService.isAuthenticated()) {
+        if (this.authService.isAuthenticated()) {
             this.navigateByUrl(AppSettings.RouteProject);
         }
     }
