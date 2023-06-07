@@ -46,26 +46,6 @@ export class ProjectComponent {
             }
         });
     }
-
-    private getProjectsIds() {
-        this.projectService.getProjectsIds().subscribe((projectsIds) => {
-            if (projectsIds.length) {
-                this.projectsIds = projectsIds;
-                this.selectedProjectId = projectsIds[0];
-            }
-        });
-    }
-
-    getProject() {
-        if (!this.selectedProject) {
-            return;
-        }
-
-        this.projectService.getProject(this.selectedProjectId).subscribe((project) => {
-            this.openProject(project);
-        });
-    }
-
     createProject() {
         if (!this.projectId) {
             return;
@@ -79,13 +59,14 @@ export class ProjectComponent {
         this.projectService.createProject(this.projectId).subscribe((project) => {
             this.toastService.showSuccessToast("Project Created Successfully");
             this.projects.push(project);
-            this.openProject(project);
+            this.selectedProject = project;
+            this.openProject();
         });
     }
 
-    private openProject(project: IProject) {
-        this.projectService.currentProject = project;
-        console.log(project);
+    openProject() {
+        this.projectService.currentProject = this.selectedProject;
+        console.log(this.selectedProject);
         this.router.navigateByUrl(AppSettings.RouteDashboard);
     }
 }

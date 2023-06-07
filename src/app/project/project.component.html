@@ -16,7 +16,7 @@
                         [(ngModel)]="selectedProject" optionLabel="id" [filter]="true" [showClear]="true">
                     </p-dropdown>
                 </span>
-                <p-button label="Open Project" styleClass="float-right" (onClick)="getProject()"
+                <p-button label="Open Project" styleClass="float-right" (onClick)="openProject()"
                     [disabled]="!selectedProject"></p-button>
 
                 <p-accordion [activeIndex]="0" *ngIf="selectedProject">

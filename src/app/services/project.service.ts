@@ -23,18 +23,6 @@ export class ProjectService {
         return this.http.get<IProject[]>(AppSettings.ProjectUrl);
     }
 
-    getProjectsIds(): Observable<string[]> {
-        if (this.projectsIds.length) {
-            return of(this.projectsIds);
-        }
-        return this.http.get<string[]>(AppSettings.ProjectUrl);
-    }
-
-    getProject(projectId: string): Observable<IProject> {
-        const projectUrl = `${AppSettings.ProjectUrl}/${projectId}`;
-        return this.http.get<IProject>(projectUrl);
-    }
-
     createProject(projectId: string): Observable<IProject> {
         const project = { id: projectId };
         return this.http.post<IProject>(AppSettings.ProjectUrl, project);
