@@ -16,6 +16,7 @@ import { ProjectComponent } from './project/project.component';
 import { HeaderComponent } from './header/header.component';
 import { BaseComponent } from './base/base.component';
 import { MapComponent } from './map/map.component';
+import { ProductService } from './services/product.service';
 
 @NgModule({
     declarations: [
@@ -38,8 +39,6 @@ import { MapComponent } from './map/map.component';
     ],
     providers: [
         MessageService,
-        AuthService,
-        ToastService,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
     ],
     bootstrap: [AppComponent]

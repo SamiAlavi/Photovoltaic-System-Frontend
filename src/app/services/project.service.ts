@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import AppSettings from '../AppSettings';
 import { IProject } from '../helpers/interfaces';
+import { ProductService } from './product.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,10 @@ export class ProjectService {
     projectsIds: string[] = [];
     currentProject: IProject | null = null;
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private productService: ProductService,
+    ) {
 
     }
 

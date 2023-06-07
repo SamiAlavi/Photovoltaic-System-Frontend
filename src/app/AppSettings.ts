@@ -9,8 +9,8 @@ class AppSettings {
     static SignupUrl = `${this.AuthUrl}signup`;
     static SigninUrl = `${this.AuthUrl}signin`;
     static SignoutUrl = `${this.AuthUrl}signout`;
-
     static ProjectUrl = `${this.ApiUrl}project`;
+    static ProductUrl = `${this.ApiUrl}product`;
 
     static RouteDefault = "";
     static RouteSignup = "signup";

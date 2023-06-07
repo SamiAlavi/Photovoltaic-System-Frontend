@@ -3,8 +3,13 @@ interface IUserCredentials {
     password: string,
 }
 
+
 interface IProduct {
-    [key: string]: any,
+    name: string,
+    company: string,
+    area: number,
+    power_peak: number,
+    num_cells: string,
 }
 
 interface IProject {
