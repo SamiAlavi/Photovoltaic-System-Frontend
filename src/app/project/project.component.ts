@@ -12,7 +12,8 @@ import AppSettings from '../AppSettings';
 })
 export class ProjectComponent {
     projectId = "";
-    selectedProject: string | null = null;
+    selectedProject!: IProject;
+    selectedProjectId!: string;
 
     constructor(
         private projectService: ProjectService,
@@ -22,16 +23,35 @@ export class ProjectComponent {
         this.getProjects();
     }
 
-    get projects(): string[] {
-        return this.projectService.projects;
+    get projectsIds(): string[] {
+        return this.projectService.projectsIds;
+    }
+    set projectsIds(projsIds: string[]) {
+        this.projectService.projectsIds = projsIds;
     }
 
+    get projects(): IProject[] {
+        return this.projectService.projects;
+    }
+    set projects(projs: IProject[]) {
+        this.projectService.projects = projs;
+    }
 
     private getProjects() {
         this.projectService.getProjects().subscribe((projects) => {
             if (projects.length) {
-                this.projectService.projects = projects;
+                this.projects = projects;
+                this.projectsIds = projects.map((project) => project.id);
                 this.selectedProject = projects[0];
+            }
+        });
+    }
+
+    private getProjectsIds() {
+        this.projectService.getProjectsIds().subscribe((projectsIds) => {
+            if (projectsIds.length) {
+                this.projectsIds = projectsIds;
+                this.selectedProjectId = projectsIds[0];
             }
         });
     }
@@ -41,7 +61,7 @@ export class ProjectComponent {
             return;
         }
 
-        this.projectService.getProject(this.selectedProject).subscribe((project) => {
+        this.projectService.getProject(this.selectedProjectId).subscribe((project) => {
             this.openProject(project);
         });
     }
@@ -51,14 +71,14 @@ export class ProjectComponent {
             return;
         }
 
-        if (this.projects.includes(this.projectId)) {
+        if (this.projectsIds.includes(this.projectId)) {
             this.toastService.showErrorToast("The project name you entered already exists. Please choose a different name for your project.");
             return;
         }
 
         this.projectService.createProject(this.projectId).subscribe((project) => {
             this.toastService.showSuccessToast("Project Created Successfully");
-            this.projectService.projects.push(this.projectId);
+            this.projects.push(project);
             this.openProject(project);
         });
     }

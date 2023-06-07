@@ -9,6 +9,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { DropdownModule } from 'primeng/dropdown';
 import { MenubarModule } from 'primeng/menubar';
 import { TooltipModule } from 'primeng/tooltip';
+import { AccordionModule } from 'primeng/accordion';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { TooltipModule } from 'primeng/tooltip';
         DropdownModule,
         MenubarModule,
         TooltipModule,
+        AccordionModule,
     ],
 })
 export class NgPrimeModule { }
