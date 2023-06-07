@@ -1,0 +1,12 @@
+<div class="w-screen h-screen">
+    <app-header [currentRoute]="currentRoute"></app-header>
+
+    <ng-container [ngSwitch]="currentRoute">
+        <ng-container *ngSwitchCase="'project'">
+            <app-project></app-project>
+        </ng-container>
+        <ng-container *ngSwitchCase="'dashboard'">
+            <app-dashboard></app-dashboard>
+        </ng-container>
+    </ng-container>
+</div>

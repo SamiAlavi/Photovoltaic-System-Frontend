@@ -4,6 +4,9 @@
             <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" />
         </ng-template>
         <ng-template pTemplate="end">
+            <ng-container *ngIf="currentProjectId">
+                Current Project: {{currentProjectId}}
+            </ng-container>
             <p-button icon="pi pi-user" class="mr-4" size="large" shape="circle" pTooltip="View Profile"
                 tooltipPosition="left"></p-button>
             <p-button icon="pi pi-sign-out" pTooltip="Sign Out" tooltipPosition="left" (onClick)="signout()"></p-button>

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
 import { AuthService } from '../services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import AppSettings from '../AppSettings';
-import { Helpers } from '../helpers/Helpers';
+import { ProjectService } from '../services/project.service';
 
 @Component({
     selector: 'app-header',
@@ -11,17 +11,18 @@ import { Helpers } from '../helpers/Helpers';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+    @Input() currentRoute: string = "";
     items: MenuItem[] = [];
+
     constructor(
         private authService: AuthService,
         private router: Router,
-        private activatedRoute: ActivatedRoute,
+        private projectService: ProjectService,
     ) {
 
     }
 
     ngOnInit() {
-
         this.items = [
             {
                 label: 'Dashboard',
@@ -39,13 +40,16 @@ export class HeaderComponent implements OnInit {
     }
 
     private isDisabled(route: string) {
-        const currentUrl = Helpers.getActivateRoute(this.activatedRoute);
-        return currentUrl === route;
+        return this.currentRoute === route;
     }
 
     private onClick = (route: string, _: any) => {
         this.router.navigateByUrl(route);
     };
+
+    get currentProjectId(): string | undefined {
+        return this.projectService.currentProject?.id;
+    }
 
     signout() {
         this.authService.signout().subscribe((_) => {

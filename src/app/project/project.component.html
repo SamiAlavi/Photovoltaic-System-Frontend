@@ -1,25 +1,22 @@
-<div class="w-screen h-screen">
-    <app-header></app-header>
-    <div class="flex items-center justify-center w-full h-full">
-        <div class="w-full h-full">
-            <p-card header="Projects" styleClass="h-full">
-                <p-fieldset legend="Create Project" styleClass="mb-6">
-                    <span class="p-float-label mb-6">
-                        <input type="text" id="projectName" class="w-full" pInputText [(ngModel)]="projectId"
-                            [minlength]="1" [maxlength]="20" />
-                        <label htmlFor="projectName">Project Name</label>
-                    </span>
-                    <p-button label="Create Project" (onClick)="createProject()" [disabled]="!projectId"></p-button>
-                </p-fieldset>
-                <p-fieldset legend="Choose Project">
-                    <span class="mb-6">
-                        <p-dropdown styleClass="w-full mb-6" placeholder="Project Name" [options]="projects"
-                            [(ngModel)]="selectedProject" [filter]="true" [showClear]="true">
-                        </p-dropdown>
-                    </span>
-                    <p-button label="Open Project" (onClick)="getProject()" [disabled]="!selectedProject"></p-button>
-                </p-fieldset>
-            </p-card>
-        </div>
+<div class="flex items-center justify-center w-full h-full">
+    <div class="w-full h-full">
+        <p-card header="Projects" styleClass="h-full">
+            <p-fieldset legend="Create Project" styleClass="mb-6">
+                <span class="p-float-label mb-6">
+                    <input type="text" id="projectName" class="w-full" pInputText [(ngModel)]="projectId"
+                        [minlength]="1" [maxlength]="20" />
+                    <label htmlFor="projectName">Project Name</label>
+                </span>
+                <p-button label="Create Project" (onClick)="createProject()" [disabled]="!projectId"></p-button>
+            </p-fieldset>
+            <p-fieldset legend="Choose Project">
+                <span class="mb-6">
+                    <p-dropdown styleClass="w-full mb-6" placeholder="Project Name" [options]="projects"
+                        [(ngModel)]="selectedProject" [filter]="true" [showClear]="true">
+                    </p-dropdown>
+                </span>
+                <p-button label="Open Project" (onClick)="getProject()" [disabled]="!selectedProject"></p-button>
+            </p-fieldset>
+        </p-card>
     </div>
 </div>

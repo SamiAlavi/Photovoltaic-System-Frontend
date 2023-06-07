@@ -14,6 +14,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { ProjectComponent } from './project/project.component';
 import { HeaderComponent } from './header/header.component';
+import { BaseComponent } from './base/base.component';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { HeaderComponent } from './header/header.component';
         DashboardComponent,
         ProjectComponent,
         HeaderComponent,
+        BaseComponent,
     ],
     imports: [
         BrowserModule,
