@@ -9,7 +9,7 @@ import { ToastService } from '../services/toast.service';
     styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent {
-    projectName = "";
+    projectId = "";
     selectedProject: string | null = null;
 
     constructor(
@@ -33,27 +33,35 @@ export class ProjectComponent {
         });
     }
 
-    openProject() {
+    getProject() {
         if (!this.selectedProject) {
             return;
         }
 
         this.projectService.getProject(this.selectedProject).subscribe((project) => {
-            this.projectService.currentProject = project;
-            console.log(project);
+            this.openProject(project);
         });
     }
 
     createProject() {
-        if (!this.projectName) {
+        if (!this.projectId) {
             return;
         }
 
-        if (this.projects.includes(this.projectName)) {
+        if (this.projects.includes(this.projectId)) {
             this.toastService.showErrorToast("The project name you entered already exists. Please choose a different name for your project.");
             return;
         }
 
-        this.toastService.showSuccessToast("Project Created Successfully");
+        this.projectService.createProject(this.projectId).subscribe((project) => {
+            this.toastService.showSuccessToast("Project Created Successfully");
+            this.projectService.projects.push(this.projectId);
+            this.openProject(project);
+        });
+    }
+
+    private openProject(project: IProject) {
+        this.projectService.currentProject = project;
+        console.log(project);
     }
 }

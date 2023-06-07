@@ -27,6 +27,11 @@ export class ProjectService {
         return this.http.get<IProject>(projectUrl);
     }
 
+    createProject(projectId: string): Observable<IProject> {
+        const project = { id: projectId };
+        return this.http.post<IProject>(AppSettings.ProjectUrl, project);
+    }
+
     clearProjects() {
         this.projects = [];
         this.currentProject = null;
