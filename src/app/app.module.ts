@@ -15,6 +15,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { ProjectComponent } from './project/project.component';
 import { HeaderComponent } from './header/header.component';
 import { BaseComponent } from './base/base.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { BaseComponent } from './base/base.component';
         ProjectComponent,
         HeaderComponent,
         BaseComponent,
+        MapComponent,
     ],
     imports: [
         BrowserModule,

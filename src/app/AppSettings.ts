@@ -1,5 +1,6 @@
 class AppSettings {
     static SESSION_KEY = "token";
+    static MapboxAccessToken = "pk.eyJ1Ijoic2FtaWFsYXZpIiwiYSI6ImNsaWxuM3E0NTBiODIzZ212OGR1aTNmMnQifQ.f-oxF72sSsV2I7-wwlVN2g";
 
     private static BaseUrl = "http://localhost:3000/";
     private static ApiUrl = `${this.BaseUrl}api/`;
