@@ -11,6 +11,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { TooltipModule } from 'primeng/tooltip';
 import { AccordionModule } from 'primeng/accordion';
 import { DockModule } from 'primeng/dock';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { DockModule } from 'primeng/dock';
         TooltipModule,
         AccordionModule,
         DockModule,
+        DynamicDialogModule,
     ],
 })
 export class NgPrimeModule { }

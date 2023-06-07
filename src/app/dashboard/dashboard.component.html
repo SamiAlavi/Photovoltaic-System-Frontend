@@ -2,7 +2,8 @@
 <div class="dock-window">
     <p-dock [model]="items" position="bottom">
         <ng-template pTemplate="item" let-item>
-            <img [src]="item.icon" [alt]="item.label" width="50%" />
+            <img [src]="item.icon" [alt]="item.label" [pTooltip]="item.label" tooltipPosition="top" width="100%"
+                (click)="item.command" />
         </ng-template>
     </p-dock>
 </div>

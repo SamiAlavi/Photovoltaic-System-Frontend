@@ -1,7 +1,13 @@
+$backgroundColor: rgba(0, 0, 0, 0.1);
+
 ::ng-deep {
     .p-dock .p-dock-list {
-        background: rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        padding: 0px;
+        background-color: $backgroundColor;
+        border: 1px solid $backgroundColor;
+
+        .p-dock-item:hover {
+            background-color: $backgroundColor;
+            border-radius: 50%;
+        }
     }
 }
