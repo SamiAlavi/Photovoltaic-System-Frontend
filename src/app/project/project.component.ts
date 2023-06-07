@@ -9,21 +9,21 @@ import { IProject } from '../helpers/interfaces';
 })
 export class ProjectComponent {
     projectName = "";
-    selectedProject!: IProject;
-    projects: IProject[] = [];
+    selectedProject: IProject | null = null;
 
     constructor(private projectService: ProjectService) {
         this.getProjects();
     }
 
+    get projects(): IProject[] {
+        return this.projectService.projects;
+    }
+
+
     private getProjects() {
-        // for (let i = 0; i < 10; i++) {
-        //     this.projects.push({ id: i, name: `test_${i}` });
-        // }
-        // this.selectedProject = this.projects[0];
         this.projectService.getProjects().subscribe((projects) => {
             if (projects.length) {
-                this.projects = projects;
+                this.projectService.projects = projects;
                 this.selectedProject = projects[0];
             }
         });
