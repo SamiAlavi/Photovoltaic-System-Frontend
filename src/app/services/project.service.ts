@@ -8,18 +8,23 @@ import { IProject } from '../helpers/interfaces';
     providedIn: 'root'
 })
 export class ProjectService {
-    projects: IProject[] = [];
+    projects: string[] = [];
     currentProject: IProject | null = null;
 
     constructor(private http: HttpClient) {
 
     }
 
-    getProjects(): Observable<IProject[]> {
+    getProjects(): Observable<string[]> {
         if (this.projects.length) {
             return of(this.projects);
         }
-        return this.http.get<IProject[]>(AppSettings.ProjectUrl);
+        return this.http.get<string[]>(AppSettings.ProjectUrl);
+    }
+
+    getProject(projectId: string): Observable<IProject> {
+        const projectUrl = `${AppSettings.ProjectUrl}/${projectId}`;
+        return this.http.get<IProject>(projectUrl);
     }
 
     clearProjects() {

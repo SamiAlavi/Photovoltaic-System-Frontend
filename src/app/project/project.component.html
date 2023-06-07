@@ -5,16 +5,19 @@
             <p-card header="Projects" styleClass="h-full">
                 <p-fieldset legend="Create Project" styleClass="mb-6">
                     <span class="p-float-label mb-6">
-                        <input type="text" id="projectName" class="w-full" pInputText [(ngModel)]="projectName" />
+                        <input type="text" id="projectName" class="w-full" pInputText [(ngModel)]="projectName"
+                            [minlength]="1" [maxlength]="20" />
                         <label htmlFor="projectName">Project Name</label>
                     </span>
+                    <p-button label="Create Project" (onClick)="createProject()" [disabled]="!projectName"></p-button>
                 </p-fieldset>
                 <p-fieldset legend="Choose Project">
                     <span class="mb-6">
-                        <p-dropdown styleClass="w-full" placeholder="Project Name" optionLabel="name" filterBy="name"
-                            [options]="projects" [(ngModel)]="selectedProject" [filter]="true" [showClear]="true">
+                        <p-dropdown styleClass="w-full mb-6" placeholder="Project Name" [options]="projects"
+                            [(ngModel)]="selectedProject" [filter]="true" [showClear]="true">
                         </p-dropdown>
                     </span>
+                    <p-button label="Open Project" (onClick)="openProject()" [disabled]="!selectedProject"></p-button>
                 </p-fieldset>
             </p-card>
         </div>

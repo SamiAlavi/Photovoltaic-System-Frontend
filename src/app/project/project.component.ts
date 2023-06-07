@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProjectService } from '../services/project.service';
 import { IProject } from '../helpers/interfaces';
+import { ToastService } from '../services/toast.service';
 
 @Component({
     selector: 'app-project',
@@ -9,13 +10,16 @@ import { IProject } from '../helpers/interfaces';
 })
 export class ProjectComponent {
     projectName = "";
-    selectedProject: IProject | null = null;
+    selectedProject: string | null = null;
 
-    constructor(private projectService: ProjectService) {
+    constructor(
+        private projectService: ProjectService,
+        private toastService: ToastService,
+    ) {
         this.getProjects();
     }
 
-    get projects(): IProject[] {
+    get projects(): string[] {
         return this.projectService.projects;
     }
 
@@ -27,5 +31,29 @@ export class ProjectComponent {
                 this.selectedProject = projects[0];
             }
         });
+    }
+
+    openProject() {
+        if (!this.selectedProject) {
+            return;
+        }
+
+        this.projectService.getProject(this.selectedProject).subscribe((project) => {
+            this.projectService.currentProject = project;
+            console.log(project);
+        });
+    }
+
+    createProject() {
+        if (!this.projectName) {
+            return;
+        }
+
+        if (this.projects.includes(this.projectName)) {
+            this.toastService.showErrorToast("The project name you entered already exists. Please choose a different name for your project.");
+            return;
+        }
+
+        this.toastService.showSuccessToast("Project Created Successfully");
     }
 }
