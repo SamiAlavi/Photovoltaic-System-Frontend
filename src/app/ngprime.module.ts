@@ -10,6 +10,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MenubarModule } from 'primeng/menubar';
 import { TooltipModule } from 'primeng/tooltip';
 import { AccordionModule } from 'primeng/accordion';
+import { DockModule } from 'primeng/dock';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { AccordionModule } from 'primeng/accordion';
         MenubarModule,
         TooltipModule,
         AccordionModule,
+        DockModule,
     ],
 })
 export class NgPrimeModule { }

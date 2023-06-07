@@ -1,1 +1,8 @@
 <app-map></app-map>
+<div class="dock-window">
+    <p-dock [model]="items" position="bottom">
+        <ng-template pTemplate="item" let-item>
+            <img [src]="item.icon" [alt]="item.label" width="50%" />
+        </ng-template>
+    </p-dock>
+</div>
