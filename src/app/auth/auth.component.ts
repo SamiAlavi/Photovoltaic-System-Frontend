@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import AppSettings from '../AppSettings';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../services/toast.service';
+import { Helpers } from '../helpers/Helpers';
 
 @Component({
     selector: 'app-auth',
@@ -31,7 +32,7 @@ export class AuthComponent {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6)]]
         });
-        this.route = this.activatedRoute.snapshot.url.join('/');
+        this.route = Helpers.getActivateRoute(this.activatedRoute);
         if (this.route === "signin") {
             this.submitFn = this.authService.signin.bind(authService);
             this.nextFn = () => {

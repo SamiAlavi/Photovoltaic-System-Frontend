@@ -9,8 +9,8 @@ interface IProduct {
 
 interface IProject {
     id: string,
-    name: string,
     products: IProduct[],
+    name?: string,
 }
 
 export {

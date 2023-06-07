@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ProjectService } from '../services/project.service';
 import { IProject } from '../helpers/interfaces';
 import { ToastService } from '../services/toast.service';
+import { Router } from '@angular/router';
+import AppSettings from '../AppSettings';
 
 @Component({
     selector: 'app-project',
@@ -15,6 +17,7 @@ export class ProjectComponent {
     constructor(
         private projectService: ProjectService,
         private toastService: ToastService,
+        private router: Router,
     ) {
         this.getProjects();
     }
@@ -63,5 +66,6 @@ export class ProjectComponent {
     private openProject(project: IProject) {
         this.projectService.currentProject = project;
         console.log(project);
+        this.router.navigateByUrl(AppSettings.RouteDashboard);
     }
 }
