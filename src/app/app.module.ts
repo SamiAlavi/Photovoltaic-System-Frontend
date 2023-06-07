@@ -17,6 +17,7 @@ import { HeaderComponent } from './header/header.component';
 import { BaseComponent } from './base/base.component';
 import { MapComponent } from './map/map.component';
 import { ProductService } from './services/product.service';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { ProductService } from './services/product.service';
         HeaderComponent,
         BaseComponent,
         MapComponent,
+        ProductComponent,
     ],
     imports: [
         BrowserModule,

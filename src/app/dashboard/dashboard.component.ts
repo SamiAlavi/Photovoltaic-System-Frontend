@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MenuItem } from 'primeng/api';
-import { ProjectComponent } from '../project/project.component';
+import { ProductComponent } from '../product/product.component';
 
 @Component({
     selector: 'app-dashboard',
@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
     }
 
     private showProductsDialog = () => {
-        //this.ref = this.dialogService.open(ProjectComponent, { header: 'Products' });
+        this.ref = this.dialogService.open(ProductComponent, { header: 'Products' });
     };
 
 }

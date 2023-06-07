@@ -1,0 +1,14 @@
+.product-dialog {
+    width: 80vw;
+    height: 70vh;
+}
+
+::ng-deep {
+    .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+        background: inherit;
+
+        &:not(.p-disabled):focus {
+            box-shadow: none;
+        }
+    }
+}
