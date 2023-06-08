@@ -1,23 +1,66 @@
-<div class="product-dialog">
-    <p-tabView>
-        <p-tabPanel header="Add Products">
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-                id est laborum.
-            </p>
-        </p-tabPanel>
-        <p-tabPanel header="Show Products">
-            <p>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-                rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-                explicabo. Nemo enim
-                ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-                eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-            </p>
-        </p-tabPanel>
-    </p-tabView>
-</div>
+<p-sidebar [visible]="sidebarVisible" (visibleChange)="visibleChange($event)" [modal]="false">
+    <ng-template pTemplate="header">Products</ng-template>
+    <ng-template pTemplate="content">
+        <p-tabView>
+            <p-tabPanel header="Add Product">
+                <p-scrollPanel>
+                    <ng-container [ngTemplateOutlet]="addProduct"></ng-container>
+                </p-scrollPanel>
+            </p-tabPanel>
+            <p-tabPanel header="Show Products">
+                <p-scrollPanel>
+                    <ng-container [ngTemplateOutlet]="showProducts"></ng-container>
+                </p-scrollPanel>
+            </p-tabPanel>
+        </p-tabView>
+    </ng-template>
+    <!-- <ng-template pTemplate="footer">Footer Content</ng-template> -->
+</p-sidebar>
+
+<ng-template #addProduct>
+    <p-dropdown styleClass="w-full h-10 mb-6" placeholder="Product Type" [options]="products"
+        [(ngModel)]="selectedProduct" optionLabel="name" [filter]="true">
+    </p-dropdown>
+    <p-table *ngIf="selectedProduct" [value]="[selectedProduct]">
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>Company</td>
+                <td>{{ product.company }}</td>
+            </tr>
+            <tr>
+                <td>Area</td>
+                <td>{{ product.area }} m<sup>2</sup></td>
+            </tr>
+            <tr>
+                <td>Cells</td>
+                <td>{{ product.num_cells }}</td>
+            </tr>
+            <tr>
+                <td>Power Peak</td>
+                <td>{{ product.power_peak }} W</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-dropdown styleClass="w-full h-10 mb-6" placeholder="Orientation" [options]="orientations"
+        [(ngModel)]="selectedOrientation" optionLabel="label">
+    </p-dropdown>
+    <div class=" mb-6">
+        <p-inputNumber styleClass="h-10 mr-5" [(ngModel)]="angle" mode="decimal" suffix="°" placeholder="Tilt Angle"
+            [showButtons]="true" [min]="0" [max]="360"></p-inputNumber>
+        <p-button icon="pi pi-info" styleClass="p-button-rounded p-button-danger p-button-outlined"></p-button>
+    </div>
+
+</ng-template>
+
+<ng-template #showProducts>
+    <p>
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+        totam
+        rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+        explicabo. Nemo enim
+        ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
+        dolores
+        eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius
+        modi.
+    </p>
+</ng-template>

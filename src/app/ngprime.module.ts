@@ -11,9 +11,11 @@ import { MenubarModule } from 'primeng/menubar';
 import { TooltipModule } from 'primeng/tooltip';
 import { AccordionModule } from 'primeng/accordion';
 import { DockModule } from 'primeng/dock';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { TabViewModule } from 'primeng/tabview';
-
+import { SidebarModule } from 'primeng/sidebar';
+import { TableModule } from 'primeng/table';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
     exports: [
@@ -28,8 +30,11 @@ import { TabViewModule } from 'primeng/tabview';
         TooltipModule,
         AccordionModule,
         DockModule,
-        DynamicDialogModule,
         TabViewModule,
+        SidebarModule,
+        TableModule,
+        ScrollPanelModule,
+        InputNumberModule,
     ],
 })
 export class NgPrimeModule { }

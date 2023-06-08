@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MenuItem } from 'primeng/api';
-import { ProductComponent } from '../product/product.component';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
-    providers: [DialogService],
 })
 export class DashboardComponent implements OnInit {
-    ref!: DynamicDialogRef;
     items: MenuItem[] = [];
+    sidebarVisible = true;
 
-    constructor(private dialogService: DialogService) {
+    constructor() {
 
     }
 
@@ -37,7 +34,7 @@ export class DashboardComponent implements OnInit {
     }
 
     private showProductsDialog = () => {
-        this.ref = this.dialogService.open(ProductComponent, { header: 'Products' });
+        this.sidebarVisible = true;
     };
 
 }

@@ -1,3 +1,5 @@
+import { ORIENTATION } from "./enums";
+
 interface IUserCredentials {
     email: string,
     password: string,
@@ -5,6 +7,7 @@ interface IUserCredentials {
 
 
 interface IProduct {
+    id: string,
     name: string,
     company: string,
     area: number,
@@ -18,8 +21,14 @@ interface IProject {
     name?: string,
 }
 
+interface IOrientation {
+    label: string,
+    value: ORIENTATION,
+}
+
 export {
     IUserCredentials,
     IProject,
     IProduct,
+    IOrientation,
 };

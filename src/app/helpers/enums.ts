@@ -16,7 +16,15 @@ enum MAPBOX_STYLEURI {
     NAVIGATION_NIGHT = "mapbox://styles/mapbox/navigation-night-v1",
 }
 
+enum ORIENTATION {
+    NORTH = "N",
+    SOUTH = "S",
+    EAST = "E",
+    WEST = "W",
+}
+
 export {
     TOAST_SEVERITY,
     MAPBOX_STYLEURI,
+    ORIENTATION,
 };

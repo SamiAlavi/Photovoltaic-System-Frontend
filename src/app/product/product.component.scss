@@ -1,14 +1,26 @@
-.product-dialog {
-    width: 80vw;
-    height: 70vh;
-}
-
 ::ng-deep {
     .p-tabview .p-tabview-nav li .p-tabview-nav-link {
         background: inherit;
 
         &:not(.p-disabled):focus {
             box-shadow: none;
+        }
+    }
+
+    .p-sidebar {
+        width: 25rem !important;
+
+        .p-sidebar-footer {
+            padding: 0px;
+        }
+    }
+
+    .p-scrollpanel {
+        width: 100%;
+        height: 75vh;
+
+        .p-scrollpanel-content {
+            padding-left: 1px;
         }
     }
 }

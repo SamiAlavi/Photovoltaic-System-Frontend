@@ -7,3 +7,7 @@
         </ng-template>
     </p-dock>
 </div>
+
+<ng-container *ngIf="sidebarVisible">
+    <app-product [(sidebarVisible)]="sidebarVisible"></app-product>
+</ng-container>
