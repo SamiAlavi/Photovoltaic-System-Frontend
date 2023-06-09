@@ -12,7 +12,6 @@ export class ProductComponent {
     @Input() sidebarVisible = false;
     @Output() sidebarVisibleChange = new EventEmitter<any>();
 
-    products: IProduct[];
     selectedProduct!: IProduct;
 
     orientations: IOrientation[] = [];
@@ -20,8 +19,7 @@ export class ProductComponent {
 
     angle!: number;
 
-    constructor(private productService: ProductService) {
-        this.products = this.productService.products;
+    constructor(protected productService: ProductService) {
         this.setOrientations();
     }
 

@@ -18,7 +18,7 @@
 </p-sidebar>
 
 <ng-template #addProduct>
-    <p-dropdown styleClass="w-full h-10 mb-6" placeholder="Product Type" [options]="products"
+    <p-dropdown styleClass="w-full h-10 mb-6" placeholder="Product Type" [options]="productService.products"
         [(ngModel)]="selectedProduct" optionLabel="name" [filter]="true">
     </p-dropdown>
     <p-table *ngIf="selectedProduct" [value]="[selectedProduct]">
@@ -41,13 +41,18 @@
             </tr>
         </ng-template>
     </p-table>
-    <p-dropdown styleClass="w-full h-10 mb-6" placeholder="Orientation" [options]="orientations"
-        [(ngModel)]="selectedOrientation" optionLabel="label">
-    </p-dropdown>
-    <div class=" mb-6">
-        <p-inputNumber styleClass="h-10 mr-5" [(ngModel)]="angle" mode="decimal" suffix="°" placeholder="Tilt Angle"
-            [showButtons]="true" [min]="0" [max]="360"></p-inputNumber>
-        <p-button icon="pi pi-info" styleClass="p-button-rounded p-button-danger p-button-outlined"></p-button>
+    <div class="w-full mb-6">
+        <p-dropdown [styleClass]="'custom-width h-10'" placeholder="Orientation" [options]="orientations"
+            [(ngModel)]="selectedOrientation" optionLabel="label">
+        </p-dropdown>
+        <p-button icon="pi pi-info"
+            styleClass="p-button-rounded p-button-danger p-button-outlined float-right"></p-button>
+    </div>
+    <div class="w-full mb-6">
+        <p-inputNumber [styleClass]="'w-full h-10'" class="custom-width" [(ngModel)]="angle" mode="decimal" suffix="°"
+            placeholder="Tilt Angle" [showButtons]="true" [min]="0" [max]="360"></p-inputNumber>
+        <p-button icon="pi pi-info"
+            styleClass="p-button-rounded p-button-danger p-button-outlined float-right"></p-button>
     </div>
 
 </ng-template>

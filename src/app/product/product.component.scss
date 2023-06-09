@@ -1,3 +1,5 @@
+$customWidth: calc(100% - 60px);
+
 ::ng-deep {
     .p-tabview .p-tabview-nav li .p-tabview-nav-link {
         background: inherit;
@@ -23,4 +25,15 @@
             padding-left: 1px;
         }
     }
+
+    p-inputNumber {
+        input {
+            width: $customWidth;
+        }
+    }
+
+    .custom-width {
+        width: $customWidth;
+    }
+
 }
