@@ -26,9 +26,16 @@ interface IOrientation {
     value: ORIENTATION,
 }
 
+interface IFactorRow {
+    label: string,
+    factor: number,
+    class: string,
+}
+
 export {
     IUserCredentials,
     IProject,
     IProduct,
     IOrientation,
+    IFactorRow,
 };

@@ -42,16 +42,16 @@
         </ng-template>
     </p-table>
     <div class="w-full mb-6">
-        <p-dropdown [styleClass]="'custom-width h-10'" placeholder="Orientation" [options]="orientations"
+        <p-dropdown styleClass="custom-width h-10" placeholder="Orientation" [options]="orientations"
             [(ngModel)]="selectedOrientation" optionLabel="label">
         </p-dropdown>
-        <p-button icon="pi pi-info"
+        <p-button icon="pi pi-info" (onClick)="showInfoDialog('Orientation', selectedOrientation)"
             styleClass="p-button-rounded p-button-danger p-button-outlined float-right"></p-button>
     </div>
     <div class="w-full mb-6">
-        <p-inputNumber [styleClass]="'w-full h-10'" class="custom-width" [(ngModel)]="angle" mode="decimal" suffix="°"
-            placeholder="Tilt Angle" [showButtons]="true" [min]="0" [max]="360"></p-inputNumber>
-        <p-button icon="pi pi-info"
+        <p-inputNumber styleClass="w-full h-10" class="custom-width" [(ngModel)]="angle" mode="decimal" suffix="°"
+            placeholder="Tilt Angle" [showButtons]="true" [min]="0" [max]="90"></p-inputNumber>
+        <p-button icon="pi pi-info" (onClick)="showInfoDialog('Tilt Angle', angle)"
             styleClass="p-button-rounded p-button-danger p-button-outlined float-right"></p-button>
     </div>
 

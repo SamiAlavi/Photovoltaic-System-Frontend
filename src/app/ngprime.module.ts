@@ -16,6 +16,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
     exports: [
@@ -35,6 +36,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
         TableModule,
         ScrollPanelModule,
         InputNumberModule,
+        DynamicDialogModule,
     ],
 })
 export class NgPrimeModule { }

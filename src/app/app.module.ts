@@ -15,6 +15,7 @@ import { HeaderComponent } from './header/header.component';
 import { BaseComponent } from './base/base.component';
 import { MapComponent } from './map/map.component';
 import { ProductComponent } from './product/product.component';
+import { FactorInfoDialogComponent } from './factor-info-dialog/factor-info-dialog.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { ProductComponent } from './product/product.component';
         BaseComponent,
         MapComponent,
         ProductComponent,
+        FactorInfoDialogComponent,
     ],
     imports: [
         BrowserModule,
