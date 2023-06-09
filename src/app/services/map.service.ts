@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
+import { CameraOptions, Map, Marker } from 'mapbox-gl';
 import { IProductDetail } from '../helpers/interfaces';
+import { Helpers } from '../helpers/Helpers';
 
 @Injectable({
     providedIn: 'root'
@@ -13,12 +15,12 @@ export class MapService {
 
     }
 
-    setMapReference(map: mapboxgl.Map) {
+    setMapReferences(map: Map) {
         this.map = map;
     }
 
     moveMap(longitude: number, latitude: number, zoom = 5) {
-        const options: mapboxgl.CameraOptions = {
+        const options: CameraOptions = {
             center: [longitude, latitude],
             zoom: zoom,
         };
@@ -26,6 +28,18 @@ export class MapService {
     }
 
     showProductOnMap(product: IProductDetail) {
-        new mapboxgl.Marker(this.markerOptions).setLngLat([product.lng, product.lng]).addTo(this.map);
+        const marker = new Marker(this.markerOptions).setLngLat([product.lng, product.lng]).addTo(this.map);
+        marker.getElement().addEventListener('mouseenter', () => {
+            marker.togglePopup();
+        });
+
+        marker.getElement().addEventListener('mouseleave', () => {
+            marker.togglePopup();
+        });
+
+        // Add popup content
+        const html = Helpers.getHTMLFromProduct(product);
+        const popup = new mapboxgl.Popup({ closeButton: false }).setHTML(html);
+        marker.setPopup(popup);
     }
 }

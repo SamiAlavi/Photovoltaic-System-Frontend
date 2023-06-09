@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { MapService } from '../services/map.service';
 import * as mapboxgl from 'mapbox-gl';
+import { LngLatLike, Map } from 'mapbox-gl';
 import AppSettings from '../AppSettings';
 import { MAPBOX_STYLEURI } from '../helpers/enums';
 import { ProjectService } from '../services/project.service';
@@ -13,10 +14,9 @@ import { ProjectService } from '../services/project.service';
 export class MapComponent implements AfterViewInit, OnInit {
 
     @ViewChild('mapContainer') mapContainer!: ElementRef;
-    map!: mapboxgl.Map;
-    showControls: boolean = true;
-    private readonly STARTING_LOCATION: mapboxgl.LngLatLike = [12.9167, 50.8333]; // Chemnitz
-    private readonly STARTING_ZOOM = 10;
+    map!: Map;
+    private readonly STARTING_LOCATION: LngLatLike = [12.9167, 50.8333]; // Chemnitz
+    private readonly STARTING_ZOOM = 1;
 
     constructor(private mapService: MapService, private projectService: ProjectService) {
     }
@@ -29,7 +29,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     }
 
     initMap(container: ElementRef) {
-        this.map = new mapboxgl.Map({
+        this.map = new Map({
             accessToken: AppSettings.MapboxAccessToken,
             container: container.nativeElement,
             style: MAPBOX_STYLEURI.LIGHT,
@@ -39,14 +39,10 @@ export class MapComponent implements AfterViewInit, OnInit {
         });
 
         this.map.on('style.load', () => {
-            // this.mapLoad();
         });
 
         this.map.on('load', () => {
-            // this.mapMouse();
-            if (this.showControls) {
-                this.addControls();
-            }
+            this.mapAddControls();
             this.showProductsLocations();
         });
 
@@ -54,10 +50,10 @@ export class MapComponent implements AfterViewInit, OnInit {
     }
 
     private setMapReference() {
-        this.mapService.setMapReference(this.map);
+        this.mapService.setMapReferences(this.map);
     }
 
-    private addControls() {
+    private mapAddControls() {
         this.map.addControl(new mapboxgl.NavigationControl(), 'top-right');
     }
 

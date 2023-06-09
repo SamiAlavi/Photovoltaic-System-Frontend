@@ -1,5 +1,6 @@
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { v4 as uuidv4 } from 'uuid';
+import { IProductDetail } from "./interfaces";
 
 export class Helpers {
     static getActivatedRoute(activatedRoute: ActivatedRoute | ActivatedRouteSnapshot): string {
@@ -18,5 +19,16 @@ export class Helpers {
 
     static generateUID(): string {
         return uuidv4();
+    }
+
+    static getHTMLFromProduct(product: IProductDetail): string {
+        let html = "<div class='text-black'>";
+        for (let [key, value] of Object.entries(product)) {
+            if (key !== "id") {
+                html += `<b>${key}</b>: ${value} <br>`;
+            }
+        }
+        html += "</div>";
+        return html;
     }
 }
