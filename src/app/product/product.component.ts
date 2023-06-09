@@ -75,10 +75,6 @@ export class ProductComponent {
         return (Helpers.isTypeNumber(this.latitude) && -90 <= this.latitude && this.latitude <= 90);
     }
 
-    onLocationChange() {
-        this.mapService.moveMap(this.longitude, this.latitude);
-    }
-
     isButtonEnabled() {
         return (
             this.selectedProduct &&
@@ -88,9 +84,13 @@ export class ProductComponent {
             this.isLatitudeValid();
     }
 
+    showProductOnMap(product: IProductDetail) {
+        this.mapService.showProductOnMap(product);
+        this.mapService.moveMap(product.lng, product.lng);
+    }
+
     addProduct() {
         if (this.isButtonEnabled()) {
-            this.onLocationChange();
             const product: IProductDetail = {
                 ...this.selectedProduct,
                 id: Helpers.generateUID(),
@@ -100,6 +100,7 @@ export class ProductComponent {
                 lat: this.latitude,
                 timestamp: Date.now(),
             };
+            this.showProductOnMap(product);
             this.projectService.addProduct(product).subscribe((isAdded) => {
                 if (isAdded) {
                     const message = "Product Added Successfully";

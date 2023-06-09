@@ -3,6 +3,7 @@ import { MapService } from '../services/map.service';
 import * as mapboxgl from 'mapbox-gl';
 import AppSettings from '../AppSettings';
 import { MAPBOX_STYLEURI } from '../helpers/enums';
+import { ProjectService } from '../services/project.service';
 
 @Component({
     selector: 'app-map',
@@ -17,7 +18,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     private readonly STARTING_LOCATION: mapboxgl.LngLatLike = [12.9167, 50.8333]; // Chemnitz
     private readonly STARTING_ZOOM = 10;
 
-    constructor(private mapService: MapService) {
+    constructor(private mapService: MapService, private projectService: ProjectService) {
     }
 
     ngOnInit() {
@@ -46,6 +47,7 @@ export class MapComponent implements AfterViewInit, OnInit {
             if (this.showControls) {
                 this.addControls();
             }
+            this.showProductsLocations();
         });
 
         this.setMapReference();
@@ -57,5 +59,14 @@ export class MapComponent implements AfterViewInit, OnInit {
 
     private addControls() {
         this.map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    }
+
+    private showProductsLocations() {
+        if (!this.projectService.currentProject) {
+            return;
+        }
+        this.projectService.currentProject.products.forEach((product) => {
+            this.mapService.showProductOnMap(product);
+        });
     }
 }
