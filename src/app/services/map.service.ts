@@ -15,8 +15,11 @@ export class MapService {
         this.map = map;
     }
 
-    moveMap(latitude: number, longitude: number) {
-        const options: mapboxgl.CameraOptions = { center: [latitude, longitude] };
+    moveMap(longitude: number, latitude: number, zoom = 5) {
+        const options: mapboxgl.CameraOptions = {
+            center: [longitude, latitude],
+            zoom: zoom,
+        };
         this.map.jumpTo(options);
     }
 }

@@ -20,6 +20,9 @@ export class ProjectComponent {
         private toastService: ToastService,
         private router: Router,
     ) {
+        if (this.projectService.currentProject) {
+            this.selectedProject = this.projectService.currentProject;
+        }
         this.getProjects();
     }
 
@@ -42,7 +45,9 @@ export class ProjectComponent {
             if (projects.length) {
                 this.projects = projects;
                 this.projectsIds = projects.map((project) => project.id);
-                this.selectedProject = projects[0];
+                if (!this.selectedProject) {
+                    this.selectedProject = projects[0];
+                }
             }
         });
     }
@@ -65,8 +70,7 @@ export class ProjectComponent {
     }
 
     openProject() {
-        this.projectService.currentProject = this.selectedProject;
-        console.log(this.selectedProject);
+        this.projectService.cacheProject(this.selectedProject);
         this.router.navigateByUrl(AppSettings.RouteDashboard);
     }
 }

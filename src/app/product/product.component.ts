@@ -63,16 +63,16 @@ export class ProductComponent {
         });
     }
 
-    private isLatitudeValid(): boolean {
-        return (Helpers.isTypeNumber(this.latitude) && -90 <= this.latitude && this.latitude <= 90);
-    }
-
     private isLongitudeValid(): boolean {
         return (Helpers.isTypeNumber(this.longitude) && -180 <= this.longitude && this.longitude <= 180);
     }
 
+    private isLatitudeValid(): boolean {
+        return (Helpers.isTypeNumber(this.latitude) && -90 <= this.latitude && this.latitude <= 90);
+    }
+
     onLocationChange() {
-        this.mapService.moveMap(this.latitude, this.longitude);
+        this.mapService.moveMap(this.longitude, this.latitude);
     }
 
     isButtonEnabled() {
@@ -80,8 +80,8 @@ export class ProductComponent {
             this.selectedProduct &&
             this.selectedOrientation &&
             Helpers.isTypeNumber(this.tiltAngle) &&
-            this.isLatitudeValid() &&
-            this.isLongitudeValid());
+            this.isLongitudeValid()) &&
+            this.isLatitudeValid();
     }
 
     addProduct() {

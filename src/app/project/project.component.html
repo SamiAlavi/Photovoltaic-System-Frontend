@@ -7,7 +7,7 @@
                         [maxlength]="20" />
                     <label htmlFor="projectName">Project Name</label>
                 </span>
-                <p-button label="Create Project" styleClass="float-right" (onClick)="createProject()"
+                <p-button label="Create Project" styleClass="float-right width-9" (onClick)="createProject()"
                     [disabled]="!projectId"></p-button>
             </p-fieldset>
             <p-fieldset legend="Choose Project">
@@ -16,7 +16,7 @@
                         [(ngModel)]="selectedProject" optionLabel="id" [filter]="true" [showClear]="true">
                     </p-dropdown>
                 </span>
-                <p-button label="Open Project" styleClass="float-right" (onClick)="openProject()"
+                <p-button label="Open Project" styleClass="float-right width-9" (onClick)="openProject()"
                     [disabled]="!selectedProject"></p-button>
 
                 <p-accordion [activeIndex]="0" *ngIf="selectedProject">
