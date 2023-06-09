@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductService } from '../services/product.service';
-import { IOrientation, IProduct } from '../helpers/interfaces';
+import { IOrientation, IProduct, IProductDetail } from '../helpers/interfaces';
 import { ORIENTATION } from '../helpers/enums';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FactorInfoDialogComponent } from '../factor-info-dialog/factor-info-dialog.component';
 import { MapService } from '../services/map.service';
 import { Helpers } from '../helpers/Helpers';
+import { ProjectService } from '../services/project.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
     selector: 'app-product',
@@ -32,6 +34,8 @@ export class ProductComponent {
         protected productService: ProductService,
         private dialogService: DialogService,
         private mapService: MapService,
+        private projectService: ProjectService,
+        private toastService: ToastService,
     ) {
         this.setOrientations();
     }
@@ -87,6 +91,25 @@ export class ProductComponent {
     addProduct() {
         if (this.isButtonEnabled()) {
             this.onLocationChange();
+            const product: IProductDetail = {
+                ...this.selectedProduct,
+                id: Helpers.generateUID(),
+                orientation: this.selectedOrientation.value,
+                tiltAngle: this.tiltAngle,
+                lng: this.longitude,
+                lat: this.latitude,
+                timestamp: Date.now(),
+            };
+            this.projectService.addProduct(product).subscribe((isAdded) => {
+                if (isAdded) {
+                    const message = "Product Added Successfully";
+                    this.toastService.showSuccessToast(message);
+                }
+                else {
+                    const message = "Error Adding Product";
+                    this.toastService.showErrorToast(message);
+                }
+            });
         }
     }
 }

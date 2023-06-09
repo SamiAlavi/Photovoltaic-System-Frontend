@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import AppSettings from '../AppSettings';
-import { IProject } from '../helpers/interfaces';
+import { IProduct, IProductDetail, IProject } from '../helpers/interfaces';
 import { ProductService } from './product.service';
 
 @Injectable({
@@ -14,10 +14,7 @@ export class ProjectService {
     currentProject: IProject | null = null;
     private readonly PROJECT_KEY = AppSettings.PROJECT_KEY;
 
-    constructor(
-        private http: HttpClient,
-        private productService: ProductService,
-    ) {
+    constructor(private http: HttpClient) {
         const cacheProject = localStorage.getItem(this.PROJECT_KEY);
         if (cacheProject) {
             this.currentProject = JSON.parse(cacheProject);
@@ -45,5 +42,16 @@ export class ProjectService {
     cacheProject(selectedProject: IProject) {
         this.currentProject = selectedProject;
         localStorage.setItem(this.PROJECT_KEY, JSON.stringify(this.currentProject));
+    }
+
+    addProduct(product: IProductDetail) {
+        if (!this.currentProject) {
+            return of(false);
+        }
+        this.currentProject.products.push(product);
+        return this.http.post<IProject>(AppSettings.AddProductUrl, this.currentProject).pipe(map((response) => {
+            this.cacheProject(response);
+            return true;
+        }));
     }
 }

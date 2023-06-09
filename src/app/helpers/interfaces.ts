@@ -17,7 +17,7 @@ interface IProduct {
 
 interface IProject {
     id: string,
-    products: IProduct[],
+    products: IProductDetail[],
     name?: string,
 }
 
@@ -32,10 +32,19 @@ interface IFactorRow {
     class: string,
 }
 
+interface IProductDetail extends IProduct {
+    orientation: ORIENTATION,
+    tiltAngle: number,
+    lat: number,
+    lng: number,
+    timestamp: number,
+}
+
 export {
     IUserCredentials,
     IProject,
     IProduct,
     IOrientation,
     IFactorRow,
+    IProductDetail,
 };

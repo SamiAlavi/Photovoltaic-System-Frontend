@@ -1,4 +1,5 @@
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { v4 as uuidv4 } from 'uuid';
 
 export class Helpers {
     static getActivatedRoute(activatedRoute: ActivatedRoute | ActivatedRouteSnapshot): string {
@@ -13,5 +14,9 @@ export class Helpers {
 
     static isTypeNumber(number: number) {
         return typeof (number) === "number";
+    }
+
+    static generateUID(): string {
+        return uuidv4();
     }
 }
