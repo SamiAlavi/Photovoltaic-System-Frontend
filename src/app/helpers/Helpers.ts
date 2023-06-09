@@ -1,7 +1,7 @@
 import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 
 export class Helpers {
-    static getActivateRoute(activatedRoute: ActivatedRoute | ActivatedRouteSnapshot): string {
+    static getActivatedRoute(activatedRoute: ActivatedRoute | ActivatedRouteSnapshot): string {
         if (activatedRoute instanceof ActivatedRoute) {
             return activatedRoute.snapshot.url.join('/');
         }

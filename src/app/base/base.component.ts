@@ -14,6 +14,6 @@ export class BaseComponent {
     }
 
     get currentRoute(): string {
-        return Helpers.getActivateRoute(this.activatedRoute);
+        return Helpers.getActivatedRoute(this.activatedRoute);
     }
 }

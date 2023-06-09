@@ -28,11 +28,13 @@ export class AuthComponent {
         private activatedRoute: ActivatedRoute,
         private router: Router,
     ) {
+        localStorage.removeItem(AppSettings.PROJECT_KEY);
+
         this.authForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(6)]]
         });
-        this.route = Helpers.getActivateRoute(this.activatedRoute);
+        this.route = Helpers.getActivatedRoute(this.activatedRoute);
         if (this.route === "signin") {
             this.submitFn = this.authService.signin.bind(authService);
             this.nextFn = () => {

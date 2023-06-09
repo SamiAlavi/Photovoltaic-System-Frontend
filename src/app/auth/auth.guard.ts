@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
             this.router.navigateByUrl(AppSettings.RouteSignin);
             return false;
         }
-        const route = Helpers.getActivateRoute(activatedRoute);
+        const route = Helpers.getActivatedRoute(activatedRoute);
         if (!(route === AppSettings.RouteDashboard)) {
             return true;
         }
