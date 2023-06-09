@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { IFactorRow, IOrientation } from '../helpers/interfaces';
+import { Helpers } from '../helpers/Helpers';
 
 @Component({
     selector: 'app-factor-info-dialog',
@@ -39,11 +40,12 @@ export class FactorInfoDialogComponent {
             { label: "South", factor: 0.8, class: '' },
             { label: "West", factor: 0.7, class: '' },
         ];
-        if (value) {
-            const row = this.rows.find((row) => row.label === value.label);
-            if (row) {
-                row.class = this.textRedClassName;
-            }
+        if (!value) {
+            return;
+        }
+        const row = this.rows.find((row) => row.label === value.label);
+        if (row) {
+            row.class = this.textRedClassName;
         }
     }
 
@@ -53,8 +55,17 @@ export class FactorInfoDialogComponent {
             { label: "(45, 60]", factor: 0.9, class: '' },
             { label: "(60, 90]", factor: 0.8, class: '' },
         ];
-        if (value) {
-
+        if (!Helpers.isTypeNumber(value)) {
+            return;
+        }
+        if (0 <= value && value <= 45) {
+            this.rows[0].class = this.textRedClassName;
+        }
+        else if (45 < value && value <= 60) {
+            this.rows[1].class = this.textRedClassName;
+        }
+        else if (60 < value && value <= 90) {
+            this.rows[2].class = this.textRedClassName;
         }
     }
 }

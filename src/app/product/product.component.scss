@@ -9,12 +9,18 @@ $customWidth: calc(100% - 60px);
         }
     }
 
+    .p-tabview-panels {
+        padding: 1.25rem 0 0 0 !important;
+    }
+
     .p-sidebar {
         width: 25rem !important;
 
         .p-sidebar-footer {
             padding: 0px;
         }
+
+
     }
 
     .p-scrollpanel {
@@ -32,8 +38,12 @@ $customWidth: calc(100% - 60px);
         }
     }
 
-    .custom-width {
+    .width-custom {
         width: $customWidth;
+    }
+
+    .width-full {
+        width: 100%;
     }
 
 }

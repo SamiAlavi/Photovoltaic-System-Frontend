@@ -4,6 +4,8 @@ import { IOrientation, IProduct } from '../helpers/interfaces';
 import { ORIENTATION } from '../helpers/enums';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FactorInfoDialogComponent } from '../factor-info-dialog/factor-info-dialog.component';
+import { MapService } from '../services/map.service';
+import { Helpers } from '../helpers/Helpers';
 
 @Component({
     selector: 'app-product',
@@ -22,11 +24,14 @@ export class ProductComponent {
     orientations: IOrientation[] = [];
     selectedOrientation!: IOrientation;
 
-    angle!: number;
+    tiltAngle!: number;
+    latitude!: number;
+    longitude!: number;
 
     constructor(
         protected productService: ProductService,
         private dialogService: DialogService,
+        private mapService: MapService,
     ) {
         this.setOrientations();
     }
@@ -49,11 +54,39 @@ export class ProductComponent {
         this.ref = this.dialogService.open(FactorInfoDialogComponent, {
             header: `${type} Factor Information`,
             width: '70%',
+            dismissableMask: true,
             contentStyle: { overflow: 'auto' },
             data: {
                 type: type,
                 value: value,
             },
         });
+    }
+
+    private isLatitudeValid(): boolean {
+        return (Helpers.isTypeNumber(this.latitude) && -90 <= this.latitude && this.latitude <= 90);
+    }
+
+    private isLongitudeValid(): boolean {
+        return (Helpers.isTypeNumber(this.longitude) && -180 <= this.longitude && this.longitude <= 180);
+    }
+
+    onLocationChange() {
+        this.mapService.moveMap(this.latitude, this.longitude);
+    }
+
+    isButtonEnabled() {
+        return (
+            this.selectedProduct &&
+            this.selectedOrientation &&
+            Helpers.isTypeNumber(this.tiltAngle) &&
+            this.isLatitudeValid() &&
+            this.isLongitudeValid());
+    }
+
+    addProduct() {
+        if (this.isButtonEnabled()) {
+            this.onLocationChange();
+        }
     }
 }

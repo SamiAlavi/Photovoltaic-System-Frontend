@@ -24,7 +24,7 @@ export class MapComponent implements AfterViewInit, OnInit {
     }
 
     ngAfterViewInit() {
-        //this.initMap(this.mapContainer);
+        this.initMap(this.mapContainer);
     }
 
     initMap(container: ElementRef) {
@@ -47,6 +47,12 @@ export class MapComponent implements AfterViewInit, OnInit {
                 this.addControls();
             }
         });
+
+        this.setMapReference();
+    }
+
+    private setMapReference() {
+        this.mapService.setMapReference(this.map);
     }
 
     private addControls() {

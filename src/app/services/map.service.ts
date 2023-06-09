@@ -5,9 +5,18 @@ import * as mapboxgl from 'mapbox-gl';
     providedIn: 'root'
 })
 export class MapService {
-    map!: mapboxgl.Map;
+    private map!: mapboxgl.Map;
 
     constructor() {
 
+    }
+
+    setMapReference(map: mapboxgl.Map) {
+        this.map = map;
+    }
+
+    moveMap(latitude: number, longitude: number) {
+        const options: mapboxgl.CameraOptions = { center: [latitude, longitude] };
+        this.map.jumpTo(options);
     }
 }
