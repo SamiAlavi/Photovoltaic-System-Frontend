@@ -118,4 +118,8 @@ export class ProductComponent {
             });
         }
     }
+
+    getFormattedDateTimeFromTimestamp(timestamp: number): string {
+        return Helpers.getFormattedDateTimeFromTimestamp(timestamp);
+    }
 }
