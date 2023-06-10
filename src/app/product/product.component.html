@@ -21,7 +21,7 @@
     <p-dropdown styleClass="w-full h-10 mb-3" placeholder="Product Type" [options]="productService.products"
         [(ngModel)]="selectedProduct" optionLabel="name" [filter]="true">
     </p-dropdown>
-    <p-table *ngIf="selectedProduct" [value]="[selectedProduct]">
+    <p-table *ngIf="selectedProduct" [value]="[selectedProduct]" styleClass="p-datatable-sm">
         <ng-template pTemplate="body" let-product>
             <tr>
                 <td>Company</td>
@@ -67,14 +67,56 @@
 </ng-template>
 
 <ng-template #TShowProducts>
-    <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-        totam
-        rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. Nemo enim
-        ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-        dolores
-        eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius
-        modi.
-    </p>
+    <ng-container *ngIf="projectService.currentProject">
+        <p-accordion [multiple]="true">
+            <ng-container *ngFor="let product of projectService.currentProject.products; let index=index">
+                <p-accordionTab header="{{index+1}}) {{product.name}}">
+                    <p-table [value]="[product]" styleClass="p-datatable-sm">
+                        <ng-template pTemplate="body" let-product>
+                            <tr>
+                                <td>Company</td>
+                                <td>{{ product.company }}</td>
+                            </tr>
+                            <tr>
+                                <td>Area</td>
+                                <td>{{ product.area }} m<sup>2</sup></td>
+                            </tr>
+                            <tr>
+                                <td>Cells</td>
+                                <td>{{ product.num_cells }}</td>
+                            </tr>
+                            <tr>
+                                <td>Power Peak</td>
+                                <td>{{ product.power_peak }} W</td>
+                            </tr>
+                            <tr>
+                                <td>Orientation</td>
+                                <td>{{ product.orientation }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tilt Angle</td>
+                                <td>{{ product.tiltAngle }}°</td>
+                            </tr>
+                            <tr>
+                                <td>Latitude</td>
+                                <td>{{ product.lat }}°</td>
+                            </tr>
+                            <tr>
+                                <td>Longitude</td>
+                                <td>{{ product.lng }}°</td>
+                            </tr>
+                            <tr>
+                                <td>Created On</td>
+                                <td>{{ product.timestamp }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <div class="flex justify-center">
+                        <p-button label="View On Map" icon="pi pi-eye" styleClass="p-button-sm"
+                            (onClick)="viewOnMap(product)"></p-button>
+                    </div>
+                </p-accordionTab>
+            </ng-container>
+        </p-accordion>
+    </ng-container>
 </ng-template>

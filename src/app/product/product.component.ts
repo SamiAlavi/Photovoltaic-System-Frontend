@@ -34,7 +34,7 @@ export class ProductComponent {
         protected productService: ProductService,
         private dialogService: DialogService,
         private mapService: MapService,
-        private projectService: ProjectService,
+        protected projectService: ProjectService,
         private toastService: ToastService,
     ) {
         this.setOrientations();
@@ -47,6 +47,11 @@ export class ProductComponent {
             { label: "South", value: ORIENTATION.SOUTH },
             { label: "West", value: ORIENTATION.WEST },
         ];
+    }
+
+    viewOnMap(product: IProductDetail) {
+        const zoom = 5;
+        this.mapService.moveMap(product.lng, product.lat, zoom);
     }
 
     visibleChange(event: boolean) {

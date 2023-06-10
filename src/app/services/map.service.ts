@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { CameraOptions, Map, Marker } from 'mapbox-gl';
+import { CameraOptions, Map, Marker, Popup, PopupOptions } from 'mapbox-gl';
 import { IProductDetail } from '../helpers/interfaces';
 import { Helpers } from '../helpers/Helpers';
 
@@ -29,17 +29,22 @@ export class MapService {
 
     showProductOnMap(product: IProductDetail) {
         const marker = new Marker(this.markerOptions).setLngLat([product.lng, product.lng]).addTo(this.map);
-        marker.getElement().addEventListener('mouseenter', () => {
+        const markerElement = marker.getElement();
+
+        markerElement.addEventListener('mouseenter', () => {
             marker.togglePopup();
         });
 
-        marker.getElement().addEventListener('mouseleave', () => {
+        markerElement.addEventListener('mouseleave', () => {
             marker.togglePopup();
         });
 
         // Add popup content
         const html = Helpers.getHTMLFromProduct(product);
-        const popup = new mapboxgl.Popup({ closeButton: false }).setHTML(html);
+        const popupOptions: PopupOptions = {
+            closeButton: false,
+        };
+        const popup = new Popup(popupOptions).setHTML(html);
         marker.setPopup(popup);
     }
 }
