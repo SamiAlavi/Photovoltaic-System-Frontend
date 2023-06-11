@@ -36,10 +36,16 @@ interface IProductDetail extends IProduct {
     timestamp: number,
 }
 
+interface IAddProductRequest {
+    projectId: string,
+    product: IProductDetail,
+}
+
 export {
     IUserCredentials,
     IProject,
     IProduct,
     IFactorRow,
     IProductDetail,
+    IAddProductRequest,
 };

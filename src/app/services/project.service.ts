@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import AppSettings from '../AppSettings';
-import { IProductDetail, IProject } from '../helpers/interfaces';
+import { IAddProductRequest, IProductDetail, IProject } from '../helpers/interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -47,9 +47,13 @@ export class ProjectService {
         if (!this.currentProject) {
             return of(false);
         }
-        this.currentProject.products.push(product);
-        return this.http.post<IProject>(AppSettings.AddProductUrl, this.currentProject).pipe(map((response) => {
-            this.cacheProject(response);
+        const body: IAddProductRequest = {
+            projectId: this.currentProject.id,
+            product: product,
+        };
+        return this.http.post<IProject>(AppSettings.AddProductUrl, body).pipe(map((response) => {
+            this.currentProject.products.push(product);
+            this.cacheProject(this.currentProject);
             return true;
         }));
     }
