@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { CameraOptions, Map, Marker, Popup, PopupOptions } from 'mapbox-gl';
+import geocoder from '@mapbox/mapbox-sdk/services/geocoding';
 import { IProductDetail } from '../helpers/interfaces';
 import { Helpers } from '../helpers/Helpers';
+import AppSettings from '../AppSettings';
 
 @Injectable({
     providedIn: 'root'
@@ -10,6 +12,14 @@ import { Helpers } from '../helpers/Helpers';
 export class MapService {
     private map!: mapboxgl.Map;
     private markerOptions: mapboxgl.MarkerOptions = {};
+    private readonly geocoder = geocoder({ accessToken: AppSettings.MapboxAccessToken });
+    readonly locPopup = {
+        popup: new Popup(),
+        timerId: null,
+        styleClass: 'text-black',
+        time: 2000, //ms,
+        isVisible: true,
+    };
 
     constructor() {
 
@@ -28,14 +38,16 @@ export class MapService {
     }
 
     showProductOnMap(product: IProductDetail) {
-        const marker = new Marker(this.markerOptions).setLngLat([product.lng, product.lng]).addTo(this.map);
+        const marker = new Marker(this.markerOptions).setLngLat([product.lng, product.lat]).addTo(this.map);
         const markerElement = marker.getElement();
 
         markerElement.addEventListener('mouseenter', () => {
+            this.locPopup.isVisible = false;
             marker.togglePopup();
         });
 
         markerElement.addEventListener('mouseleave', () => {
+            this.locPopup.isVisible = true;
             marker.togglePopup();
         });
 
@@ -47,4 +59,24 @@ export class MapService {
         const popup = new Popup(popupOptions).setHTML(html);
         marker.setPopup(popup);
     }
+
+    reverseGeocode = async (lat: number, lng: number): Promise<string> => {
+        let region = "";
+        try {
+            const response = await this.geocoder.reverseGeocode({
+                query: [lng, lat],
+                types: ['place', 'district'],
+                limit: 1
+            }).send();
+
+            if (response?.body?.features.length) {
+                region = response.body.features[0].text;
+                return region;
+            }
+        }
+        catch (error) {
+            return "";
+        }
+        return region;
+    };
 }

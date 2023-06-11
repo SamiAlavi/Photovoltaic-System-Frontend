@@ -13,6 +13,7 @@ const keysMapper: { [key: string]: string; } = {
     power_peak: "Power Peak",
     num_cells: "Cells",
     timestamp: "Timestamp",
+    region: "Region"
 };
 
 export class Helpers {

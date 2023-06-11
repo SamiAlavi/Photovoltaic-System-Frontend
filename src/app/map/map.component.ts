@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { MapService } from '../services/map.service';
 import * as mapboxgl from 'mapbox-gl';
-import { LngLatLike, Map } from 'mapbox-gl';
+import { LngLatLike, Map, Popup } from 'mapbox-gl';
 import AppSettings from '../AppSettings';
 import { MAPBOX_STYLEURI } from '../helpers/enums';
 import { ProjectService } from '../services/project.service';
@@ -43,6 +43,7 @@ export class MapComponent implements AfterViewInit, OnInit {
 
         this.map.on('load', () => {
             this.mapAddControls();
+            this.mapMouse();
             this.showProductsLocations();
         });
 
@@ -51,6 +52,28 @@ export class MapComponent implements AfterViewInit, OnInit {
 
     private setMapReference() {
         this.mapService.setMapReferences(this.map);
+    }
+
+
+
+    mapMouse(): void {
+        this.map.on('mousemove', (e) => {
+            this.mapService.locPopup.popup.remove();
+            if (this.mapService.locPopup.isVisible) {
+                const { lng, lat } = e.lngLat;
+                const html = `<span>Longitude :  ${lng}</span><br><span>Latitude :  ${lat}</span>`;
+                this.mapService.locPopup.popup = new Popup({
+                    closeButton: false,
+                    closeOnClick: true,
+                    closeOnMove: true,
+                    className: this.mapService.locPopup.styleClass,
+                    maxWidth: '400px',
+                })
+                    .setLngLat(e.lngLat)
+                    .setHTML(html)
+                    .addTo(this.map);
+            }
+        });
     }
 
     private mapAddControls() {

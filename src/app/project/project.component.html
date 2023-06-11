@@ -3,8 +3,8 @@
         <p-card header="Projects" styleClass="h-full">
             <p-fieldset legend="Create Project" styleClass="mb-6">
                 <span class="p-float-label mb-6">
-                    <input type="text" id="projectName" pInputText [(ngModel)]="projectId" [minlength]="1"
-                        [maxlength]="20" />
+                    <input type="text" id="projectName" class="custom-width" pInputText [(ngModel)]="projectId"
+                        [minlength]="1" [maxlength]="20" />
                     <label htmlFor="projectName">Project Name</label>
                 </span>
                 <p-button label="Create Project" styleClass="float-right width-9" (onClick)="createProject()"
@@ -12,7 +12,7 @@
             </p-fieldset>
             <p-fieldset legend="Choose Project">
                 <span class="mb-6">
-                    <p-dropdown styleClass="w-11/12 mb-6" placeholder="Project Name" [options]="projects"
+                    <p-dropdown styleClass="w-11/12 mb-6 custom-width" placeholder="Project Name" [options]="projects"
                         [(ngModel)]="selectedProject" optionLabel="id" [filter]="true" [showClear]="true">
                     </p-dropdown>
                 </span>

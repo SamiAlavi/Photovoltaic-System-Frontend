@@ -84,8 +84,9 @@ export class ProductComponent {
         this.mapService.moveMap(product.lng, product.lng);
     }
 
-    addProduct() {
+    async addProduct() {
         if (this.isButtonEnabled()) {
+            const region = await this.mapService.reverseGeocode(this.latitude, this.longitude);
             const product: IProductDetail = {
                 ...this.selectedProduct,
                 id: Helpers.generateUID(),
@@ -93,6 +94,7 @@ export class ProductComponent {
                 tiltAngle: this.tiltAngle,
                 lng: this.longitude,
                 lat: this.latitude,
+                region: region,
                 timestamp: Date.now(),
             };
             this.showProductOnMap(product);

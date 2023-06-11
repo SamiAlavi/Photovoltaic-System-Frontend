@@ -3,9 +3,12 @@
         display: inline;
     }
 
-    .p-inputtext,
-    .p-dropdown {
-        width: 90%;
+    .custom-width {
+
+        &.p-inputtext,
+        &.p-dropdown {
+            width: 90%;
+        }
     }
 
     .p-button.width-9 {

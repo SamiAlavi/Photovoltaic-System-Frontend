@@ -32,6 +32,7 @@ interface IProductDetail extends IProduct {
     tiltAngle: number,
     lat: number,
     lng: number,
+    region: string,
     timestamp: number,
 }
 

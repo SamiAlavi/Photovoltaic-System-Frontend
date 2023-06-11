@@ -18,8 +18,8 @@
 </p-sidebar>
 
 <ng-template #TAddProduct>
-    <p-dropdown styleClass="w-full h-10 mb-3" placeholder="Product Type" [options]="productService.products"
-        [(ngModel)]="selectedProduct" optionLabel="name" [filter]="true">
+    <p-dropdown [autofocus]="true" styleClass="w-full h-10 mb-3" placeholder="Product Type"
+        [options]="productService.products" [(ngModel)]="selectedProduct" optionLabel="name" [filter]="true">
     </p-dropdown>
     <p-table *ngIf="selectedProduct" [value]="[selectedProduct]" styleClass="p-datatable-sm">
         <ng-template pTemplate="body" let-product>
@@ -56,10 +56,10 @@
             styleClass="p-button-rounded p-button-danger p-button-outlined float-right"></p-button>
     </div>
     <p-inputNumber styleClass="w-full h-10 mb-3" class="width-full" [(ngModel)]="longitude" mode="decimal"
-        [maxFractionDigits]="10" suffix="°" placeholder="Longitude" [showButtons]="true" [min]="-180" [max]="180"
+        [maxFractionDigits]="14" suffix="°" placeholder="Longitude" [showButtons]="true" [min]="-180" [max]="180"
         title="Min: -180, Max: 180"></p-inputNumber>
     <p-inputNumber styleClass="w-full h-10 mb-3" class="width-full" [(ngModel)]="latitude" mode="decimal"
-        [maxFractionDigits]="10" suffix="°" placeholder="Latitude" [showButtons]="true" [min]="-90" [max]="90"
+        [maxFractionDigits]="14" suffix="°" placeholder="Latitude" [showButtons]="true" [min]="-90" [max]="90"
         title="Min: -90, Max: 90"></p-inputNumber>
 
     <p-button label="Submit" (onClick)="addProduct()" [disabled]="!isButtonEnabled()"></p-button>

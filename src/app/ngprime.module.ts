@@ -17,6 +17,7 @@ import { TableModule } from 'primeng/table';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { AutoFocusModule } from 'primeng/autofocus';
 
 @NgModule({
     exports: [
@@ -37,6 +38,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
         ScrollPanelModule,
         InputNumberModule,
         DynamicDialogModule,
+        AutoFocusModule,
     ],
 })
 export class NgPrimeModule { }
