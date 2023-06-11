@@ -81,7 +81,7 @@ export class ProductComponent {
 
     showProductOnMap(product: IProductDetail) {
         this.mapService.showProductOnMap(product);
-        this.mapService.moveMap(product.lng, product.lng);
+        this.mapService.moveMap(product.lng, product.lat);
     }
 
     async addProduct() {
