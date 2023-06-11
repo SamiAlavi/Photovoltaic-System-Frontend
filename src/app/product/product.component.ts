@@ -87,6 +87,11 @@ export class ProductComponent {
     async addProduct() {
         if (this.isButtonEnabled()) {
             const region = await this.mapService.reverseGeocode(this.latitude, this.longitude);
+            if (!region) {
+                const message = "This location has no region. Please choose a valid location.";
+                this.toastService.showErrorToast(message);
+                return;
+            }
             const product: IProductDetail = {
                 ...this.selectedProduct,
                 id: Helpers.generateUID(),
