@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductService } from '../services/product.service';
-import { IOrientation, IProduct, IProductDetail } from '../helpers/interfaces';
+import { IProduct, IProductDetail } from '../helpers/interfaces';
 import { ORIENTATION } from '../helpers/enums';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FactorInfoDialogComponent } from '../factor-info-dialog/factor-info-dialog.component';
@@ -23,8 +23,8 @@ export class ProductComponent {
 
     selectedProduct!: IProduct;
 
-    orientations: IOrientation[] = [];
-    selectedOrientation!: IOrientation;
+    orientations = [ORIENTATION.NORTH, ORIENTATION.EAST, ORIENTATION.SOUTH, ORIENTATION.WEST];;
+    selectedOrientation!: ORIENTATION;
 
     tiltAngle!: number;
     latitude!: number;
@@ -37,16 +37,6 @@ export class ProductComponent {
         protected projectService: ProjectService,
         private toastService: ToastService,
     ) {
-        this.setOrientations();
-    }
-
-    setOrientations() {
-        this.orientations = [
-            { label: "North", value: ORIENTATION.NORTH },
-            { label: "East", value: ORIENTATION.EAST },
-            { label: "South", value: ORIENTATION.SOUTH },
-            { label: "West", value: ORIENTATION.WEST },
-        ];
     }
 
     viewOnMap(product: IProductDetail) {
@@ -59,7 +49,7 @@ export class ProductComponent {
         this.sidebarVisibleChange.emit(this.sidebarVisible);
     }
 
-    showInfoDialog(type: string, value: IOrientation | number) {
+    showInfoDialog(type: string, value: ORIENTATION | number) {
         this.ref = this.dialogService.open(FactorInfoDialogComponent, {
             header: `${type} Factor Information`,
             width: '70%',
@@ -99,7 +89,7 @@ export class ProductComponent {
             const product: IProductDetail = {
                 ...this.selectedProduct,
                 id: Helpers.generateUID(),
-                orientation: this.selectedOrientation.value,
+                orientation: this.selectedOrientation,
                 tiltAngle: this.tiltAngle,
                 lng: this.longitude,
                 lat: this.latitude,

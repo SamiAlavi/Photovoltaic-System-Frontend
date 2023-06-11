@@ -2,6 +2,19 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
 import { v4 as uuidv4 } from 'uuid';
 import { IProductDetail } from "./interfaces";
 
+const keysMapper: { [key: string]: string; } = {
+    area: "Area",
+    orientation: "Orientation",
+    lng: "Longitude",
+    name: "Name",
+    company: "Company",
+    tiltAngle: "Tilt Angle",
+    lat: "Latitude",
+    power_peak: "Power Peak",
+    num_cells: "Cells",
+    timestamp: "Timestamp",
+};
+
 export class Helpers {
     static getActivatedRoute(activatedRoute: ActivatedRoute | ActivatedRouteSnapshot): string {
         if (activatedRoute instanceof ActivatedRoute) {
@@ -25,7 +38,7 @@ export class Helpers {
         let html = "<div class='text-black'>";
         for (let [key, value] of Object.entries(product)) {
             if (key !== "id") {
-                html += `<b>${key}</b>: ${value} <br>`;
+                html += `<b>${keysMapper[key]}</b>: ${value} <br>`;
             }
         }
         html += "</div>";

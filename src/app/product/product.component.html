@@ -43,7 +43,7 @@
     </p-table>
     <div class="w-full mb-3">
         <p-dropdown styleClass="width-custom h-10" placeholder="Orientation" [options]="orientations"
-            [(ngModel)]="selectedOrientation" optionLabel="label">
+            [(ngModel)]="selectedOrientation">
         </p-dropdown>
         <p-button icon="pi pi-info" (onClick)="showInfoDialog('Orientation', selectedOrientation)"
             styleClass="p-button-rounded p-button-danger p-button-outlined float-right"></p-button>

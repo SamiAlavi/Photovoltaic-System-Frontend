@@ -21,11 +21,6 @@ interface IProject {
     name?: string,
 }
 
-interface IOrientation {
-    label: string,
-    value: ORIENTATION,
-}
-
 interface IFactorRow {
     label: string,
     factor: number,
@@ -44,7 +39,6 @@ export {
     IUserCredentials,
     IProject,
     IProduct,
-    IOrientation,
     IFactorRow,
     IProductDetail,
 };
