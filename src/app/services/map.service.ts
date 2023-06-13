@@ -52,7 +52,7 @@ export class MapService {
         });
 
         // Add popup content
-        const html = Helpers.getHTMLFromProduct(product);
+        const html = Helpers.getHTMLFromProduct(product, 'black');
         const popupOptions: PopupOptions = {
             closeButton: false,
         };

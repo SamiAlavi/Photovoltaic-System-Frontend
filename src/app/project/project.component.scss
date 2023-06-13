@@ -14,4 +14,17 @@
     .p-button.width-9 {
         width: 9%;
     }
+
+    .proj-scrollPanel {
+        height: 37vh;
+    }
+
+    .prod-active {
+        background-color: var(--green-700);
+        ;
+    }
+
+    .prod-inactive {
+        background-color: var(--red-700);
+    }
 }

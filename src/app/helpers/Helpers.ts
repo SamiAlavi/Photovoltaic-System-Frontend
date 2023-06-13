@@ -12,8 +12,9 @@ const keysMapper: { [key: string]: string; } = {
     lat: "Latitude",
     power_peak: "Power Peak",
     num_cells: "Cells",
-    timestamp: "Timestamp",
-    region: "Region"
+    timestamp: "Created At",
+    region: "Region",
+    isActive: "Is Active"
 };
 
 export class Helpers {
@@ -35,12 +36,17 @@ export class Helpers {
         return uuidv4();
     }
 
-    static getHTMLFromProduct(product: IProductDetail): string {
-        let html = "<div class='text-black'>";
+    static getHTMLFromProduct(product: IProductDetail, color: string): string {
+        const style = `style="color: ${color};"`;
+        let html = `<div ${style}>`;
         for (let [key, value] of Object.entries(product)) {
-            if (key !== "id") {
-                html += `<b>${keysMapper[key]}</b>: ${value} <br>`;
+            if (key === "id") {
+                continue;
             }
+            else if (key === "timestamp") {
+                value = new Date(value);
+            }
+            html += `<b>${keysMapper[key]}</b>: ${value} <br>`;
         }
         html += "</div>";
         return html;

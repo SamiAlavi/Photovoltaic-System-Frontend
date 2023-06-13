@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ProjectService } from '../services/project.service';
-import { IProject } from '../helpers/interfaces';
+import { IProductDetail, IProject } from '../helpers/interfaces';
 import { ToastService } from '../services/toast.service';
 import { Router } from '@angular/router';
 import AppSettings from '../AppSettings';
+import { Helpers } from '../helpers/Helpers';
 
 @Component({
     selector: 'app-project',
@@ -23,9 +24,6 @@ export class ProjectComponent {
         private toastService: ToastService,
         private router: Router,
     ) {
-        if (this.projectService.currentProject) {
-            this.selectedProject = this.projectService.currentProject;
-        }
         this.getProjects();
     }
     private getProjects() {
@@ -37,9 +35,7 @@ export class ProjectComponent {
                     items: projects.filter(proj => proj.isActive === isActive),
                 }));
                 this.projectsIds = projects.map((project) => project.id);
-                if (!this.selectedProject) {
-                    this.selectedProject = projects[0];
-                }
+                this.selectedProject = projects[0];
             }
         });
     }
@@ -64,5 +60,10 @@ export class ProjectComponent {
     openProject() {
         this.projectService.cacheProject(this.selectedProject);
         this.router.navigateByUrl(AppSettings.RouteDashboard);
+    }
+
+    getHtml(product: IProductDetail): string {
+        const color = "rgba(255, 255, 255, 0.87)";
+        return Helpers.getHTMLFromProduct(product, color);
     }
 }

@@ -19,14 +19,17 @@
                 </span>
                 <p-button label="Open Project" styleClass="float-right width-9" (onClick)="openProject()"
                     [disabled]="!selectedProject"></p-button>
+                <p-scrollPanel *ngIf="selectedProject" styleClass="proj-scrollPanel">
+                    <ng-container *ngFor="let product of selectedProject.products; let i=index">
+                        <p-card header="{{i+1}}) {{product.name}} ({{product.id}})"
+                            [title]="product.isActive ? 'Active' : 'Inactive'"
+                            [styleClass]="product.isActive ? 'prod-active mb-2' : 'prod-inactive mb-2'">
+                            <p class="m-0" [innerHTML]="getHtml(product)">
 
-                <p-accordion [activeIndex]="0" *ngIf="selectedProject">
-                    <p-accordionTab header="Products">
-                        <ng-container *ngFor="let product of selectedProject.products">
-                            {{product}}
-                        </ng-container>
-                    </p-accordionTab>
-                </p-accordion>
+                            </p>
+                        </p-card>
+                    </ng-container>
+                </p-scrollPanel>
             </p-fieldset>
         </p-card>
     </div>
