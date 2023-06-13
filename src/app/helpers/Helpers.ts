@@ -14,7 +14,7 @@ const keysMapper: { [key: string]: string; } = {
     num_cells: "Cells",
     timestamp: "Created At",
     region: "Region",
-    isActive: "Is Active"
+    isActive: "Status"
 };
 
 export class Helpers {
@@ -43,8 +43,11 @@ export class Helpers {
             if (key === "id") {
                 continue;
             }
+            else if (key === "isActive") {
+                value = product.isActive ? 'Active' : 'Inactive';
+            }
             else if (key === "timestamp") {
-                value = new Date(value);
+                value = this.getFormattedDateTimeFromTimestamp(value);
             }
             html += `<b>${keysMapper[key]}</b>: ${value} <br>`;
         }
