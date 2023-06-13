@@ -16,6 +16,7 @@ import { BaseComponent } from './base/base.component';
 import { MapComponent } from './map/map.component';
 import { ProductComponent } from './product/product.component';
 import { FactorInfoDialogComponent } from './factor-info-dialog/factor-info-dialog.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { FactorInfoDialogComponent } from './factor-info-dialog/factor-info-dial
         MapComponent,
         ProductComponent,
         FactorInfoDialogComponent,
+        ProfileComponent,
     ],
     imports: [
         BrowserModule,

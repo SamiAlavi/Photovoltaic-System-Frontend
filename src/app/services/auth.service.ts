@@ -2,7 +2,7 @@ import AppSettings from '../AppSettings';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
-import { IUserCredentials } from '../helpers/interfaces';
+import { ICustomUserRecord, IUserCredentials } from '../helpers/interfaces';
 import { SessionService } from './session.service';
 import { ProjectService } from './project.service';
 
@@ -19,21 +19,21 @@ export class AuthService {
     }
 
     signup(userCredentials: IUserCredentials): Observable<any> {
-        return this.http.post(AppSettings.SignupUrl, userCredentials);
+        return this.http.post<ICustomUserRecord>(AppSettings.SignupUrl, userCredentials);
     }
 
-    signin(userCredentials: IUserCredentials): Observable<any> {
-        return this.http.post(AppSettings.SigninUrl, userCredentials).pipe(map((response) => {
+    signin(userCredentials: IUserCredentials): Observable<void> {
+        return this.http.post<ICustomUserRecord>(AppSettings.SigninUrl, userCredentials).pipe(map((response) => {
             this.sessionService.saveSession(response);
-            return of();
+            return;
         }));
     }
 
-    signout(): Observable<any> {
+    signout(): Observable<void> {
         return this.http.delete(AppSettings.SignoutUrl).pipe(map(() => {
             this.sessionService.clearSession();
             this.projectService.clearProjects();
-            return of();
+            return;
         }));
     }
 

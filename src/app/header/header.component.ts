@@ -56,4 +56,8 @@ export class HeaderComponent implements OnInit {
             this.router.navigateByUrl(AppSettings.RouteSignin);
         });
     }
+
+    profilePage() {
+        this.router.navigateByUrl(AppSettings.RouteProfile);
+    }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import AppSettings from '../AppSettings';
+import { ICustomUserRecord } from '../helpers/interfaces';
 
 @Injectable({
     providedIn: 'root',
@@ -7,18 +8,18 @@ import AppSettings from '../AppSettings';
 export class SessionService {
     private readonly SESSION_KEY = AppSettings.SESSION_KEY;
 
-    saveSession(user: any): void {
+    saveSession(user: ICustomUserRecord): void {
         localStorage.setItem(this.SESSION_KEY, JSON.stringify(user));
     }
 
-    getSession(): any {
+    getSession(): ICustomUserRecord {
         const user = JSON.parse(localStorage.getItem(this.SESSION_KEY) ?? "{}");
         return user;
     }
 
     isAuthenticated(): boolean {
         const user = this.getSession();
-        return (user.accessToken && user.uid);
+        return !!(user.accessToken && user.uid);
     }
 
     clearSession(): void {

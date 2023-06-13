@@ -1,0 +1,48 @@
+<div class="flex items-center justify-center w-full h-full">
+    <div class="w-full h-full">
+        <p-card header="Profile" styleClass="h-full">
+            <p-table *ngIf="user" [value]="[user]" styleClass="h-full custom-table">
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>Email</td>
+                        <td>
+                            <input type="text" class="w-full" pInputText [ngModel]="user.email" [disabled]="true" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ID</td>
+                        <td>
+                            <input type="text" class="w-full" pInputText [ngModel]="user.uid" [disabled]="true" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Current Password</td>
+                        <td>
+                            <p-password [toggleMask]="true" [feedback]="false" [minlength]="6" inputStyleClass="w-full"
+                                styleClass="w-full" [formControl]="currentPasswordControl"></p-password>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>New Password</td>
+                        <td>
+                            <p-password [toggleMask]="true" [feedback]="true" [minlength]="6" inputStyleClass="w-full"
+                                styleClass="w-full" [formControl]="newPasswordControl"></p-password>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p-button label="Update Password" (onClick)="updatePassword()"></p-button>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p-button label="Delete Account"></p-button>
+                        </td>
+                        <td></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+    </div>
+</div>

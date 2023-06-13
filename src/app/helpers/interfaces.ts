@@ -5,6 +5,12 @@ interface IUserCredentials {
     password: string,
 }
 
+interface ICustomUserRecord {
+    uid: string,
+    email: string,
+    accessToken?: string,
+    exp?: number,
+}
 
 interface IProduct {
     id: string,
@@ -55,4 +61,5 @@ export {
     IProductDetail,
     IAddProductRequest,
     IDeleteProjectRequest,
+    ICustomUserRecord,
 };
