@@ -43,6 +43,9 @@ interface IAddProductRequest {
     projectId: string,
     product: IProductDetail,
 }
+interface IDeleteProjectRequest {
+    projectId: string,
+}
 
 export {
     IUserCredentials,
@@ -51,4 +54,5 @@ export {
     IFactorRow,
     IProductDetail,
     IAddProductRequest,
+    IDeleteProjectRequest,
 };

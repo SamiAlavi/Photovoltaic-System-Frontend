@@ -3,7 +3,7 @@
         <p-card header="Projects" styleClass="h-full">
             <p-fieldset legend="Create Project" styleClass="mb-6">
                 <span class="p-float-label mb-6">
-                    <input type="text" id="projectName" class="custom-width" pInputText [(ngModel)]="projectId"
+                    <input type="text" id="projectName" class="custom-width proj-new" pInputText [(ngModel)]="projectId"
                         [minlength]="1" [maxlength]="20" />
                     <label htmlFor="projectName">Project Name</label>
                 </span>
@@ -12,13 +12,15 @@
             </p-fieldset>
             <p-fieldset legend="Choose Project">
                 <span class="mb-6">
-                    <p-dropdown styleClass="w-11/12 mb-6 custom-width" placeholder="Project Name"
+                    <p-dropdown styleClass="w-11/12 mb-6 custom-width proj-select" placeholder="Project Name"
                         [options]="groupedProjects" [(ngModel)]="selectedProject" optionLabel="id" [filter]="true"
                         [showClear]="true" [group]="true">
                     </p-dropdown>
                 </span>
                 <p-button label="Open Project" styleClass="float-right width-9" (onClick)="openProject()"
                     [disabled]="!selectedProject"></p-button>
+                <p-button icon="pi pi-trash" styleClass="float-right btn-trash" (onClick)="deleteProject()"
+                    [disabled]="!selectedProject" title="Delete Project"></p-button>
                 <p-scrollPanel *ngIf="selectedProject" styleClass="proj-scrollPanel">
                     <ng-container *ngFor="let product of selectedProject.products; let i=index">
                         <p-card header="{{i+1}}) {{product.name}} ({{product.id}})"

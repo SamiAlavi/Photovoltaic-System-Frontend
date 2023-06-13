@@ -7,7 +7,13 @@
 
         &.p-inputtext,
         &.p-dropdown {
-            width: 90%;
+            &.proj-new {
+                width: 90%;
+            }
+
+            &.proj-select {
+                width: 86%;
+            }
         }
     }
 
@@ -21,10 +27,13 @@
 
     .prod-active {
         background-color: var(--green-700);
-        ;
     }
 
     .prod-inactive {
         background-color: var(--red-700);
+    }
+
+    .btn-trash {
+        margin-right: 1rem;
     }
 }

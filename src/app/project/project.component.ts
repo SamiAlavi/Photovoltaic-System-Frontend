@@ -29,16 +29,21 @@ export class ProjectComponent {
     private getProjects() {
         this.projectService.getProjects().subscribe((projects) => {
             if (projects.length) {
-                this.projects = projects;
-                this.groupedProjects = [true, false].map((isActive) => ({
-                    label: isActive ? 'Active' : 'Inactive',
-                    items: projects.filter(proj => proj.isActive === isActive),
-                }));
-                this.projectsIds = projects.map((project) => project.id);
-                this.selectedProject = projects[0];
+                this.setupProjects(projects);
             }
         });
     }
+
+    private setupProjects(projects: IProject[]) {
+        this.projects = projects;
+        this.projectsIds = projects.map((project) => project.id);
+        this.groupedProjects = [true, false].map((isActive) => ({
+            label: isActive ? 'Active' : 'Inactive',
+            items: projects.filter(proj => proj.isActive === isActive),
+        }));
+        this.selectedProject = projects[0];
+    }
+
     createProject() {
         if (!this.projectId) {
             return;
@@ -60,6 +65,15 @@ export class ProjectComponent {
     openProject() {
         this.projectService.cacheProject(this.selectedProject);
         this.router.navigateByUrl(AppSettings.RouteDashboard);
+    }
+
+    deleteProject() {
+        this.projectService.deleteProject(this.selectedProject).subscribe((isDeleted) => {
+            if (isDeleted) {
+                this.projects = this.projects.filter((proj) => proj !== this.selectedProject);
+                this.setupProjects(this.projects);
+            }
+        });
     }
 
     getHtml(product: IProductDetail): string {

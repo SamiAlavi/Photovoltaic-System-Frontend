@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import AppSettings from '../AppSettings';
-import { IAddProductRequest, IProductDetail, IProject } from '../helpers/interfaces';
+import { IAddProductRequest, IDeleteProjectRequest, IProductDetail, IProject } from '../helpers/interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -28,8 +28,8 @@ export class ProjectService {
     }
 
     createProject(projectId: string): Observable<IProject> {
-        const project = { id: projectId };
-        return this.http.post<IProject>(AppSettings.ProjectUrl, project);
+        const body = { projectId: projectId };
+        return this.http.post<IProject>(AppSettings.ProjectUrl, body);
     }
 
     clearProjects() {
@@ -43,7 +43,12 @@ export class ProjectService {
         localStorage.setItem(this.PROJECT_KEY, JSON.stringify(this.currentProject));
     }
 
-    addProduct(product: IProductDetail) {
+    clearCache() {
+        this.currentProject = null;
+        localStorage.removeItem(this.PROJECT_KEY);
+    }
+
+    addProduct(product: IProductDetail): Observable<boolean> {
         if (!this.currentProject) {
             return of(false);
         }
@@ -56,5 +61,19 @@ export class ProjectService {
             this.cacheProject(this.currentProject);
             return true;
         }));
+    }
+
+    deleteProject(project: IProject): Observable<boolean> {
+        if (!this.currentProject) {
+            return of(false);
+        }
+        const body: IDeleteProjectRequest = {
+            projectId: project.id,
+        };
+        return this.http.delete<boolean>(AppSettings.ProjectUrl, { body: body }).pipe(map((response) => {
+            this.clearCache();
+            return response;
+        }));
+
     }
 }
