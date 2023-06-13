@@ -14,6 +14,9 @@ export class ProjectComponent {
     projectId = "";
     selectedProject!: IProject;
     selectedProjectId!: string;
+    projects: IProject[] = [];
+    projectsIds: string[] = [];
+    groupedProjects: { label: string, items: IProject[]; }[] = [];
 
     constructor(
         private projectService: ProjectService,
@@ -25,25 +28,14 @@ export class ProjectComponent {
         }
         this.getProjects();
     }
-
-    get projectsIds(): string[] {
-        return this.projectService.projectsIds;
-    }
-    set projectsIds(projsIds: string[]) {
-        this.projectService.projectsIds = projsIds;
-    }
-
-    get projects(): IProject[] {
-        return this.projectService.projects;
-    }
-    set projects(projs: IProject[]) {
-        this.projectService.projects = projs;
-    }
-
     private getProjects() {
         this.projectService.getProjects().subscribe((projects) => {
             if (projects.length) {
                 this.projects = projects;
+                this.groupedProjects = [true, false].map((isActive) => ({
+                    label: isActive ? 'Active' : 'Inactive',
+                    items: projects.filter(proj => proj.isActive === isActive),
+                }));
                 this.projectsIds = projects.map((project) => project.id);
                 if (!this.selectedProject) {
                     this.selectedProject = projects[0];

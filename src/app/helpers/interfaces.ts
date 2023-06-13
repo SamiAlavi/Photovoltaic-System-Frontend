@@ -18,7 +18,8 @@ interface IProduct {
 interface IProject {
     id: string,
     products: IProductDetail[],
-    name?: string,
+    timeCreated: number,
+    isActive: boolean,
 }
 
 interface IFactorRow {
@@ -27,13 +28,15 @@ interface IFactorRow {
     class: string,
 }
 
+
 interface IProductDetail extends IProduct {
     orientation: ORIENTATION,
     tiltAngle: number,
     lat: number,
     lng: number,
-    region: string,
     timestamp: number,
+    region: string,
+    isActive: boolean,
 }
 
 interface IAddProductRequest {

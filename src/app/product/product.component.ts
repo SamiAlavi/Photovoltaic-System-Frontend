@@ -101,6 +101,7 @@ export class ProductComponent {
                 lat: this.latitude,
                 region: region,
                 timestamp: Date.now(),
+                isActive: true,
             };
             this.showProductOnMap(product);
             this.projectService.addProduct(product).subscribe((isAdded) => {
