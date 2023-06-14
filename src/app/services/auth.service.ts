@@ -41,8 +41,14 @@ export class AuthService {
         return this.sessionService.isAuthenticated();
     }
 
-    updatePassword(profile: IProfile) {
+    updateProfile(profile: IProfile) {
         return this.http.post(AppSettings.UpdateProfileUrl, profile);
+    }
+
+    deleteProfile() {
+        return this.http.delete(AppSettings.UpdateProfileUrl).pipe(map(() => {
+            return this.signout();
+        }));
     }
 
 }

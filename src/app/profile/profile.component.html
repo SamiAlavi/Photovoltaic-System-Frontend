@@ -1,5 +1,6 @@
 <div class="flex items-center justify-center w-full h-full">
     <div class="w-full h-full">
+        <p-confirmDialog #cd [style]="{width: '50vw'}"></p-confirmDialog>
         <p-card header="Profile" styleClass="h-full">
             <p-table *ngIf="user" [value]="[user]" styleClass="h-full custom-table">
                 <ng-template pTemplate="body" let-product>
@@ -37,7 +38,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p-button label="Delete Account"></p-button>
+                            <p-button label="Delete Account" (onClick)="deleteProfile()"></p-button>
                         </td>
                         <td></td>
                     </tr>

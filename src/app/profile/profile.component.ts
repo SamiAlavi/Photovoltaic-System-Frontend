@@ -5,11 +5,15 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ToastService } from '../services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { ConfirmationService } from 'primeng/api';
+import { Router } from '@angular/router';
+import AppSettings from '../AppSettings';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss']
+    styleUrls: ['./profile.component.scss'],
+    providers: [ConfirmationService],
 })
 export class ProfileComponent {
     user !: ICustomUserRecord;
@@ -20,6 +24,8 @@ export class ProfileComponent {
         private sessionService: SessionService,
         private toastService: ToastService,
         private authService: AuthService,
+        private confirmationService: ConfirmationService,
+        private router: Router,
     ) {
         this.user = this.sessionService.getSession();
         this.form = this.formBuilder.group({
@@ -34,13 +40,29 @@ export class ProfileComponent {
                 email: this.user.email,
                 ...this.form.value
             };
-            this.authService.updatePassword(profile).subscribe((response) => {
+            this.authService.updateProfile(profile).subscribe((response) => {
                 this.toastService.showSuccessToast("Profile Updated Sucessfully");
             });
         }
         else {
             this.generateErrorMessages();
         }
+    }
+
+    deleteProfile() {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete your profile?',
+            header: 'Delete Profile',
+            icon: 'pi pi-exclamation-triangle text-red-700',
+            accept: () => {
+                this.authService.deleteProfile().subscribe((_) => {
+                    this.toastService.showSuccessToast("Deleted Profile Successfully");
+                    this.router.navigateByUrl(AppSettings.RouteSignin);
+                });
+            },
+            reject: (type) => {
+            }
+        });
     }
 
     get currentPasswordControl(): any {
