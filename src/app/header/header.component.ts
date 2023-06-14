@@ -53,7 +53,9 @@ export class HeaderComponent implements OnInit {
 
     signout() {
         this.authService.signout().subscribe((_) => {
-            this.router.navigateByUrl(AppSettings.RouteSignin);
+            this.router.navigateByUrl(AppSettings.RouteSignin, { skipLocationChange: true }).then(() => {
+                location.reload();
+            });
         });
     }
 

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ICustomUserRecord, IUserCredentials } from '../helpers/interfaces';
+import { ICustomUserRecord, IProfile, IUserCredentials } from '../helpers/interfaces';
 import { SessionService } from '../services/session.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'app-profile',
@@ -18,6 +19,7 @@ export class ProfileComponent {
         private formBuilder: FormBuilder,
         private sessionService: SessionService,
         private toastService: ToastService,
+        private authService: AuthService,
     ) {
         this.user = this.sessionService.getSession();
         this.form = this.formBuilder.group({
@@ -28,6 +30,13 @@ export class ProfileComponent {
 
     updatePassword() {
         if (this.form.valid) {
+            const profile: IProfile = {
+                email: this.user.email,
+                ...this.form.value
+            };
+            this.authService.updatePassword(profile).subscribe((response) => {
+                this.toastService.showSuccessToast("Profile Updated Sucessfully");
+            });
         }
         else {
             this.generateErrorMessages();

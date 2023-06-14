@@ -1,5 +1,11 @@
 import { ORIENTATION } from "./enums";
 
+interface IProfile {
+    email: string,
+    currentPassword: string,
+    newPassword: string,
+}
+
 interface IUserCredentials {
     email: string,
     password: string,
@@ -62,4 +68,5 @@ export {
     IAddProductRequest,
     IDeleteProjectRequest,
     ICustomUserRecord,
+    IProfile,
 };

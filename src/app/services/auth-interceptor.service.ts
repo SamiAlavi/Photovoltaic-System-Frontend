@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'; // imports the class that provides local storage for token
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from "rxjs/operators";
-import { throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import AppSettings from '../AppSettings';
 import { ToastService } from './toast.service';
 import { Router } from '@angular/router';
@@ -38,6 +38,9 @@ export class AuthInterceptorService implements HttpInterceptor {
         return next.handle(req)
             .pipe(
                 catchError((error: HttpErrorResponse) => {
+                    if (error.status >= 200 && error.status < 300) {
+                        return of();
+                    }
                     if (error.status === 0) {
                         error.error.message = "Server is not running";
                     }

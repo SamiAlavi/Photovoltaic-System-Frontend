@@ -1,8 +1,8 @@
 import AppSettings from '../AppSettings';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, of } from 'rxjs';
-import { ICustomUserRecord, IUserCredentials } from '../helpers/interfaces';
+import { Observable, map } from 'rxjs';
+import { ICustomUserRecord, IProfile, IUserCredentials } from '../helpers/interfaces';
 import { SessionService } from './session.service';
 import { ProjectService } from './project.service';
 
@@ -39,6 +39,10 @@ export class AuthService {
 
     isAuthenticated(): boolean {
         return this.sessionService.isAuthenticated();
+    }
+
+    updatePassword(profile: IProfile) {
+        return this.http.post(AppSettings.UpdateProfileUrl, profile);
     }
 
 }
