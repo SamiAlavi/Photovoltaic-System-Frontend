@@ -17,7 +17,7 @@ export class MapService {
     readonly locPopup = {
         popup: new Popup(),
         timerId: null,
-        styleClass: 'text-black',
+        styleClass: 'text-black mapbox-popup',
         time: 2000, //ms,
         isVisible: true,
     };

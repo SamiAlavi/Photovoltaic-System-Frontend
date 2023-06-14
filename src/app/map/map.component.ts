@@ -5,11 +5,14 @@ import { LngLatLike, Map, Popup } from 'mapbox-gl';
 import AppSettings from '../AppSettings';
 import { MAPBOX_STYLEURI } from '../helpers/enums';
 import { ProjectService } from '../services/project.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddEditProductComponent } from '../add-edit-product/add-edit-product.component';
 
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
-    styleUrls: ['./map.component.scss']
+    styleUrls: ['./map.component.scss'],
+    providers: [DialogService],
 })
 export class MapComponent implements AfterViewInit, OnInit {
 
@@ -18,7 +21,12 @@ export class MapComponent implements AfterViewInit, OnInit {
     private readonly STARTING_LOCATION: LngLatLike = [12.9167, 50.8333]; // Chemnitz
     private readonly STARTING_ZOOM = 1;
 
-    constructor(private mapService: MapService, private projectService: ProjectService) {
+    ref: DynamicDialogRef;
+
+    constructor(
+        private mapService: MapService,
+        private projectService: ProjectService,
+        private dialogService: DialogService,) {
     }
 
     ngOnInit() {
@@ -44,6 +52,7 @@ export class MapComponent implements AfterViewInit, OnInit {
         this.map.on('load', () => {
             this.mapAddControls();
             this.mapMouse();
+            this.mapClick();
             this.showProductsLocations();
         });
 
@@ -61,7 +70,10 @@ export class MapComponent implements AfterViewInit, OnInit {
             this.mapService.locPopup.popup.remove();
             if (this.mapService.locPopup.isVisible) {
                 const { lng, lat } = e.lngLat;
-                const html = `<span>Longitude :  ${lng}</span><br><span>Latitude :  ${lat}</span>`;
+                const html = `
+                    <span><b>Longitude:</b> ${lng}</span><br>
+                    <span><b>Latitude:</b> ${lat}</span><br>
+                    <span>Click to add product to this location</span>`;
                 this.mapService.locPopup.popup = new Popup({
                     closeButton: false,
                     closeOnClick: true,
@@ -73,6 +85,20 @@ export class MapComponent implements AfterViewInit, OnInit {
                     .setHTML(html)
                     .addTo(this.map);
             }
+        });
+    }
+
+    mapClick() {
+        this.map.on('click', (e) => {
+            this.ref = this.dialogService.open(AddEditProductComponent, {
+                header: `Add Product`,
+                width: '70%',
+                dismissableMask: true,
+                contentStyle: { overflow: 'auto' },
+                data: {
+                    ...e.lngLat,
+                },
+            });
         });
     }
 

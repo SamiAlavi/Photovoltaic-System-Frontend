@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FactorInfoDialogComponent } from '../factor-info-dialog/factor-info-dialog.component';
 import { Helpers } from '../helpers/Helpers';
 import { ORIENTATION } from '../helpers/enums';
 import { IProduct, IProductDetail } from '../helpers/interfaces';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MapService } from '../services/map.service';
 import { ToastService } from '../services/toast.service';
 import { ProjectService } from '../services/project.service';
@@ -15,7 +15,7 @@ import { ProductService } from '../services/product.service';
     styleUrls: ['./add-edit-product.component.scss'],
     providers: [DialogService],
 })
-export class AddEditProductComponent {
+export class AddEditProductComponent implements OnInit {
 
     ref!: DynamicDialogRef;
 
@@ -25,7 +25,22 @@ export class AddEditProductComponent {
         private dialogService: DialogService,
         private mapService: MapService,
         private toastService: ToastService,
+        public config: DynamicDialogConfig,
     ) { }
+
+
+    ngOnInit() {
+        // Access the passed data
+        const data = this.config.data;
+        if (data) {
+            if (data.lng) {
+                this.longitude = data.lng;
+            }
+            if (data.lat) {
+                this.latitude = data.lat;
+            }
+        }
+    }
 
     selectedProduct!: IProduct;
 

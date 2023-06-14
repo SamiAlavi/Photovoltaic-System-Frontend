@@ -1,3 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "./styles/imports.scss";
+
+.mapbox-popup {
+    opacity: 0.7;
+
+    .mapboxgl-popup-content {
+        border-radius: 10px;
+        box-shadow: 2px 6px 3px rgba(0, 0, 0, 0.3);
+    }
+}

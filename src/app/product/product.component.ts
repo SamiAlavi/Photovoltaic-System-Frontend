@@ -45,8 +45,6 @@ export class ProductComponent {
             width: '70%',
             dismissableMask: true,
             contentStyle: { overflow: 'auto' },
-            data: {
-            },
         });
     }
 }
