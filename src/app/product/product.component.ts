@@ -49,6 +49,7 @@ export class ProductComponent {
     }
 
     editProduct(product: IProductDetail) {
+        // update marker on map
         this.ref = this.dialogService.open(AddEditProductComponent, {
             header: `Edit Product`,
             width: '70%',
@@ -61,7 +62,7 @@ export class ProductComponent {
     deleteProduct(product: IProductDetail) {
         // ask for confirmation
         this.projectService.deleteProduct(product).subscribe((_) => {
-
+            this.mapService.removeMarker(product.id);
         });
     }
 }
