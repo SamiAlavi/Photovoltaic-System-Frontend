@@ -14,7 +14,7 @@ export class ProjectService {
     private readonly PROJECT_KEY = AppSettings.PROJECT_KEY;
 
     constructor(private http: HttpClient) {
-        const cacheProject = localStorage.getItem(this.PROJECT_KEY);
+        const cacheProject = sessionStorage.getItem(this.PROJECT_KEY);
         if (cacheProject) {
             this.currentProject = JSON.parse(cacheProject);
         }
@@ -35,17 +35,17 @@ export class ProjectService {
     clearProjects() {
         this.projects = [];
         this.currentProject = null;
-        localStorage.removeItem(this.PROJECT_KEY);
+        sessionStorage.removeItem(this.PROJECT_KEY);
     }
 
     cacheProject(selectedProject: IProject) {
         this.currentProject = selectedProject;
-        localStorage.setItem(this.PROJECT_KEY, JSON.stringify(this.currentProject));
+        sessionStorage.setItem(this.PROJECT_KEY, JSON.stringify(this.currentProject));
     }
 
     clearCache() {
         this.currentProject = null;
-        localStorage.removeItem(this.PROJECT_KEY);
+        sessionStorage.removeItem(this.PROJECT_KEY);
     }
 
     addProduct(product: IProductDetail): Observable<boolean> {

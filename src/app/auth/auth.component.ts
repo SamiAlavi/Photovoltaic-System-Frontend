@@ -28,7 +28,7 @@ export class AuthComponent {
         private activatedRoute: ActivatedRoute,
         private router: Router,
     ) {
-        localStorage.removeItem(AppSettings.PROJECT_KEY);
+        sessionStorage.removeItem(AppSettings.PROJECT_KEY);
 
         this.authForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
