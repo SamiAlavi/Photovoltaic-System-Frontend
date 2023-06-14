@@ -59,6 +59,9 @@ export class ProductComponent {
     }
 
     deleteProduct(product: IProductDetail) {
+        // ask for confirmation
+        this.projectService.deleteProduct(product).subscribe((_) => {
 
+        });
     }
 }

@@ -56,7 +56,7 @@ export class ProjectService {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.post<IProject>(AppSettings.AddProductUrl, body).pipe(map((response) => {
+        return this.http.post<void>(AppSettings.AddProductUrl, body).pipe(map((_) => {
             this.currentProject.products.push(product);
             this.cacheProject(this.currentProject);
             return true;
@@ -71,11 +71,26 @@ export class ProjectService {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.put<IProject>(AppSettings.AddProductUrl, body).pipe(map((response) => {
+        return this.http.put<void>(AppSettings.AddProductUrl, body).pipe(map((_) => {
             const prodIndex = this.currentProject.products.findIndex((prod) => prod.id === product.id);
             if (prodIndex > -1) {
                 this.currentProject.products[prodIndex] = product;
             }
+            this.cacheProject(this.currentProject);
+            return true;
+        }));
+    }
+
+    deleteProduct(product: IProductDetail): Observable<boolean> {
+        if (!this.currentProject) {
+            return of(false);
+        }
+        const body: IAddProductRequest = {
+            projectId: this.currentProject.id,
+            product: product,
+        };
+        return this.http.delete<void>(AppSettings.AddProductUrl, { body: body }).pipe(map((_) => {
+            this.currentProject.products = this.currentProject.products.filter((prod) => prod.id !== product.id);
             this.cacheProject(this.currentProject);
             return true;
         }));
