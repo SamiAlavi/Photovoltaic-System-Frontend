@@ -43,9 +43,9 @@
 </p-divider>
 <p-inputNumber styleClass="w-full h-10 mb-3" class="width-full" [(ngModel)]="longitude" mode="decimal"
     [maxFractionDigits]="14" suffix="°" placeholder="Longitude" [showButtons]="true" [min]="-180" [max]="180"
-    title="Min: -180, Max: 180"></p-inputNumber>
+    title="Min: -180, Max: 180" [disabled]="isEditMode"></p-inputNumber>
 <p-inputNumber styleClass="w-full h-10 mb-3" class="width-full" [(ngModel)]="latitude" mode="decimal"
     [maxFractionDigits]="14" suffix="°" placeholder="Latitude" [showButtons]="true" [min]="-90" [max]="90"
-    title="Min: -90, Max: 90"></p-inputNumber>
+    title="Min: -90, Max: 90" [disabled]="isEditMode"></p-inputNumber>
 
-<p-button label="Submit" (onClick)="addProduct()" [disabled]="!isButtonEnabled()"></p-button>
+<p-button label="Submit" (onClick)="onSubmit()" [disabled]="!isButtonEnabled()"></p-button>

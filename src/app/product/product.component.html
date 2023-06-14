@@ -62,8 +62,13 @@
                         </ng-template>
                     </p-table>
                     <div class="flex justify-center">
-                        <p-button label="View On Map" icon="pi pi-eye" styleClass="p-button-sm"
-                            (onClick)="viewOnMap(product)"></p-button>
+                        <p-button icon="pi pi-eye" class="mr-6" pTooltip="View On Map" (onClick)="viewOnMap(product)"
+                            styleClass="p-button-rounded p-button-outlined"></p-button>
+                        <p-button icon="pi pi-pencil" class="mr-6" pTooltip="Edit Product"
+                            (onClick)="editProduct(product)" styleClass="p-button-rounded p-button-outlined"></p-button>
+                        <p-button icon="pi pi-trash" class="mr-6" pTooltip="Delete Product"
+                            (onClick)="deleteProduct(product)"
+                            styleClass="p-button-rounded p-button-outlined"></p-button>
                     </div>
                 </p-accordionTab>
             </ng-container>

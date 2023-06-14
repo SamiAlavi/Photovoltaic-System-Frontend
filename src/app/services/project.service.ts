@@ -63,6 +63,24 @@ export class ProjectService {
         }));
     }
 
+    editProduct(product: IProductDetail): Observable<boolean> {
+        if (!this.currentProject) {
+            return of(false);
+        }
+        const body: IAddProductRequest = {
+            projectId: this.currentProject.id,
+            product: product,
+        };
+        return this.http.put<IProject>(AppSettings.AddProductUrl, body).pipe(map((response) => {
+            const prodIndex = this.currentProject.products.findIndex((prod) => prod.id === product.id);
+            if (prodIndex > -1) {
+                this.currentProject.products[prodIndex] = product;
+            }
+            this.cacheProject(this.currentProject);
+            return true;
+        }));
+    }
+
     deleteProject(project: IProject): Observable<boolean> {
         if (!this.currentProject) {
             return of(false);

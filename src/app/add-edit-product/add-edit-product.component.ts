@@ -17,31 +17,6 @@ import { ProductService } from '../services/product.service';
 })
 export class AddEditProductComponent implements OnInit {
 
-    ref!: DynamicDialogRef;
-
-    constructor(
-        protected productService: ProductService,
-        protected projectService: ProjectService,
-        private dialogService: DialogService,
-        private mapService: MapService,
-        private toastService: ToastService,
-        public config: DynamicDialogConfig,
-    ) { }
-
-
-    ngOnInit() {
-        // Access the passed data
-        const data = this.config.data;
-        if (data) {
-            if (data.lng) {
-                this.longitude = data.lng;
-            }
-            if (data.lat) {
-                this.latitude = data.lat;
-            }
-        }
-    }
-
     selectedProduct!: IProduct;
 
     orientations = [ORIENTATION.NORTH, ORIENTATION.EAST, ORIENTATION.SOUTH, ORIENTATION.WEST];;
@@ -51,9 +26,38 @@ export class AddEditProductComponent implements OnInit {
     latitude!: number;
     longitude!: number;
 
+    isEditMode = false;
+
+    constructor(
+        protected productService: ProductService,
+        protected projectService: ProjectService,
+        private dialogService: DialogService,
+        private mapService: MapService,
+        private toastService: ToastService,
+        private config: DynamicDialogConfig,
+        private ref: DynamicDialogRef,
+    ) { }
+
+
+    ngOnInit() {
+        // Access the passed data
+        const data: IProductDetail = this.config.data;
+        if (data) {
+            this.selectedProduct = this.productService.products.find((prod) => prod.name === data.name);
+            this.selectedOrientation = data.orientation;
+            this.tiltAngle = data.tiltAngle;
+            this.longitude = data.lng;
+            this.latitude = data.lat;
+
+            if (data.lng && data.lat) {
+                this.isEditMode = true;
+            }
+        }
+    }
+
 
     showInfoDialog(type: string, value: ORIENTATION | number) {
-        this.ref = this.dialogService.open(FactorInfoDialogComponent, {
+        this.dialogService.open(FactorInfoDialogComponent, {
             header: `${type} Factor Information`,
             width: '70%',
             dismissableMask: true,
@@ -87,37 +91,80 @@ export class AddEditProductComponent implements OnInit {
         this.mapService.moveMap(product.lng, product.lat);
     }
 
-    async addProduct() {
+    onSubmit() {
         if (this.isButtonEnabled()) {
-            const region = await this.mapService.reverseGeocode(this.latitude, this.longitude);
-            if (!region) {
-                const message = "This location has no region. Please choose a valid location.";
-                this.toastService.showErrorToast(message);
-                return;
+            if (this.isEditMode) {
+                this.editProduct();
             }
-            const product: IProductDetail = {
-                ...this.selectedProduct,
-                id: Helpers.generateUID(),
-                orientation: this.selectedOrientation,
-                tiltAngle: this.tiltAngle,
-                lng: this.longitude,
-                lat: this.latitude,
-                region: region,
-                timestamp: Date.now(),
-                isActive: true,
-            };
-            this.showProductOnMap(product);
-            this.projectService.addProduct(product).subscribe((isAdded) => {
-                if (isAdded) {
-                    const message = "Product Added Successfully";
-                    this.toastService.showSuccessToast(message);
-                }
-                else {
-                    const message = "Error Adding Product";
-                    this.toastService.showErrorToast(message);
-                }
-            });
+            else {
+                this.addProduct();
+            }
         }
+    }
+
+    async addProduct() {
+        const region = await this.mapService.reverseGeocode(this.latitude, this.longitude);
+        if (!region) {
+            const message = "This location has no region. Please choose a valid location.";
+            this.toastService.showErrorToast(message);
+            return;
+        }
+        const id = Helpers.generateUID();
+        const timestamp = Date.now();
+        const isActive = true;
+
+        const product: IProductDetail = {
+            ...this.selectedProduct,
+            id: id,
+            orientation: this.selectedOrientation,
+            tiltAngle: this.tiltAngle,
+            region: region,
+            timestamp: timestamp,
+            isActive: isActive,
+            lng: this.longitude,
+            lat: this.latitude,
+        };
+
+        this.showProductOnMap(product);
+        this.projectService.addProduct(product).subscribe((isAdded) => {
+            if (isAdded) {
+                const message = "Product Added Successfully";
+                this.toastService.showSuccessToast(message);
+                this.ref.close();
+            }
+            else {
+                const message = "Error Adding Product";
+                this.toastService.showErrorToast(message);
+            }
+        });
+    }
+
+    editProduct() {
+        const { region, id, timestamp, isActive } = this.config.data;
+        const product: IProductDetail = {
+            ...this.selectedProduct,
+            id: id,
+            orientation: this.selectedOrientation,
+            tiltAngle: this.tiltAngle,
+            region: region,
+            timestamp: timestamp,
+            isActive: isActive,
+            lng: this.longitude,
+            lat: this.latitude,
+        };
+
+        this.projectService.editProduct(product).subscribe((isAdded) => {
+            if (isAdded) {
+                const message = "Product Edited Successfully";
+                this.toastService.showSuccessToast(message);
+                this.ref.close();
+            }
+            else {
+                const message = "Error Editing Product";
+                this.toastService.showErrorToast(message);
+            }
+        });
+
     }
 
 }

@@ -47,4 +47,18 @@ export class ProductComponent {
             contentStyle: { overflow: 'auto' },
         });
     }
+
+    editProduct(product: IProductDetail) {
+        this.ref = this.dialogService.open(AddEditProductComponent, {
+            header: `Edit Product`,
+            width: '70%',
+            dismissableMask: true,
+            contentStyle: { overflow: 'auto' },
+            data: product
+        });
+    }
+
+    deleteProduct(product: IProductDetail) {
+
+    }
 }
