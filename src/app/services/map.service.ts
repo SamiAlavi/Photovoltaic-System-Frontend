@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { CameraOptions, Map, Marker, Popup, PopupOptions } from 'mapbox-gl';
 import geocoder from '@mapbox/mapbox-sdk/services/geocoding';
-import { IProductDetail } from '../helpers/interfaces';
+import { IProduct, IProductDetail } from '../helpers/interfaces';
 import { Helpers } from '../helpers/Helpers';
 import AppSettings from '../AppSettings';
 
@@ -13,6 +13,7 @@ export class MapService {
     private map!: mapboxgl.Map;
     private markerOptions: mapboxgl.MarkerOptions = {};
     private readonly geocoder = geocoder({ accessToken: AppSettings.MapboxAccessToken });
+    private readonly markers: { id: string, marker: mapboxgl.Marker; }[] = [];
     readonly locPopup = {
         popup: new Popup(),
         timerId: null,
@@ -38,7 +39,33 @@ export class MapService {
     }
 
     showProductOnMap(product: IProductDetail) {
-        const marker = new Marker(this.markerOptions).setLngLat([product.lng, product.lat]).addTo(this.map);
+        const marker = this.addMarker(product.id, product.lng, product.lat);
+        this.setupMarkerPopup(marker, product);
+    }
+
+    addMarker(id: string, lng: number, lat: number) {
+        const marker = new Marker(this.markerOptions)
+            .setLngLat([lng, lat])
+            .addTo(this.map);
+
+        this.markers.push({ id, marker });
+        return marker;
+    }
+
+    removeMarker(id: string) {
+        const markerData = this.markers.find(markerData => markerData.id === id);
+        if (markerData) {
+            const { marker } = markerData;
+            const index = this.markers.indexOf(markerData);
+
+            marker.remove();
+            this.markers.splice(index, 1);
+        }
+    }
+
+
+    setupMarkerPopup(marker: Marker, product: IProductDetail) {
+
         const markerElement = marker.getElement();
 
         markerElement.addEventListener('mouseenter', () => {

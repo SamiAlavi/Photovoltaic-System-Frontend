@@ -19,6 +19,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
     exports: [
@@ -41,6 +42,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         DynamicDialogModule,
         AutoFocusModule,
         ConfirmDialogModule,
+        DividerModule,
     ],
 })
 export class NgPrimeModule { }

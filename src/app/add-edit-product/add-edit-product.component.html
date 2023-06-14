@@ -1,0 +1,51 @@
+<p-dropdown [autofocus]="true" styleClass="w-full h-10 mb-3" placeholder="Product Type"
+    [options]="productService.products" [(ngModel)]="selectedProduct" optionLabel="name" [filter]="true">
+</p-dropdown>
+<p-table *ngIf="selectedProduct" [value]="[selectedProduct]" styleClass="p-datatable-sm">
+    <ng-template pTemplate="body" let-product>
+        <tr>
+            <td><b>Company</b></td>
+            <td>{{ product.company }}</td>
+        </tr>
+        <tr>
+            <td><b>Area</b></td>
+            <td>{{ product.area }} m<sup>2</sup></td>
+        </tr>
+        <tr>
+            <td><b>Cells</b></td>
+            <td>{{ product.num_cells }}</td>
+        </tr>
+        <tr>
+            <td><b>Power Peak</b></td>
+            <td>{{ product.power_peak }} W</td>
+        </tr>
+    </ng-template>
+</p-table>
+<div class="w-full mb-3">
+    <p-dropdown styleClass="width-custom h-10" placeholder="Orientation" [options]="orientations"
+        [(ngModel)]="selectedOrientation">
+    </p-dropdown>
+    <p-button icon="pi pi-info" (onClick)="showInfoDialog('Orientation', selectedOrientation)"
+        styleClass="p-button-rounded p-button-danger p-button-outlined float-right"></p-button>
+</div>
+<div class="w-full mb-3">
+    <p-inputNumber styleClass="w-full h-10" class="width-custom" [(ngModel)]="tiltAngle" mode="decimal"
+        [maxFractionDigits]="10" suffix="°" placeholder="Tilt Angle" [showButtons]="true" [min]="0" [max]="90"
+        title="Min: 0, Max: 90"></p-inputNumber>
+    <p-button icon="pi pi-info" (onClick)="showInfoDialog('Tilt Angle', tiltAngle)"
+        styleClass="p-button-rounded p-button-danger p-button-outlined float-right"></p-button>
+</div>
+<p-divider align="center">
+    <div class="inline-flex align-items-center">
+        <i class="pi pi-map-marker mr-2"></i>
+        <b>Location</b>
+    </div>
+</p-divider>
+<p-inputNumber styleClass="w-full h-10 mb-3" class="width-full" [(ngModel)]="longitude" mode="decimal"
+    [maxFractionDigits]="14" suffix="°" placeholder="Longitude" [showButtons]="true" [min]="-180" [max]="180"
+    title="Min: -180, Max: 180"></p-inputNumber>
+<p-inputNumber styleClass="w-full h-10 mb-3" class="width-full" [(ngModel)]="latitude" mode="decimal"
+    [maxFractionDigits]="14" suffix="°" placeholder="Latitude" [showButtons]="true" [min]="-90" [max]="90"
+    title="Min: -90, Max: 90"></p-inputNumber>
+
+<p-button label="Submit" (onClick)="addProduct()" [disabled]="!isButtonEnabled()"></p-button>
