@@ -1,5 +1,6 @@
 <div class="flex items-center justify-center w-full h-full">
     <div class="w-full h-full">
+        <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
         <p-card header="Projects" styleClass="h-full">
             <p-fieldset legend="Create Project" styleClass="mb-6">
                 <span class="p-float-label mb-6">
@@ -17,10 +18,10 @@
                         [showClear]="true" [group]="true">
                     </p-dropdown>
                 </span>
-                <p-button label="Open Project" styleClass="float-right width-9" (onClick)="openProject()"
-                    [disabled]="!selectedProject"></p-button>
                 <p-button icon="pi pi-trash" styleClass="float-right btn-trash" (onClick)="deleteProject()"
                     [disabled]="!selectedProject" title="Delete Project"></p-button>
+                <p-button label="Open Project" styleClass="float-right width-9" (onClick)="openProject()"
+                    [disabled]="!selectedProject"></p-button>
                 <p-scrollPanel *ngIf="selectedProject" styleClass="proj-scrollPanel">
                     <ng-container *ngFor="let product of selectedProject.products; let i=index">
                         <p-card header="{{i+1}}) {{product.name}} ({{product.id}})"

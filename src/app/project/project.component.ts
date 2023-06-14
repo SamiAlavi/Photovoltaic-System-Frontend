@@ -5,11 +5,13 @@ import { ToastService } from '../services/toast.service';
 import { Router } from '@angular/router';
 import AppSettings from '../AppSettings';
 import { Helpers } from '../helpers/Helpers';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-project',
     templateUrl: './project.component.html',
-    styleUrls: ['./project.component.scss']
+    styleUrls: ['./project.component.scss'],
+    providers: [ConfirmationService],
 })
 export class ProjectComponent {
     projectId = "";
@@ -23,6 +25,7 @@ export class ProjectComponent {
         private projectService: ProjectService,
         private toastService: ToastService,
         private router: Router,
+        private confirmationService: ConfirmationService,
     ) {
         this.getProjects();
     }
@@ -68,10 +71,19 @@ export class ProjectComponent {
     }
 
     deleteProject() {
-        this.projectService.deleteProject(this.selectedProject).subscribe((isDeleted) => {
-            if (isDeleted) {
-                this.projects = this.projects.filter((proj) => proj !== this.selectedProject);
-                this.setupProjects(this.projects);
+        this.confirmationService.confirm({
+            message: `Are you sure that you want to delete the project (${this.selectedProject.id})?`,
+            header: 'Delete Profile',
+            icon: 'pi pi-exclamation-triangle text-red-700',
+            accept: () => {
+                this.projectService.deleteProject(this.selectedProject).subscribe((isDeleted) => {
+                    if (isDeleted) {
+                        this.projects = this.projects.filter((proj) => proj !== this.selectedProject);
+                        this.setupProjects(this.projects);
+                    }
+                });
+            },
+            reject: (type) => {
             }
         });
     }
