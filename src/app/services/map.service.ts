@@ -16,7 +16,6 @@ import { ToastService } from './toast.service';
 })
 export class MapService {
     private map!: Map;
-    private markerOptions: MarkerOptions = {};
     private readonly geocoder = geocoder({ accessToken: AppSettings.MapboxAccessToken });
     private readonly markers: { id: string, marker: mapboxgl.Marker; }[] = [];
     readonly locPopup = {
@@ -138,16 +137,19 @@ export class MapService {
     }
 
     showProductOnMap(product: IProductDetail) {
-        const marker = this.addMarker(product.id, product.lng, product.lat);
+        const marker = this.addMarker(product);
         this.setupMarkerPopup(marker, product.id);
     }
 
-    addMarker(id: string, lng: number, lat: number) {
-        const marker = new Marker(this.markerOptions)
-            .setLngLat([lng, lat])
+    addMarker(product: IProductDetail) {
+        const markerOptions: MarkerOptions = {
+            color: product.isActive ? '#2f855a' : '#c53030',
+        };
+        const marker = new Marker(markerOptions)
+            .setLngLat([product.lng, product.lat])
             .addTo(this.map);
 
-        this.markers.push({ id, marker });
+        this.markers.push({ id: product.id, marker: marker });
         return marker;
     }
 
@@ -169,7 +171,9 @@ export class MapService {
         markerElement.onmouseenter = () => {
             const product = this.projectService.currentProject.products.find((prod) => prod.id === productId);
             const html = Helpers.getHTMLFromProduct(product, 'black');
-            marker.getPopup().setHTML(html);
+            const popup = marker.getPopup();
+            popup.addClassName(product.isActive ? 'popup-active' : 'popup-inactive');
+            popup.setHTML(html);
             marker.togglePopup();
             this.locPopup.isVisible = false;
         };

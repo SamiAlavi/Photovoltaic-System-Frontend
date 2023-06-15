@@ -18,6 +18,19 @@
         .mapboxgl-popup {
             z-index: 10;
         }
+
+        .popup-active .mapboxgl-popup-content {
+            background-color: var(--green-700);
+        }
+
+        .popup-inactive .mapboxgl-popup-content {
+            background-color: var(--red-700);
+        }
+
+        .mapboxgl-popup-content div {
+
+            color: rgba(255, 255, 255, 0.87) !important;
+        }
     }
 
 }

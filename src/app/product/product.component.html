@@ -18,7 +18,14 @@
     <ng-container *ngIf="projectService.currentProject">
         <p-accordion [multiple]="true">
             <ng-container *ngFor="let product of projectService.currentProject.products; let index=index">
-                <p-accordionTab header="{{index+1}}) {{product.name}}">
+                <p-accordionTab>
+                    <ng-template pTemplate="header">
+                        <div class="flex align-items-center">
+                            <span class="vertical-align-middle"
+                                [ngClass]="product.isActive ? 'text-green-700' : 'text-red-700'">{{index+1}})
+                                {{product.name}}</span>
+                        </div>
+                    </ng-template>
                     <p-table [value]="[product]" styleClass="p-datatable-sm">
                         <ng-template pTemplate="body" let-product>
                             <tr>

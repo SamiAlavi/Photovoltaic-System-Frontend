@@ -40,7 +40,6 @@ export class AddEditProductComponent implements OnInit {
 
 
     ngOnInit() {
-        // Access the passed data
         const data: IProductDetail = this.config.data;
         if (data) {
             this.selectedProduct = this.productService.products.find((prod) => prod.name === data.name);
