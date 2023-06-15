@@ -1,5 +1,3 @@
-$customWidth: calc(100% - 60px);
-
 ::ng-deep {
     .p-tabview .p-tabview-nav li .p-tabview-nav-link {
         background: inherit;
@@ -30,20 +28,6 @@ $customWidth: calc(100% - 60px);
         .p-scrollpanel-content {
             padding-left: 1px;
         }
-    }
-
-    p-inputNumber {
-        input {
-            width: $customWidth;
-        }
-    }
-
-    .width-custom {
-        width: $customWidth;
-    }
-
-    .width-full {
-        width: 100%;
     }
 
     .p-accordion .p-accordion-content {

@@ -5,6 +5,7 @@ import { SessionService } from '../services/session.service';
 import AppSettings from '../AppSettings';
 import { Helpers } from '../helpers/Helpers';
 import { ProjectService } from '../services/project.service';
+import { ToastService } from '../services/toast.service';
 
 @Injectable({
     providedIn: 'root',
@@ -13,7 +14,9 @@ export class AuthGuard implements CanActivate {
     constructor(
         private sessionService: SessionService,
         private router: Router,
-        private projectService: ProjectService) {
+        private projectService: ProjectService,
+        private toastService: ToastService,
+    ) {
     }
 
     canActivate(activatedRoute: ActivatedRouteSnapshot): boolean {
@@ -30,6 +33,7 @@ export class AuthGuard implements CanActivate {
             return true;
         }
         else {
+            this.toastService.showWarnToast("Please choose a project");
             this.router.navigateByUrl(AppSettings.RouteProject);
             return false;
         }

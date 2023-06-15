@@ -1,1 +1,18 @@
+$customWidth: calc(100% - 60px);
 
+::ng-deep {
+    p-inputNumber {
+        input {
+            width: $customWidth;
+        }
+    }
+
+    .width-custom {
+        width: $customWidth;
+    }
+
+    .width-full {
+        width: 100%;
+    }
+
+}

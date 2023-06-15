@@ -128,6 +128,14 @@ export class MapService {
         });
     }
 
+    viewOnMap(product: IProductDetail) {
+        const zoom = 5;
+        const highlightDuration = 5000;
+        const marker = this.markers.find((markerData) => markerData.id === product.id).marker;
+        this.moveMap(product.lng, product.lat, zoom);
+        this.highlightMarker(marker, highlightDuration);
+    }
+
     moveMap(longitude: number, latitude: number, zoom = 5) {
         const options: CameraOptions = {
             center: [longitude, latitude],
@@ -149,18 +157,17 @@ export class MapService {
             .setLngLat([product.lng, product.lat])
             .addTo(this.map);
 
+
         this.markers.push({ id: product.id, marker: marker });
         return marker;
     }
 
     removeMarker(id: string) {
-        const markerData = this.markers.find(markerData => markerData.id === id);
-        if (markerData) {
-            const { marker } = markerData;
-            const index = this.markers.indexOf(markerData);
-
+        const markerIndex = this.markers.findIndex((markerData) => markerData.id === id);
+        if (markerIndex > -1) {
+            const marker = this.markers[markerIndex].marker;
             marker.remove();
-            this.markers.splice(index, 1);
+            this.markers.splice(markerIndex, 1);
         }
     }
 
@@ -214,4 +221,11 @@ export class MapService {
         }
         return region;
     };
+
+    private highlightMarker(marker: Marker, highlightDuration: number) {
+        marker.getElement().classList.add('highlighted-marker');
+        setTimeout(function () {
+            marker.getElement().classList.remove('highlighted-marker');
+        }, highlightDuration);
+    }
 }

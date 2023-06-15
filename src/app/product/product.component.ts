@@ -37,8 +37,7 @@ export class ProductComponent {
     }
 
     viewOnMap(product: IProductDetail) {
-        const zoom = 5;
-        this.mapService.moveMap(product.lng, product.lat, zoom);
+        this.mapService.viewOnMap(product);
     }
 
     addProduct() {
