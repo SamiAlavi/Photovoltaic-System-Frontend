@@ -5,12 +5,13 @@ import { Helpers } from '../helpers/Helpers';
 import { ProjectService } from '../services/project.service';
 import { IProductDetail } from '../helpers/interfaces';
 import { AddEditProductComponent } from '../add-edit-product/add-edit-product.component';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-product',
     templateUrl: './product.component.html',
     styleUrls: ['./product.component.scss'],
-    providers: [DialogService],
+    providers: [DialogService, ConfirmationService],
 })
 export class ProductComponent {
     @Input() sidebarVisible = false;
@@ -22,6 +23,7 @@ export class ProductComponent {
         protected projectService: ProjectService,
         private mapService: MapService,
         private dialogService: DialogService,
+        private confirmationService: ConfirmationService,
     ) {
     }
 
@@ -61,8 +63,17 @@ export class ProductComponent {
 
     deleteProduct(product: IProductDetail) {
         // ask for confirmation
-        this.projectService.deleteProduct(product).subscribe((_) => {
-            this.mapService.removeMarker(product.id);
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to delete the product?',
+            header: 'Delete Product',
+            icon: 'pi pi-exclamation-triangle text-red-700',
+            accept: () => {
+                this.projectService.deleteProduct(product).subscribe((_) => {
+                    this.mapService.removeMarker(product.id);
+                });
+            },
+            reject: () => {
+            }
         });
     }
 }

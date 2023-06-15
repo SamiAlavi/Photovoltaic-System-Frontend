@@ -1,6 +1,7 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
 <div class="flex items-center justify-center w-full h-full">
     <div class="w-full h-full">
-        <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
         <p-card header="Profile" styleClass="h-full">
             <p-table *ngIf="user" [value]="[user]" styleClass="h-full custom-table">
                 <ng-template pTemplate="body" let-product>
