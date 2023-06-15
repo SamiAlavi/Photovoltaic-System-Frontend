@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
             {
                 label: 'Products',
                 icon: 'https://www.svgrepo.com/download/297104/solar-panel.svg',
-                command: this.showProductsDialog,
+                command: this.toggleProductsDialog,
 
             },
             // {
@@ -33,8 +33,8 @@ export class DashboardComponent implements OnInit {
         ];
     }
 
-    private showProductsDialog = () => {
-        this.sidebarVisible = true;
+    private toggleProductsDialog = () => {
+        this.sidebarVisible = !this.sidebarVisible;
     };
 
 }
