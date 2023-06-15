@@ -13,7 +13,6 @@ import { ProductService } from '../services/product.service';
     selector: 'app-add-edit-product',
     templateUrl: './add-edit-product.component.html',
     styleUrls: ['./add-edit-product.component.scss'],
-    providers: [DialogService],
 })
 export class AddEditProductComponent implements OnInit {
 
@@ -49,7 +48,7 @@ export class AddEditProductComponent implements OnInit {
             this.longitude = data.lng;
             this.latitude = data.lat;
 
-            if (data.lng && data.lat) {
+            if (this.selectedProduct && this.selectedOrientation && this.tiltAngle && this.longitude && this.latitude) {
                 this.isEditMode = true;
             }
         }

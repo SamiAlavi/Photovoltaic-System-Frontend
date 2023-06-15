@@ -11,7 +11,7 @@ import { ConfirmationService } from 'primeng/api';
     selector: 'app-product',
     templateUrl: './product.component.html',
     styleUrls: ['./product.component.scss'],
-    providers: [DialogService, ConfirmationService],
+    providers: [ConfirmationService],
 })
 export class ProductComponent {
     @Input() sidebarVisible = false;

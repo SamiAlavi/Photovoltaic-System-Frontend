@@ -18,6 +18,7 @@ import { ProductComponent } from './product/product.component';
 import { FactorInfoDialogComponent } from './factor-info-dialog/factor-info-dialog.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AddEditProductComponent } from './add-edit-product/add-edit-product.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
     declarations: [
@@ -44,6 +45,7 @@ import { AddEditProductComponent } from './add-edit-product/add-edit-product.com
     ],
     providers: [
         MessageService,
+        DialogService,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
     ],
     bootstrap: [AppComponent]

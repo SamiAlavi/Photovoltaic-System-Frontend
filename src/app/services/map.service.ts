@@ -1,33 +1,125 @@
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { CameraOptions, Map, Marker, Popup, PopupOptions } from 'mapbox-gl';
+import { CameraOptions, LngLatLike, Map, Marker, MarkerOptions, Popup, PopupOptions } from 'mapbox-gl';
 import geocoder from '@mapbox/mapbox-sdk/services/geocoding';
-import { IProduct, IProductDetail } from '../helpers/interfaces';
+import { IProductDetail } from '../helpers/interfaces';
 import { Helpers } from '../helpers/Helpers';
 import AppSettings from '../AppSettings';
+import { AddEditProductComponent } from '../add-edit-product/add-edit-product.component';
+import { MAPBOX_STYLEURI } from '../helpers/enums';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ProjectService } from './project.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MapService {
-    private map!: mapboxgl.Map;
-    private markerOptions: mapboxgl.MarkerOptions = {};
+    private map!: Map;
+    private markerOptions: MarkerOptions = {};
     private readonly geocoder = geocoder({ accessToken: AppSettings.MapboxAccessToken });
     private readonly markers: { id: string, marker: mapboxgl.Marker; }[] = [];
     readonly locPopup = {
         popup: new Popup(),
-        timerId: null,
-        styleClass: 'text-black mapbox-popup',
-        time: 2000, //ms,
-        isVisible: true,
+        isVisible: false,
     };
+    private readonly STARTING_LOCATION: LngLatLike = [12.9167, 50.8333]; // Chemnitz
+    private readonly STARTING_ZOOM = 1;
+    isMarkerHovered = false;
 
-    constructor() {
+    ref: DynamicDialogRef;
+
+    constructor(
+        private projectService: ProjectService,
+        private dialogService: DialogService,
+    ) {
 
     }
 
-    setMapReferences(map: Map) {
-        this.map = map;
+    initMap(container: ElementRef) {
+        this.map = new Map({
+            accessToken: AppSettings.MapboxAccessToken,
+            container: container.nativeElement,
+            style: MAPBOX_STYLEURI.LIGHT,
+            center: this.STARTING_LOCATION,
+            zoom: this.STARTING_ZOOM,
+            renderWorldCopies: true,
+        });
+
+        this.map.on('style.load', () => {
+        });
+
+        this.map.on('load', () => {
+            this.mapAddControls();
+            this.mapMouse();
+            this.mapClick();
+            this.showProductsLocations();
+        });
+    }
+
+
+    mapMouse(): void {
+        this.map.on('mousemove', (e) => {
+            this.locPopup.popup.remove();
+            if (this.locPopup.isVisible) {
+                const { lng, lat } = e.lngLat;
+                const html = `
+                    <span><b>Longitude:</b> ${lng}</span><br>
+                    <span><b>Latitude:</b> ${lat}</span><br>
+                    <span>Click to add product to this location</span>`;
+                this.locPopup.popup = new Popup({
+                    closeButton: false,
+                    closeOnClick: true,
+                    closeOnMove: true,
+                    className: 'text-black mapbox-popup',
+                    maxWidth: '400px',
+                })
+                    .setLngLat(e.lngLat)
+                    .setHTML(html)
+                    .addTo(this.map);
+            }
+        });
+    }
+
+    mapClick() {
+        this.map.on('click', (e) => {
+            if (this.locPopup.isVisible) {
+                this.addNewProduct(e);
+            }
+        });
+    }
+    private editProduct(product: IProductDetail) {
+        this.ref = this.dialogService.open(AddEditProductComponent, {
+            header: `Edit Product`,
+            width: '70%',
+            dismissableMask: true,
+            contentStyle: { overflow: 'auto' },
+            data: product,
+        });
+    }
+
+    private addNewProduct(e: mapboxgl.MapMouseEvent & mapboxgl.EventData) {
+        this.ref = this.dialogService.open(AddEditProductComponent, {
+            header: `Add Product`,
+            width: '70%',
+            dismissableMask: true,
+            contentStyle: { overflow: 'auto' },
+            data: {
+                ...e.lngLat,
+            },
+        });
+    }
+
+    private mapAddControls() {
+        this.map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    }
+
+    private showProductsLocations() {
+        if (!this.projectService.currentProject) {
+            return;
+        }
+        this.projectService.currentProject.products.forEach((product) => {
+            this.showProductOnMap(product);
+        });
     }
 
     moveMap(longitude: number, latitude: number, zoom = 5) {
@@ -40,7 +132,7 @@ export class MapService {
 
     showProductOnMap(product: IProductDetail) {
         const marker = this.addMarker(product.id, product.lng, product.lat);
-        this.setupMarkerPopup(marker, product);
+        this.setupMarkerPopup(marker, product.id);
     }
 
     addMarker(id: string, lng: number, lat: number) {
@@ -64,26 +156,31 @@ export class MapService {
     }
 
 
-    setupMarkerPopup(marker: Marker, product: IProductDetail) {
-
+    setupMarkerPopup(marker: Marker, productId: string) {
         const markerElement = marker.getElement();
 
-        markerElement.addEventListener('mouseenter', () => {
-            this.locPopup.isVisible = false;
+        markerElement.onmouseenter = () => {
+            const product = this.projectService.currentProject.products.find((prod) => prod.id === productId);
+            const html = Helpers.getHTMLFromProduct(product, 'black');
+            marker.getPopup().setHTML(html);
             marker.togglePopup();
-        });
+            this.locPopup.isVisible = false;
+        };
 
-        markerElement.addEventListener('mouseleave', () => {
+        markerElement.onmouseleave = () => {
             this.locPopup.isVisible = true;
             marker.togglePopup();
-        });
+        };
 
-        // Add popup content
-        const html = Helpers.getHTMLFromProduct(product, 'black');
+        markerElement.onclick = () => {
+            const product = this.projectService.currentProject.products.find((prod) => prod.id === productId);
+            this.editProduct(product);
+        };
+
         const popupOptions: PopupOptions = {
             closeButton: false,
         };
-        const popup = new Popup(popupOptions).setHTML(html);
+        const popup = new Popup(popupOptions);
         marker.setPopup(popup);
     }
 
