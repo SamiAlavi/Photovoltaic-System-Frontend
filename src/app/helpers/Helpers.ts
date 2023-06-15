@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { IProductDetail } from "./interfaces";
 
 const keysMapper: { [key: string]: string; } = {
+    id: "ID",
     area: "Area",
     orientation: "Orientation",
     lng: "Longitude",
@@ -38,10 +39,11 @@ export class Helpers {
 
     static getHTMLFromProduct(product: IProductDetail, color: string): string {
         const style = `style="color: ${color};"`;
+        const object = this.sortObjectKeys(product);
         let html = `<div ${style}>`;
-        for (let [key, value] of Object.entries(product)) {
+        for (let [key, value] of Object.entries(object)) {
             if (key === "id") {
-                continue;
+                // continue;
             }
             else if (key === "isActive") {
                 value = product.isActive ? 'Active' : 'Inactive';
@@ -68,5 +70,11 @@ export class Helpers {
         const formattedDateTime = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         return formattedDateTime;
 
+    }
+
+    private static sortObjectKeys(object: Object): Object {
+        const sortedArray = Object.entries(object).sort();
+        const sortedObj = Object.fromEntries(sortedArray);
+        return sortedObj;
     }
 }
