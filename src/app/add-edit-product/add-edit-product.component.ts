@@ -26,6 +26,7 @@ export class AddEditProductComponent implements OnInit {
     longitude!: number;
 
     isEditMode = false;
+    label = "Add";
 
     constructor(
         protected productService: ProductService,
@@ -50,6 +51,7 @@ export class AddEditProductComponent implements OnInit {
 
             if (this.selectedProduct && this.selectedOrientation && this.tiltAngle && this.longitude && this.latitude) {
                 this.isEditMode = true;
+                this.label = "Edit";
             }
         }
     }

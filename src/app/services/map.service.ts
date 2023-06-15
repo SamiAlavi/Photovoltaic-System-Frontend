@@ -9,6 +9,7 @@ import { AddEditProductComponent } from '../add-edit-product/add-edit-product.co
 import { MAPBOX_STYLEURI } from '../helpers/enums';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ProjectService } from './project.service';
+import { ToastService } from './toast.service';
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +32,7 @@ export class MapService {
     constructor(
         private projectService: ProjectService,
         private dialogService: DialogService,
+        private toastService: ToastService,
     ) {
 
     }
@@ -88,13 +90,18 @@ export class MapService {
         });
     }
     private editProduct(product: IProductDetail) {
-        this.ref = this.dialogService.open(AddEditProductComponent, {
-            header: `Edit Product`,
-            width: '70%',
-            dismissableMask: true,
-            contentStyle: { overflow: 'auto' },
-            data: product,
-        });
+        if (product.isActive) {
+            this.ref = this.dialogService.open(AddEditProductComponent, {
+                header: `Edit Product`,
+                width: '70%',
+                dismissableMask: true,
+                contentStyle: { overflow: 'auto' },
+                data: product,
+            });
+        }
+        else {
+            this.toastService.showErrorToast("Cannot edit product as it is readonly");
+        }
     }
 
     private addNewProduct(e: mapboxgl.MapMouseEvent & mapboxgl.EventData) {
