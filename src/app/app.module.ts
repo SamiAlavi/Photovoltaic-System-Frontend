@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgPrimeModule } from './ngprime.module';
 import { AuthComponent } from './auth/auth.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { ProjectComponent } from './project/project.component';
@@ -19,6 +19,7 @@ import { FactorInfoDialogComponent } from './factor-info-dialog/factor-info-dial
 import { ProfileComponent } from './profile/profile.component';
 import { AddEditProductComponent } from './add-edit-product/add-edit-product.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { EditDeleteChooserComponent } from './edit-delete-chooser/edit-delete-chooser.component';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { DialogService } from 'primeng/dynamicdialog';
         FactorInfoDialogComponent,
         ProfileComponent,
         AddEditProductComponent,
+        EditDeleteChooserComponent,
     ],
     imports: [
         BrowserModule,
@@ -46,6 +48,7 @@ import { DialogService } from 'primeng/dynamicdialog';
     providers: [
         MessageService,
         DialogService,
+        ConfirmationService,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
     ],
     bootstrap: [AppComponent]

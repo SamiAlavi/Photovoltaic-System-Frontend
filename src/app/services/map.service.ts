@@ -10,6 +10,7 @@ import { MAPBOX_STYLEURI } from '../helpers/enums';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ProjectService } from './project.service';
 import { ToastService } from './toast.service';
+import { EditDeleteChooserComponent } from '../edit-delete-chooser/edit-delete-chooser.component';
 
 @Injectable({
     providedIn: 'root'
@@ -26,12 +27,9 @@ export class MapService {
     private readonly STARTING_ZOOM = 1;
     isMarkerHovered = false;
 
-    ref: DynamicDialogRef;
-
     constructor(
         private projectService: ProjectService,
         private dialogService: DialogService,
-        private toastService: ToastService,
     ) {
 
     }
@@ -88,23 +86,19 @@ export class MapService {
             }
         });
     }
-    private editProduct(product: IProductDetail) {
-        if (product.isActive) {
-            this.ref = this.dialogService.open(AddEditProductComponent, {
-                header: `Edit Product`,
-                width: '70%',
-                dismissableMask: true,
-                contentStyle: { overflow: 'auto' },
-                data: product,
-            });
-        }
-        else {
-            this.toastService.showErrorToast("Cannot edit product as it is readonly");
-        }
+
+    private editDeleteProductChooser(product: IProductDetail) {
+        this.dialogService.open(EditDeleteChooserComponent, {
+            header: product.name,
+            //width: '70%',
+            dismissableMask: true,
+            contentStyle: { overflow: 'auto' },
+            data: product,
+        });
     }
 
     private addNewProduct(e: mapboxgl.MapMouseEvent & mapboxgl.EventData) {
-        this.ref = this.dialogService.open(AddEditProductComponent, {
+        this.dialogService.open(AddEditProductComponent, {
             header: `Add Product`,
             width: '70%',
             dismissableMask: true,
@@ -192,7 +186,7 @@ export class MapService {
 
         markerElement.onclick = () => {
             const product = this.projectService.currentProject.products.find((prod) => prod.id === productId);
-            this.editProduct(product);
+            this.editDeleteProductChooser(product);
         };
 
         const popupOptions: PopupOptions = {

@@ -48,4 +48,4 @@
     [maxFractionDigits]="14" suffix="°" placeholder="Latitude" [showButtons]="true" [min]="-90" [max]="90"
     title="Min: -90, Max: 90" [disabled]="isEditMode"></p-inputNumber>
 
-<p-button [label]="label" (onClick)="onSubmit()" [disabled]="!isButtonEnabled()"></p-button>
+<p-button label="Save" (onClick)="onSubmit()" [disabled]="!isButtonEnabled()"></p-button>

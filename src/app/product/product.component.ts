@@ -11,13 +11,10 @@ import { ConfirmationService } from 'primeng/api';
     selector: 'app-product',
     templateUrl: './product.component.html',
     styleUrls: ['./product.component.scss'],
-    providers: [ConfirmationService],
 })
 export class ProductComponent {
     @Input() sidebarVisible = false;
     @Output() sidebarVisibleChange = new EventEmitter<any>();
-
-    ref: DynamicDialogRef;
 
     constructor(
         protected projectService: ProjectService,
@@ -41,7 +38,7 @@ export class ProductComponent {
     }
 
     addProduct() {
-        this.ref = this.dialogService.open(AddEditProductComponent, {
+        this.dialogService.open(AddEditProductComponent, {
             header: `Add Product`,
             width: '70%',
             dismissableMask: true,
@@ -50,8 +47,7 @@ export class ProductComponent {
     }
 
     editProduct(product: IProductDetail) {
-        // update marker on map
-        this.ref = this.dialogService.open(AddEditProductComponent, {
+        this.dialogService.open(AddEditProductComponent, {
             header: `Edit Product`,
             width: '70%',
             dismissableMask: true,
@@ -61,7 +57,6 @@ export class ProductComponent {
     }
 
     deleteProduct(product: IProductDetail) {
-        // ask for confirmation
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete the product?',
             header: 'Delete Product',

@@ -11,7 +11,6 @@ import { ConfirmationService } from 'primeng/api';
     selector: 'app-project',
     templateUrl: './project.component.html',
     styleUrls: ['./project.component.scss'],
-    providers: [ConfirmationService],
 })
 export class ProjectComponent {
     projectId = "";
