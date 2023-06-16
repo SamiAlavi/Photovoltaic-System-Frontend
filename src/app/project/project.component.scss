@@ -3,26 +3,12 @@
         display: inline;
     }
 
-    .custom-width {
-
-        &.p-inputtext,
-        &.p-dropdown {
-            &.proj-new {
-                width: 90%;
-            }
-
-            &.proj-select {
-                width: 86%;
-            }
-        }
-    }
-
     .p-button.width-9 {
         width: 9%;
     }
 
     .proj-scrollPanel {
-        height: 37vh;
+        height: 29vh;
     }
 
     .prod-active {
@@ -34,6 +20,6 @@
     }
 
     .btn-trash {
-        margin-left: 1rem;
+        width: 100% !important;
     }
 }
