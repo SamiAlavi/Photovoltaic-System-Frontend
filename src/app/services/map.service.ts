@@ -90,7 +90,6 @@ export class MapService {
     private editDeleteProductChooser(product: IProductDetail) {
         this.dialogService.open(EditDeleteChooserComponent, {
             header: product.name,
-            //width: '70%',
             dismissableMask: true,
             contentStyle: { overflow: 'auto' },
             data: product,
