@@ -49,6 +49,7 @@ interface IProductDetail extends IProduct {
     timestamp: number,
     region: string,
     isActive: boolean,
+    report?: any,
 }
 
 interface IAddProductRequest {

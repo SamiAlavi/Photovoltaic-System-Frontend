@@ -7,13 +7,16 @@ class AppSettings {
     private static ApiUrl = `${this.BaseUrl}api/`;
 
     private static AuthUrl = `${this.ApiUrl}`;
+
     static SignupUrl = `${this.AuthUrl}signup`;
     static SigninUrl = `${this.AuthUrl}signin`;
     static SignoutUrl = `${this.AuthUrl}signout`;
+
     static ProjectUrl = `${this.ApiUrl}project`;
     static ProductUrl = `${this.ApiUrl}product`;
     static UpdateProfileUrl = `${this.ApiUrl}profile`;
     static AddProductUrl = `${this.ProjectUrl}/product`;
+    static ProductReportUrl = `${this.AddProductUrl}/report`;
 
     static RouteDefault = "";
     static RouteSignup = "signup";

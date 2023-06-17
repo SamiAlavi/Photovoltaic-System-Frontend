@@ -101,4 +101,17 @@ export class ProjectService {
         }));
 
     }
+
+    generateProductReport(product: IProductDetail): Observable<any> {
+        if (!this.currentProject) {
+            return of(false);
+        }
+        const body: IAddProductRequest = {
+            projectId: this.currentProject.id,
+            product: product,
+        };
+        return this.http.post<any>(AppSettings.ProductReportUrl, body).pipe(map((_) => {
+            return true;
+        }));
+    }
 }
