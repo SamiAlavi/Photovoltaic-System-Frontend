@@ -8,7 +8,15 @@
     }
 
     .proj-scrollPanel {
-        height: 29vh;
+        height: 38vh;
+
+        @media (max-height: 700px) {
+            height: 30vh;
+        }
+
+        @media (max-height: 650px) {
+            height: 25vh;
+        }
     }
 
     .prod-active {
@@ -19,7 +27,7 @@
         background-color: var(--red-700);
     }
 
-    .btn-trash {
+    .btn-icon {
         width: 100% !important;
     }
 }

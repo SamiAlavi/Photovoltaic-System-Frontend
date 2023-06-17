@@ -2,48 +2,59 @@
     <div class="w-full h-full">
         <p-card header="Projects" styleClass="h-full">
             <p-fieldset legend="Create Project" styleClass="mb-6">
-                <div class="flex flex-col lg:flex-row">
-                    <div class="w-full lg:flex lg:items-center">
+                <div #createProjectDiv class="flex flex-row">
+                    <div class="w-full flex items-center">
                         <span class="p-float-label w-full">
-                            <input type="text" id="projectName" class="w-full lg:custom-width proj-new" pInputText
+                            <input type="text" id="projectName" class="w-full proj-new" pInputText
                                 [(ngModel)]="projectId" [minlength]="1" [maxlength]="20" />
                             <label htmlFor="projectName">Project Name</label>
                         </span>
                     </div>
-                    <div class="w-full lg:w-1/5 lg:pl-2 lg:flex lg:justify-end mt-4 lg:mt-0">
-                        <p-button label="Create Project" class="w-full mb-2 lg:mb-0" styleClass="w-full"
+                    <div class="w-1/5 pl-2 flex justify-end mt-0">
+                        <p-button *ngIf="!isBreakpointReached" label="Create Project" class="w-full" styleClass="w-full"
                             (onClick)="createProject()" [disabled]="!projectId"></p-button>
+                        <p-button *ngIf="isBreakpointReached" icon="pi pi-plus" class="w-full"
+                            styleClass="w-full btn-icon" (onClick)="createProject()" [disabled]="!projectId"
+                            pTooltip="Create Project"></p-button>
                     </div>
                 </div>
             </p-fieldset>
             <p-fieldset legend="Choose Project">
-                <div class="flex flex-col lg:flex-row mb-6">
-                    <div class="w-full lg:flex lg:items-center">
-                        <p-dropdown class="w-full" styleClass="w-full proj-select" placeholder="Project Name"
-                            [options]="groupedProjects" [(ngModel)]="selectedProject" optionLabel="id" [filter]="true"
-                            [showClear]="true" [group]="true">
-                        </p-dropdown>
+                <div #chooseProjectDiv>
+                    <div class="flex flex-row mb-6">
+                        <div class="w-full flex items-center">
+                            <p-dropdown class="w-full" styleClass="w-full proj-select" placeholder="Project Name"
+                                [options]="groupedProjects" [(ngModel)]="selectedProject" optionLabel="id"
+                                [filter]="true" [showClear]="true" [group]="true">
+                            </p-dropdown>
+                        </div>
+                        <div class="w-1/5 pl-2 flex justify-end mt-0">
+                            <p-button *ngIf="!isBreakpointReached" label="Open Project" class="w-2/3 mr-2"
+                                styleClass="w-full" (onClick)="openProject()" [disabled]="!selectedProject"></p-button>
+                            <span class="mb-2 block"></span>
+                            <p-button *ngIf="isBreakpointReached" icon="pi pi-folder-open" class="w-2/3 mr-2"
+                                styleClass="w-full btn-icon" (onClick)="openProject()" [disabled]="!selectedProject"
+                                pTooltip="Open Project"></p-button>
+                            <span class="mb-2 block"></span>
+                            <p-button icon="pi pi-trash" class="w-1/3" styleClass="w-full btn-icon"
+                                (onClick)="deleteProject()" [disabled]="!selectedProject"
+                                title="Delete Project"></p-button>
+                        </div>
                     </div>
-                    <div class="w-full lg:w-1/5 lg:pl-2 lg:flex lg:justify-end mt-4 lg:mt-0">
-                        <p-button label="Open Project" class="w-2/3 mr-2" styleClass="w-full" (onClick)="openProject()"
-                            [disabled]="!selectedProject"></p-button>
-                        <span class="mb-2 block"></span>
-                        <p-button icon="pi pi-trash" class="w-1/3" styleClass="w-full btn-trash"
-                            (onClick)="deleteProject()" [disabled]="!selectedProject" title="Delete Project"></p-button>
-                    </div>
-                </div>
-                <span class="mb-6"></span>
-                <p-scrollPanel *ngIf="selectedProject" styleClass="proj-scrollPane">
-                    <ng-container *ngFor="let product of selectedProject.products; let i=index">
-                        <p-card header="{{i+1}}) {{product.name}} ({{product.id}})"
-                            [title]="product.isActive ? 'Active' : 'Inactive'"
-                            [styleClass]="product.isActive ? 'prod-active mb-2' : 'prod-inactive mb-2'">
-                            <p class="m-0" [innerHTML]="getHtml(product)">
+                    <span class="mb-6"></span>
+                    <p-scrollPanel *ngIf="selectedProject" styleClass="proj-scrollPanel">
+                        <ng-container *ngFor="let product of selectedProject.products; let i=index">
+                            <p-card header="{{i+1}}) {{product.name}} ({{product.id}})"
+                                [title]="product.isActive ? 'Active' : 'Inactive'"
+                                [styleClass]="product.isActive ? 'prod-active mb-2' : 'prod-inactive mb-2'">
+                                <p class="m-0" [innerHTML]="getHtml(product)">
 
-                            </p>
-                        </p-card>
-                    </ng-container>
-                </p-scrollPanel>
+                                </p>
+                            </p-card>
+                        </ng-container>
+                    </p-scrollPanel>
+
+                </div>
             </p-fieldset>
         </p-card>
     </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ProjectService } from '../services/project.service';
 import { IProductDetail, IProject } from '../helpers/interfaces';
 import { ToastService } from '../services/toast.service';
@@ -12,10 +12,14 @@ import { ConfirmationService } from 'primeng/api';
     templateUrl: './project.component.html',
     styleUrls: ['./project.component.scss'],
 })
-export class ProjectComponent {
+export class ProjectComponent implements AfterViewInit {
+    @ViewChild('createProjectDiv') createProjectDiv!: ElementRef;
+    @ViewChild('chooseProjectDiv') chooseProjectDiv!: ElementRef;
+
     projectId = "";
     selectedProject!: IProject;
     selectedProjectId!: string;
+    isBreakpointReached = false;
     projects: IProject[] = [];
     projectsIds: string[] = [];
     groupedProjects: { label: string, items: IProject[]; }[] = [];
@@ -26,6 +30,7 @@ export class ProjectComponent {
         private router: Router,
         private confirmationService: ConfirmationService,
     ) {
+        this.onResize();
         this.getProjects();
     }
     private getProjects() {
@@ -34,6 +39,15 @@ export class ProjectComponent {
                 this.setupProjects(projects);
             }
         });
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+
+            const createProjectHeight = this.createProjectDiv.nativeElement.offsetHeight;
+            const chooseProjectHeight = this.chooseProjectDiv.nativeElement.offsetHeight;
+            console.log(createProjectHeight, chooseProjectHeight);
+        }, 10000);
     }
 
     private setupProjects(projects: IProject[]) {
@@ -90,5 +104,13 @@ export class ProjectComponent {
     getHtml(product: IProductDetail): string {
         const color = "rgba(255, 255, 255, 0.87)";
         return Helpers.getHTMLFromProduct(product, color);
+    }
+
+    @HostListener('window:resize')
+    onResize() {
+        const windowWidth = window.innerWidth;
+        const breakpoint = 1240; // Adjust this value according to your breakpoint
+
+        this.isBreakpointReached = windowWidth <= breakpoint;
     }
 }
