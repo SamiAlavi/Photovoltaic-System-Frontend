@@ -34,4 +34,13 @@
         padding-top: 0px;
     }
 
+    .p-datatable.p-datatable-sm.p-datatable-xsm .p-datatable-tbody>tr>td {
+        padding: 0.2rem 0.2rem;
+        font-size: 16px;
+
+        &:nth-child(1) {
+            font-weight: bold;
+        }
+    }
+
 }
