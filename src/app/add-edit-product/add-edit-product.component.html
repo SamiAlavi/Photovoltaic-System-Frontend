@@ -35,6 +35,8 @@
     <p-button icon="pi pi-info" (onClick)="showInfoDialog('Tilt Angle', tiltAngle)"
         styleClass="p-button-rounded p-button-danger p-button-outlined float-right"></p-button>
 </div>
+<p-inputNumber styleClass="w-full h-10 mb-3" class="width-full" [(ngModel)]="numPanels" placeholder="Num Panels"
+    [showButtons]="true" [min]="1"></p-inputNumber>
 <p-divider align="center">
     <div class="inline-flex align-items-center">
         <i class="pi pi-map-marker mr-2"></i>

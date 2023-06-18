@@ -15,7 +15,8 @@ const keysMapper: { [key: string]: string; } = {
     num_cells: "Cells",
     timestamp: "Created At",
     region: "Region",
-    isActive: "Status"
+    isActive: "Status",
+    num_panels: "Panels"
 };
 
 export class Helpers {

@@ -24,6 +24,7 @@ export class AddEditProductComponent implements OnInit {
     tiltAngle!: number;
     latitude!: number;
     longitude!: number;
+    numPanels!: number;
 
     isEditMode = false;
 
@@ -46,8 +47,9 @@ export class AddEditProductComponent implements OnInit {
             this.tiltAngle = data.tiltAngle;
             this.longitude = data.lng;
             this.latitude = data.lat;
+            this.numPanels = data.num_panels;
 
-            if (this.selectedProduct && this.selectedOrientation && this.tiltAngle && this.longitude && this.latitude) {
+            if (this.isButtonEnabled()) {
                 this.isEditMode = true;
             }
         }
@@ -81,7 +83,8 @@ export class AddEditProductComponent implements OnInit {
             this.selectedOrientation &&
             Helpers.isTypeNumber(this.tiltAngle) &&
             this.isLongitudeValid()) &&
-            this.isLatitudeValid();
+            this.isLatitudeValid() &&
+            Helpers.isTypeNumber(this.numPanels);
     }
 
     showProductOnMap(product: IProductDetail) {
@@ -119,6 +122,7 @@ export class AddEditProductComponent implements OnInit {
             region: region,
             timestamp: timestamp,
             isActive: isActive,
+            num_panels: this.numPanels,
             lng: this.longitude,
             lat: this.latitude,
         };
@@ -147,6 +151,7 @@ export class AddEditProductComponent implements OnInit {
             region: region,
             timestamp: timestamp,
             isActive: isActive,
+            num_panels: this.numPanels,
             lng: this.longitude,
             lat: this.latitude,
         };
@@ -161,6 +166,15 @@ export class AddEditProductComponent implements OnInit {
                 const message = "Error Editing Product";
                 this.toastService.showErrorToast(message);
             }
+        });
+
+    }
+
+    test() {
+        const product: IProductDetail = this.config.data;
+
+        this.projectService.generateProductReport(product).subscribe((aa) => {
+            console.log(aa);
         });
 
     }

@@ -21,7 +21,7 @@ export class MapService {
     private readonly markers: { id: string, marker: mapboxgl.Marker; }[] = [];
     readonly locPopup = {
         popup: new Popup(),
-        isVisible: false,
+        isVisible: true,
     };
     private readonly STARTING_LOCATION: LngLatLike = [12.9167, 50.8333]; // Chemnitz
     private readonly STARTING_ZOOM = 1;
