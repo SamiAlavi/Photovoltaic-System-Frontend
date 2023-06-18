@@ -40,20 +40,25 @@ export class Helpers {
     }
 
     static getHTMLFromProduct(product: IProductDetail, color: string): string {
+        const temp = {};
+        for (let [key, value] of Object.entries(product)) {
+            temp[keysMapper[key]] = value;
+        }
+
         const style = `style="color: ${color};"`;
-        const object = this.sortObjectKeys(product);
+        const object = this.sortObjectKeys(temp);
         let html = `<div ${style}>`;
         for (let [key, value] of Object.entries(object)) {
-            if (key === "id") {
+            if (key === "ID") {
                 // continue;
             }
-            else if (key === "isActive") {
+            else if (key === "Status") {
                 value = product.isActive ? 'Active' : 'Inactive';
             }
-            else if (key === "timestamp") {
+            else if (key === "Created At") {
                 value = this.getFormattedDateTimeFromTimestamp(value);
             }
-            html += `<b>${keysMapper[key]}</b>: ${value} <br>`;
+            html += `<b>${key}</b>: ${value} <br>`;
         }
         html += "</div>";
         return html;
