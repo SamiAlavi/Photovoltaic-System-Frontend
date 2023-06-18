@@ -16,7 +16,8 @@ const keysMapper: { [key: string]: string; } = {
     timestamp: "Created At",
     region: "Region",
     isActive: "Status",
-    num_panels: "Panels"
+    num_panels: "Panels",
+    model: "Model",
 };
 
 export class Helpers {

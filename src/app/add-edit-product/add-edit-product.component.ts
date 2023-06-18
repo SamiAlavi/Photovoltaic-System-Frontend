@@ -15,12 +15,11 @@ import { ProductService } from '../services/product.service';
     styleUrls: ['./add-edit-product.component.scss'],
 })
 export class AddEditProductComponent implements OnInit {
+    orientations = [ORIENTATION.NORTH, ORIENTATION.EAST, ORIENTATION.SOUTH, ORIENTATION.WEST];
 
     selectedProduct!: IProduct;
-
-    orientations = [ORIENTATION.NORTH, ORIENTATION.EAST, ORIENTATION.SOUTH, ORIENTATION.WEST];;
     selectedOrientation!: ORIENTATION;
-
+    name!: string;
     tiltAngle!: number;
     latitude!: number;
     longitude!: number;
@@ -42,7 +41,8 @@ export class AddEditProductComponent implements OnInit {
     ngOnInit() {
         const data: IProductDetail = this.config.data;
         if (data) {
-            this.selectedProduct = this.productService.products.find((prod) => prod.name === data.name);
+            this.name = data.name;
+            this.selectedProduct = this.productService.products.find((prod) => prod.model === data.model);
             this.selectedOrientation = data.orientation;
             this.tiltAngle = data.tiltAngle;
             this.longitude = data.lng;
@@ -84,7 +84,8 @@ export class AddEditProductComponent implements OnInit {
             Helpers.isTypeNumber(this.tiltAngle) &&
             this.isLongitudeValid()) &&
             this.isLatitudeValid() &&
-            Helpers.isTypeNumber(this.numPanels);
+            Helpers.isTypeNumber(this.numPanels) &&
+            this.name;
     }
 
     showProductOnMap(product: IProductDetail) {
@@ -117,11 +118,12 @@ export class AddEditProductComponent implements OnInit {
         const product: IProductDetail = {
             ...this.selectedProduct,
             id: id,
-            orientation: this.selectedOrientation,
-            tiltAngle: this.tiltAngle,
             region: region,
             timestamp: timestamp,
             isActive: isActive,
+            name: this.name,
+            orientation: this.selectedOrientation,
+            tiltAngle: this.tiltAngle,
             num_panels: this.numPanels,
             lng: this.longitude,
             lat: this.latitude,
@@ -146,11 +148,12 @@ export class AddEditProductComponent implements OnInit {
         const product: IProductDetail = {
             ...this.selectedProduct,
             id: id,
-            orientation: this.selectedOrientation,
-            tiltAngle: this.tiltAngle,
             region: region,
             timestamp: timestamp,
             isActive: isActive,
+            name: this.name,
+            orientation: this.selectedOrientation,
+            tiltAngle: this.tiltAngle,
             num_panels: this.numPanels,
             lng: this.longitude,
             lat: this.latitude,

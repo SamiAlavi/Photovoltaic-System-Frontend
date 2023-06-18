@@ -1,5 +1,8 @@
-<p-dropdown [autofocus]="true" styleClass="w-full h-10 mb-3" placeholder="Product Type"
-    [options]="productService.products" [(ngModel)]="selectedProduct" optionLabel="name" [filter]="true">
+<input type="text" pInputText [autofocus]="true" class="w-full prod-name" [(ngModel)]="name"
+    placeholder="Product Name" />
+
+<p-dropdown styleClass="w-full h-10 mb-3" placeholder="Product Type" [options]="productService.products"
+    [(ngModel)]="selectedProduct" optionLabel="model" [filter]="true">
 </p-dropdown>
 <p-table *ngIf="selectedProduct" [value]="[selectedProduct]" styleClass="p-datatable-sm">
     <ng-template pTemplate="body" let-product>
