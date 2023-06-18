@@ -79,7 +79,7 @@ export class Helpers {
 
     }
 
-    private static sortObjectKeys(object: Object): Object {
+    static sortObjectKeys(object: Object): Object {
         const sortedArray = Object.entries(object).sort();
         const sortedObj = Object.fromEntries(sortedArray);
         return sortedObj;

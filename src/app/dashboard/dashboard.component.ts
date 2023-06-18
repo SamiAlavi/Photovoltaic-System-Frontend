@@ -8,7 +8,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class DashboardComponent implements OnInit {
     items: MenuItem[] = [];
-    sidebarVisible = false;
+    sidebarVisible = true;
 
     constructor() {
 

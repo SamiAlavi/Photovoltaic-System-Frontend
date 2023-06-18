@@ -3,7 +3,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MapService } from '../services/map.service';
 import { Helpers } from '../helpers/Helpers';
 import { ProjectService } from '../services/project.service';
-import { IProductDetail, IReportData } from '../helpers/interfaces';
+import { IProductDetail } from '../helpers/interfaces';
 import { AddEditProductComponent } from '../add-edit-product/add-edit-product.component';
 import { ConfirmationService } from 'primeng/api';
 import { WeatherReportChartComponent } from '../weather-report-chart/weather-report-chart.component';

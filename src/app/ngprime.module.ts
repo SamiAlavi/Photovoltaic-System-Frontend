@@ -20,6 +20,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DividerModule } from 'primeng/divider';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
     exports: [
@@ -43,6 +44,7 @@ import { DividerModule } from 'primeng/divider';
         AutoFocusModule,
         ConfirmDialogModule,
         DividerModule,
+        ChartModule,
     ],
 })
 export class NgPrimeModule { }

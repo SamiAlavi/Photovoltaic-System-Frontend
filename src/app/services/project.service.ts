@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import AppSettings from '../AppSettings';
-import { IAddProductRequest, IDeleteProjectRequest, IProductDetail, IProject, IReportData } from '../helpers/interfaces';
+import { IAddProductRequest, IDeleteProjectRequest, IProductDetail, IProject, IReportJSON } from '../helpers/interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -114,7 +114,7 @@ export class ProjectService {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.post<any>(AppSettings.ProductReportUrl, body).pipe(map((weatherData: IReportData) => {
+        return this.http.post<any>(AppSettings.ProductReportUrl, body).pipe(map((weatherData: IReportJSON) => {
             if (weatherData) {
                 product.isActive = false;
                 product.report = weatherData;
