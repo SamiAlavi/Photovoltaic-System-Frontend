@@ -173,13 +173,4 @@ export class AddEditProductComponent implements OnInit {
 
     }
 
-    test() {
-        const product: IProductDetail = this.config.data;
-
-        this.projectService.generateProductReport(product).subscribe((aa) => {
-            console.log(aa);
-        });
-
-    }
-
 }

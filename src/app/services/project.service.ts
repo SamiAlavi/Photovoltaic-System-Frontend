@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import AppSettings from '../AppSettings';
-import { IAddProductRequest, IDeleteProjectRequest, IProductDetail, IProject } from '../helpers/interfaces';
+import { IAddProductRequest, IDeleteProjectRequest, IProductDetail, IProject, IReportData } from '../helpers/interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -64,13 +64,17 @@ export class ProjectService {
             product: product,
         };
         return this.http.put<void>(AppSettings.AddProductUrl, body).pipe(map((_) => {
-            const prodIndex = this.currentProject.products.findIndex((prod) => prod.id === product.id);
-            if (prodIndex > -1) {
-                this.currentProject.products[prodIndex] = product;
-            }
-            this.cacheProject(this.currentProject);
+            this.updateLocalProduct(product);
             return true;
         }));
+    }
+
+    private updateLocalProduct(product: IProductDetail) {
+        const prodIndex = this.currentProject.products.findIndex((prod) => prod.id === product.id);
+        if (prodIndex > -1) {
+            this.currentProject.products[prodIndex] = product;
+        }
+        this.cacheProject(this.currentProject);
     }
 
     deleteProduct(product: IProductDetail): Observable<boolean> {
@@ -110,8 +114,13 @@ export class ProjectService {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.post<any>(AppSettings.ProductReportUrl, body).pipe(map((_) => {
-            return true;
+        return this.http.post<any>(AppSettings.ProductReportUrl, body).pipe(map((weatherData: IReportData) => {
+            if (weatherData) {
+                product.isActive = false;
+                product.report = weatherData;
+                this.updateLocalProduct(product);
+            }
+            return weatherData;
         }));
     }
 }

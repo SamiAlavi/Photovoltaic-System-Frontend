@@ -51,7 +51,7 @@ interface IProductDetail extends IProduct {
     region: string,
     isActive: boolean,
     num_panels: number,
-    report?: any,
+    report?: IReportData,
 }
 
 interface IAddProductRequest {
@@ -60,6 +60,16 @@ interface IAddProductRequest {
 }
 interface IDeleteProjectRequest {
     projectId: string,
+}
+
+interface IReportDataRow {
+    datetime: string,
+    solarradiation: number,
+    electricityGenerated?: number,
+}
+
+interface IReportData {
+    [key: string]: IReportDataRow[],
 }
 
 export {
@@ -72,4 +82,5 @@ export {
     IDeleteProjectRequest,
     ICustomUserRecord,
     IProfile,
+    IReportData,
 };

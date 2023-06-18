@@ -3,9 +3,10 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MapService } from '../services/map.service';
 import { Helpers } from '../helpers/Helpers';
 import { ProjectService } from '../services/project.service';
-import { IProductDetail } from '../helpers/interfaces';
+import { IProductDetail, IReportData } from '../helpers/interfaces';
 import { AddEditProductComponent } from '../add-edit-product/add-edit-product.component';
 import { ConfirmationService } from 'primeng/api';
+import { WeatherReportChartComponent } from '../weather-report-chart/weather-report-chart.component';
 
 @Component({
     selector: 'app-product',
@@ -68,6 +69,31 @@ export class ProductComponent {
             },
             reject: () => {
             }
+        });
+    }
+
+    generateReport(product: IProductDetail) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to generate the report for last 30 days? The product will go into read-only state.',
+            header: 'Generate Product Report',
+            icon: 'pi pi-exclamation-triangle text-red-700',
+            accept: () => {
+                this.projectService.generateProductReport(product).subscribe((_) => {
+                    this.viewReport(product);
+                });
+            },
+            reject: () => {
+            }
+        });
+    }
+
+    viewReport(product: IProductDetail) {
+        this.dialogService.open(WeatherReportChartComponent, {
+            header: `Weather Report - ${product.name}`,
+            width: '70%',
+            dismissableMask: true,
+            contentStyle: { overflow: 'auto' },
+            data: product.report
         });
     }
 }
