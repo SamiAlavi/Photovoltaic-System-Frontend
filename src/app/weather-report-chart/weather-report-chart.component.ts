@@ -8,7 +8,7 @@ import { IReportJSON } from '../helpers/interfaces';
     styleUrls: ['./weather-report-chart.component.scss']
 })
 export class WeatherReportChartComponent {
-    weatherData!: any;
+    reportData!: any;
     options!: any;
 
     constructor(
@@ -31,7 +31,49 @@ export class WeatherReportChartComponent {
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-        console.log(data.datetimes);
-        console.log(data.electrictyProduced);
+
+        this.reportData = {
+            labels: data.datetimes,
+            datasets: [
+                {
+                    label: 'Electricity Produced',
+                    data: data.electrictyProduced,
+                    fill: true,
+                    tension: 0.4
+                },
+            ]
+        };
+
+        this.options = {
+            maintainAspectRatio: false,
+            aspectRatio: 0.6,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                }
+            }
+        };
     }
 }
