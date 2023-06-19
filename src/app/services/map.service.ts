@@ -1,6 +1,6 @@
 import { ElementRef, Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { CameraOptions, LngLatLike, Map, Marker, MarkerOptions, Popup, PopupOptions } from 'mapbox-gl';
+import { CameraOptions, LngLat, LngLatLike, Map, Marker, MarkerOptions, NavigationControl, Popup, PopupOptions } from 'mapbox-gl';
 import geocoder from '@mapbox/mapbox-sdk/services/geocoding';
 import { IProductDetail } from '../helpers/interfaces';
 import { Helpers } from '../helpers/Helpers';
@@ -11,6 +11,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ProjectService } from './project.service';
 import { ToastService } from './toast.service';
 import { EditDeleteChooserComponent } from '../edit-delete-chooser/edit-delete-chooser.component';
+import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 @Injectable({
     providedIn: 'root'
@@ -42,9 +43,6 @@ export class MapService {
             center: this.STARTING_LOCATION,
             zoom: this.STARTING_ZOOM,
             renderWorldCopies: true,
-        });
-
-        this.map.on('style.load', () => {
         });
 
         this.map.on('load', () => {
@@ -82,7 +80,8 @@ export class MapService {
     mapClick() {
         this.map.on('click', (e) => {
             if (this.locPopup.isVisible) {
-                this.addNewProduct(e);
+                const lngLat = e.lngLat;
+                this.addNewProduct(lngLat.lng, lngLat.lat);
             }
         });
     }
@@ -96,20 +95,52 @@ export class MapService {
         });
     }
 
-    private addNewProduct(e: mapboxgl.MapMouseEvent & mapboxgl.EventData) {
+    private addNewProduct(lng: number, lat: number) {
         this.dialogService.open(AddEditProductComponent, {
             header: `Add Product`,
             width: '70%',
             dismissableMask: true,
             contentStyle: { overflow: 'auto' },
             data: {
-                ...e.lngLat,
+                lng: lng,
+                lat: lat,
             },
         });
     }
 
     private mapAddControls() {
-        this.map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+        this.setupGeocoder();
+
+        this.map.addControl(new NavigationControl({
+            showCompass: true,
+            showZoom: true,
+            visualizePitch: true,
+        }), 'top-right');
+    }
+
+    private setupGeocoder() {
+        const geocoder = new MapboxGeocoder({
+            accessToken: AppSettings.MapboxAccessToken,
+            types: 'place,district',
+        });
+        geocoder.on("result", ({ result }) => {
+            const lngLat: [number, number] = result.geometry.coordinates;
+            setTimeout(() => {
+                this.addNewProduct(lngLat[0], lngLat[1]);
+            }, 2000);
+        });
+
+        this.map.addControl(geocoder, 'top-right');
+
+        const geocoderContainer = document.querySelector('.mapboxgl-ctrl-geocoder');
+        geocoderContainer.addEventListener('mouseenter', () => {
+            this.locPopup.popup.remove();
+            this.locPopup.isVisible = false;
+        });
+
+        geocoderContainer.addEventListener('mouseleave', () => {
+            this.locPopup.isVisible = true;
+        });
     }
 
     private showProductsLocations() {
@@ -134,7 +165,7 @@ export class MapService {
             center: [longitude, latitude],
             zoom: zoom,
         };
-        this.map.jumpTo(options);
+        this.map.flyTo(options);
     }
 
     showProductOnMap(product: IProductDetail) {
@@ -149,7 +180,6 @@ export class MapService {
         const marker = new Marker(markerOptions)
             .setLngLat([product.lng, product.lat])
             .addTo(this.map);
-
 
         this.markers.push({ id: product.id, marker: marker });
         return marker;
@@ -201,7 +231,8 @@ export class MapService {
             const response = await this.geocoder.reverseGeocode({
                 query: [lng, lat],
                 types: ['place', 'district'],
-                limit: 1
+                limit: 1,
+                language: ['en'],
             }).send();
 
             if (response?.body?.features.length) {
