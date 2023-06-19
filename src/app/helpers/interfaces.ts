@@ -62,10 +62,16 @@ interface IDeleteProjectRequest {
     projectId: string,
 }
 
-interface IReportJSON {
+interface IReportJSONRow {
     datetimes: string[],
     electrictyProduced: number[],
 }
+
+interface IReportJSON {
+    hourly: IReportJSONRow,
+    daily: IReportJSONRow,
+}
+
 
 
 export {

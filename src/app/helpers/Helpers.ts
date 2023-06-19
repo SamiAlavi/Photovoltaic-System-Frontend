@@ -21,6 +21,7 @@ const keysMapper: { [key: string]: string; } = {
 };
 
 export class Helpers {
+    private static skipKeys = ["report"];
     static getActivatedRoute(activatedRoute: ActivatedRoute | ActivatedRouteSnapshot): string {
         if (activatedRoute instanceof ActivatedRoute) {
             return activatedRoute.snapshot.url.join('/');
@@ -42,15 +43,16 @@ export class Helpers {
     static getHTMLFromProduct(product: IProductDetail, color: string): string {
         const temp = {};
         for (let [key, value] of Object.entries(product)) {
-            temp[keysMapper[key]] = value;
+            const newKey = keysMapper[key] ?? key;
+            temp[newKey] = value;
         }
 
         const style = `style="color: ${color};"`;
         const object = this.sortObjectKeys(temp);
         let html = `<div ${style}>`;
         for (let [key, value] of Object.entries(object)) {
-            if (key === "ID") {
-                // continue;
+            if (this.skipKeys.includes(key)) {
+                continue;
             }
             else if (key === "Status") {
                 value = product.isActive ? 'Active' : 'Inactive';

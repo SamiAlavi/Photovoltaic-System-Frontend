@@ -21,6 +21,7 @@ import { AutoFocusModule } from 'primeng/autofocus';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @NgModule({
     exports: [
@@ -45,6 +46,7 @@ import { ChartModule } from 'primeng/chart';
         ConfirmDialogModule,
         DividerModule,
         ChartModule,
+        SelectButtonModule,
     ],
 })
 export class NgPrimeModule { }
