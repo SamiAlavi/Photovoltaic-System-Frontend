@@ -80,6 +80,8 @@ export class ProductComponent {
             accept: () => {
                 this.projectService.generateProductReport(product).subscribe((_) => {
                     this.viewReport(product);
+                    this.mapService.removeMarker(product.id);
+                    this.mapService.addMarker(product);
                 });
             },
             reject: () => {
@@ -90,7 +92,8 @@ export class ProductComponent {
     viewReport(product: IProductDetail) {
         this.dialogService.open(WeatherReportChartComponent, {
             header: `Electricity Generation Report - ${product.name}`,
-            width: '70%',
+            width: '100%',
+            height: '100%',
             dismissableMask: true,
             maximizable: true,
             contentStyle: { overflow: 'auto' },

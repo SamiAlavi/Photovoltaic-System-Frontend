@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IReportJSON } from '../helpers/interfaces';
 
@@ -7,9 +7,12 @@ import { IReportJSON } from '../helpers/interfaces';
     templateUrl: './weather-report-chart.component.html',
     styleUrls: ['./weather-report-chart.component.scss']
 })
-export class WeatherReportChartComponent {
+export class WeatherReportChartComponent implements OnInit {
     reportData!: any;
     options!: any;
+    stateOptions = [{ label: 'Hourly', value: 'hourly' }, { label: 'Daily', value: 'daily' }];
+    value = 'hourly';
+    private data!: IReportJSON;
 
     constructor(
         private dialogService: DialogService,
@@ -19,32 +22,22 @@ export class WeatherReportChartComponent {
 
 
     ngOnInit() {
-        const data: IReportJSON = this.config.data;
-        if (data) {
-            this.initChart(data);
+        this.data = this.config.data;
+        if (this.data) {
+            this.initChart();
         }
     }
 
-    initChart(data: IReportJSON) {
+    initChart() {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-
-        this.reportData = {
-            labels: data.datetimes,
-            datasets: [
-                {
-                    label: 'Electricity Produced',
-                    data: data.electrictyProduced,
-                    fill: true,
-                    tension: 0.4
-                },
-            ]
-        };
+        this.onChange("hourly");
 
         this.options = {
+            responsive: true,
             maintainAspectRatio: false,
             aspectRatio: 0.6,
             plugins: {
@@ -71,9 +64,32 @@ export class WeatherReportChartComponent {
                     grid: {
                         color: surfaceBorder,
                         drawBorder: false
-                    }
-                }
+                    },
+                },
             }
+        };
+    };
+
+    onChange(type: string) {
+        if (type === "hourly") {
+            this.setXYData(this.data.hourly.datetimes, this.data.hourly.electrictyProduced);
+        }
+        else if (type === "daily") {
+            this.setXYData(this.data.daily.datetimes, this.data.daily.electrictyProduced);
+        }
+    }
+
+    private setXYData(xAxis: string[], yAxis: number[]) {
+        this.reportData = {
+            labels: xAxis,
+            datasets: [
+                {
+                    label: 'Electricity Produced',
+                    data: yAxis,
+                    fill: true,
+                    tension: 0.4
+                },
+            ]
         };
     }
 }
