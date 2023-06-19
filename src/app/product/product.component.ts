@@ -91,7 +91,7 @@ export class ProductComponent {
 
     viewReport(product: IProductDetail) {
         this.dialogService.open(WeatherReportChartComponent, {
-            header: `Electricity Generation Report - ${product.name}`,
+            header: `Electricity Generation Report - ${product.name} (${product.id})`,
             width: '100%',
             height: '100%',
             dismissableMask: true,

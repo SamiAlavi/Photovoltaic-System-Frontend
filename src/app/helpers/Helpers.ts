@@ -86,4 +86,8 @@ export class Helpers {
         const sortedObj = Object.fromEntries(sortedArray);
         return sortedObj;
     }
+
+    static convertDatetime(datetimeString: string | number): string {
+        return `${datetimeString}`.replace(":00:00", ":00");
+    }
 }

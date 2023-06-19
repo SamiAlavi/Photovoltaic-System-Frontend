@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IReportJSON } from '../helpers/interfaces';
+import { ChartOptions } from 'chart.js';
+import { Helpers } from '../helpers/Helpers';
 
 @Component({
     selector: 'app-weather-report-chart',
@@ -9,7 +11,7 @@ import { IReportJSON } from '../helpers/interfaces';
 })
 export class WeatherReportChartComponent implements OnInit {
     reportData!: any;
-    options!: any;
+    options!: ChartOptions;
     stateOptions = [{ label: 'Hourly', value: 'hourly' }, { label: 'Daily', value: 'daily' }];
     value = 'hourly';
     private data!: IReportJSON;
@@ -24,6 +26,7 @@ export class WeatherReportChartComponent implements OnInit {
     ngOnInit() {
         this.data = this.config.data;
         if (this.data) {
+            this.data.hourly.datetimes = this.data.hourly.datetimes.map((val) => Helpers.convertDatetime(val));
             this.initChart();
         }
     }
@@ -40,32 +43,48 @@ export class WeatherReportChartComponent implements OnInit {
             responsive: true,
             maintainAspectRatio: false,
             aspectRatio: 0.6,
+            animation: {
+                duration: 2000,
+            },
             plugins: {
                 legend: {
                     labels: {
                         color: textColor
                     }
-                }
+                },
             },
             scales: {
                 x: {
+                    title: {
+                        display: true,
+                        text: 'Datetime',
+                        color: textColorSecondary,
+                    },
                     ticks: {
-                        color: textColorSecondary
+                        color: textColorSecondary,
+                        stepSize: 24, // Step size between major ticks
                     },
                     grid: {
                         color: surfaceBorder,
-                        drawBorder: false
                     }
                 },
                 y: {
+                    type: 'linear',
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Electricity Generated (kWh)',
+                        color: textColorSecondary,
+                    },
                     ticks: {
-                        color: textColorSecondary
+                        color: textColorSecondary,
+                        callback: value => `${value} kWh`,
                     },
                     grid: {
                         color: surfaceBorder,
-                        drawBorder: false
                     },
                 },
+
             }
         };
     };
@@ -84,10 +103,11 @@ export class WeatherReportChartComponent implements OnInit {
             labels: xAxis,
             datasets: [
                 {
-                    label: 'Electricity Produced',
+                    label: 'Electricity Generated',
                     data: yAxis,
                     fill: true,
-                    tension: 0.4
+                    tension: 0.2,
+                    pointHoverRadius: 15,
                 },
             ]
         };
