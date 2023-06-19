@@ -12,7 +12,7 @@ import { ConfirmationService } from 'primeng/api';
     templateUrl: './project.component.html',
     styleUrls: ['./project.component.scss'],
 })
-export class ProjectComponent implements AfterViewInit {
+export class ProjectComponent {
     @ViewChild('createProjectDiv') createProjectDiv!: ElementRef;
     @ViewChild('chooseProjectDiv') chooseProjectDiv!: ElementRef;
 
@@ -39,15 +39,6 @@ export class ProjectComponent implements AfterViewInit {
                 this.setupProjects(projects);
             }
         });
-    }
-
-    ngAfterViewInit() {
-        setTimeout(() => {
-
-            const createProjectHeight = this.createProjectDiv.nativeElement.offsetHeight;
-            const chooseProjectHeight = this.chooseProjectDiv.nativeElement.offsetHeight;
-            console.log(createProjectHeight, chooseProjectHeight);
-        }, 10000);
     }
 
     private setupProjects(projects: IProject[]) {

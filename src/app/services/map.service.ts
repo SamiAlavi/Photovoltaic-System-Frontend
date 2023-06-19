@@ -236,7 +236,7 @@ export class MapService {
             }).send();
 
             if (response?.body?.features.length) {
-                region = response.body.features[0].text;
+                region = response.body.features[0]['text_en'];
                 return region;
             }
         }
