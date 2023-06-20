@@ -1,7 +1,11 @@
 <div class="flex justify-between">
     <p-selectButton [options]="stateOptions" [(ngModel)]="value" (ngModelChange)="onStateChange($event)"
         optionLabel="label" optionValue="value"></p-selectButton>
-    <p-menu #menu [model]="downloadOptions" [popup]="true" [styleClass]="'top-123-px'"></p-menu>
-    <p-button (onClick)="menu.toggle($event)" icon="pi pi-save" label="Download"></p-button>
+    <span class="p-buttonset">
+        <ng-container *ngFor="let item of downloadOptions">
+            <p-button [icon]="item.icon" [label]="item.label" (onClick)="item.command()"
+                [pTooltip]="'Download '+item.label" tooltipPosition="left"></p-button>
+        </ng-container>
+    </span>
 </div>
 <p-chart #chart type="line" [data]="reportData" [options]="options"></p-chart>
