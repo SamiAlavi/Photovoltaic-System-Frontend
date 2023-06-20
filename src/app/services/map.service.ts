@@ -157,7 +157,7 @@ export class MapService {
         const highlightDuration = 5000;
         const marker = this.markers.find((markerData) => markerData.id === product.id).marker;
         this.moveMap(product.lng, product.lat, zoom);
-        this.highlightMarker(marker, highlightDuration);
+        this.glowMarker(marker, highlightDuration, product.isActive);
     }
 
     moveMap(longitude: number, latitude: number, zoom = 5) {
@@ -246,10 +246,12 @@ export class MapService {
         return region;
     };
 
-    private highlightMarker(marker: Marker, highlightDuration: number) {
-        marker.getElement().classList.add('highlighted-marker');
-        setTimeout(function () {
-            marker.getElement().classList.remove('highlighted-marker');
+    private glowMarker(marker: Marker, highlightDuration: number, isActive: boolean) {
+        const markerElement = marker.getElement();
+        const className = `glow-marker-${isActive ? 'green' : 'red'}`;
+        markerElement.classList.add(className);
+        setTimeout(() => {
+            markerElement.classList.remove(className);
         }, highlightDuration);
     }
 }

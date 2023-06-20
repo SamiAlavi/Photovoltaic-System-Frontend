@@ -31,25 +31,25 @@
             color: rgba(255, 255, 255, 0.87) !important;
         }
 
-        .highlighted-marker {
-            animation: glowing 1s infinite;
+        .glow-marker-red {
+            --glow-color: rgba(255, 0, 0, 1);
+            animation: glowing 0.5s infinite alternate ease-in-out;
         }
 
+        .glow-marker-green {
+            --glow-color: rgba(0, 255, 0, 1);
+            animation: glowing 0.5s infinite alternate ease-in-out;
+        }
     }
 
 }
 
-
 @keyframes glowing {
     0% {
-        filter: drop-shadow(0 0px 12px rgba(0, 0, 0, 1));
-    }
-
-    50% {
-        filter: drop-shadow(0 -8px 7px rgba(255, 0, 0, 1));
+        filter: drop-shadow(0 0px 0px rgba(0, 0, 0, 1)) saturate(1);
     }
 
     100% {
-        filter: drop-shadow(0 0px 0px rgba(0, 0, 0, 1));
+        filter: drop-shadow(0 0px 20px var(--glow-color)) saturate(5);
     }
 }
