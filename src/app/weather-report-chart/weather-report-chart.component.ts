@@ -44,12 +44,15 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
     }
 
     initChart() {
+        this.setOptions();
+        this.onStateChange("hourly");
+    };
+
+    setOptions() {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-        this.onStateChange("hourly");
 
         this.options = {
             responsive: true,
@@ -99,19 +102,18 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
 
             }
         };
-    };
+
+    }
 
     onStateChange(type: string) {
         if (type === "hourly") {
             this.setXYData(this.data.hourly.datetimes, this.data.hourly.electrictyProduced);
+            this.options.scales['x']['title']['text'] = "Datetimes";
         }
         else if (type === "daily") {
             this.setXYData(this.data.daily.datetimes, this.data.daily.electrictyProduced);
+            this.options.scales['x']['title']['text'] = "Dates";
         }
-    }
-
-    showMenu() {
-
     }
 
     private setXYData(xAxis: string[], yAxis: number[]) {
@@ -131,7 +133,6 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
 
     downloadJSON() {
         const jsonData = this.data;
-
         const jsonBlob = new Blob([JSON.stringify(jsonData, null, 4)], { type: 'application/json' });
         const dataUrl = URL.createObjectURL(jsonBlob);
         this.download(dataUrl, "json");
