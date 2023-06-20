@@ -9,27 +9,28 @@ export class ToastService {
 
     constructor(private messageService: MessageService) { }
 
-    showSuccessToast(detail: string) {
-        this.showToast(TOAST_SEVERITY.SUCCCESS, "Success", detail);
+    showSuccessToast(detail: string, duration = 3000) {
+        this.showToast(TOAST_SEVERITY.SUCCCESS, "Success", detail, duration);
     }
 
-    showInfoToast(detail: string) {
-        this.showToast(TOAST_SEVERITY.INFO, "Info", detail);
+    showInfoToast(detail: string, duration = 3000) {
+        this.showToast(TOAST_SEVERITY.INFO, "Info", detail, duration);
     }
 
-    showWarnToast(detail: string) {
-        this.showToast(TOAST_SEVERITY.WARN, "Warning", detail);
+    showWarnToast(detail: string, duration = 3000) {
+        this.showToast(TOAST_SEVERITY.WARN, "Warning", detail, duration);
     }
 
-    showErrorToast(detail: string) {
-        this.showToast(TOAST_SEVERITY.ERROR, "Error", detail);
+    showErrorToast(detail: string, duration = 3000) {
+        this.showToast(TOAST_SEVERITY.ERROR, "Error", detail, duration);
     }
 
-    private showToast(severity: TOAST_SEVERITY, summary: string, detail: string) {
+    private showToast(severity: TOAST_SEVERITY, summary: string, detail: string, duration: number) {
         this.messageService.add({
             severity: severity,
             summary: summary,
             detail: detail,
+            life: duration,
         });
     }
 

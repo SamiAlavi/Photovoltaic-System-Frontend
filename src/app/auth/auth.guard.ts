@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate {
             return true;
         }
         else {
-            this.toastService.showWarnToast("Please choose a project");
+            this.toastService.showWarnToast("Please choose a project", 1000);
             this.router.navigateByUrl(AppSettings.RouteProject);
             return false;
         }

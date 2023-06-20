@@ -8,7 +8,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class DashboardComponent implements OnInit {
     items: MenuItem[] = [];
-    sidebarVisible = false;
+    sidebarVisible = true;
 
     constructor() {
 
@@ -22,14 +22,6 @@ export class DashboardComponent implements OnInit {
                 command: this.toggleProductsDialog,
 
             },
-            // {
-            //     label: 'Photos',
-            //     icon: 'https://primefaces.org/cdn/primeng/images/dock/photos.svg'
-            // },
-            // {
-            //     label: 'Trash',
-            //     icon: 'https://primefaces.org/cdn/primeng/images/dock/trash.png'
-            // }
         ];
     }
 
