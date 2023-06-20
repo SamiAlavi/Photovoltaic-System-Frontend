@@ -1,3 +1,7 @@
-<p-selectButton [options]="stateOptions" [(ngModel)]="value" (ngModelChange)="onChange($event)" optionLabel="label"
-    optionValue="value"></p-selectButton>
-<p-chart type="line" [data]="reportData" [options]="options"></p-chart>
+<div class="flex justify-between">
+    <p-selectButton [options]="stateOptions" [(ngModel)]="value" (ngModelChange)="onStateChange($event)"
+        optionLabel="label" optionValue="value"></p-selectButton>
+    <p-menu #menu [model]="downloadOptions" [popup]="true" [styleClass]="'top-123-px'"></p-menu>
+    <p-button (onClick)="menu.toggle($event)" icon="pi pi-save" label="Download"></p-button>
+</div>
+<p-chart #chart type="line" [data]="reportData" [options]="options"></p-chart>

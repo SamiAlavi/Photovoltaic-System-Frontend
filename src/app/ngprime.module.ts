@@ -23,6 +23,7 @@ import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { BadgeModule } from 'primeng/badge';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
     exports: [
@@ -49,6 +50,7 @@ import { BadgeModule } from 'primeng/badge';
         ChartModule,
         SelectButtonModule,
         BadgeModule,
+        MenuModule,
     ],
 })
 export class NgPrimeModule { }
