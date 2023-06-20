@@ -20,8 +20,8 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
 
     stateOptions = [{ label: 'Hourly', value: 'hourly' }, { label: 'Daily', value: 'daily' }];
     downloadOptions = [
-        { label: 'JSON', icon: 'pi pi-file', value: 'json', command: () => this.downloadJSON() },
-        { label: 'PNG', icon: 'pi pi-image', value: 'png', command: () => this.downloadCanvasAsPNG() }
+        { label: 'JSON', icon: 'pi pi-file', value: 'json', command: this.downloadJSON },
+        { label: 'PNG', icon: 'pi pi-image', value: 'png', command: this.downloadCanvasAsPNG }
     ];
     value = 'hourly';
 
