@@ -1,15 +1,14 @@
 import { ElementRef, Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { CameraOptions, LngLat, LngLatLike, Map, Marker, MarkerOptions, NavigationControl, Popup, PopupOptions } from 'mapbox-gl';
+import { CameraOptions, LngLatLike, Map, Marker, MarkerOptions, NavigationControl, Popup, PopupOptions } from 'mapbox-gl';
 import geocoder from '@mapbox/mapbox-sdk/services/geocoding';
 import { IProductDetail } from '../helpers/interfaces';
 import { Helpers } from '../helpers/Helpers';
 import AppSettings from '../AppSettings';
 import { AddEditProductComponent } from '../add-edit-product/add-edit-product.component';
 import { MAPBOX_STYLEURI } from '../helpers/enums';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService } from 'primeng/dynamicdialog';
 import { ProjectService } from './project.service';
-import { ToastService } from './toast.service';
 import { EditDeleteChooserComponent } from '../edit-delete-chooser/edit-delete-chooser.component';
 import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
@@ -125,6 +124,7 @@ export class MapService {
         const geocoder = new MapboxGeocoder({
             accessToken: AppSettings.MapboxAccessToken,
             types: 'place,district',
+            marker: false,
         });
         geocoder.on("result", ({ result }) => {
             const lngLat: [number, number] = result.geometry.coordinates;
