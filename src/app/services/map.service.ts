@@ -57,7 +57,6 @@ export class MapService {
         this.moveMap(this.STARTING_LOCATION[0], this.STARTING_LOCATION[1], this.STARTING_ZOOM);
     }
 
-
     mapMouse(): void {
         this.map.on('mousemove', (e) => {
             this.locPopup.popup.remove();
@@ -158,7 +157,7 @@ export class MapService {
 
     viewOnMap(product: IProductDetail) {
         const zoom = 5;
-        const highlightDuration = 5000;
+        const highlightDuration = 5500;
         const marker = this.markers.find((markerData) => markerData.id === product.id).marker;
         this.moveMap(product.lng, product.lat, zoom);
         this.glowMarker(marker, highlightDuration, product.isActive);
