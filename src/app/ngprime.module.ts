@@ -22,6 +22,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { BadgeModule } from 'primeng/badge';
 
 @NgModule({
     exports: [
@@ -47,6 +48,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
         DividerModule,
         ChartModule,
         SelectButtonModule,
+        BadgeModule,
     ],
 })
 export class NgPrimeModule { }
