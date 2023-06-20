@@ -100,4 +100,12 @@ export class ProductComponent {
             data: product.report
         });
     }
+
+    onAccordionTabOpen(event: any) {
+        this.viewOnMap(this.projectService.currentProject.products[event.index]);
+    }
+
+    onAccordionTabClose() {
+        this.mapService.resetMapStartingView();
+    }
 }

@@ -53,6 +53,10 @@ export class MapService {
         });
     }
 
+    resetMapStartingView() {
+        this.moveMap(this.STARTING_LOCATION[0], this.STARTING_LOCATION[1], this.STARTING_ZOOM);
+    }
+
 
     mapMouse(): void {
         this.map.on('mousemove', (e) => {

@@ -14,7 +14,7 @@
 
 <ng-template #TShowProducts>
     <ng-container *ngIf="projectService.currentProject">
-        <p-accordion [multiple]="true">
+        <p-accordion [multiple]="true" (onOpen)="onAccordionTabOpen($event)" (onClose)="onAccordionTabClose()">
             <ng-container *ngFor="let product of projectService.currentProject.products; let index=index">
                 <p-accordionTab>
                     <ng-template pTemplate="header">
