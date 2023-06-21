@@ -42,7 +42,7 @@ export class AuthService {
     }
 
     updateProfile(profile: IProfile) {
-        return this.http.post(AppSettings.UpdateProfileUrl, profile);
+        return this.http.put(AppSettings.UpdateProfileUrl, profile);
     }
 
     deleteProfile() {

@@ -39,7 +39,7 @@ export class ProfileComponent {
                 email: this.user.email,
                 ...this.form.value
             };
-            this.authService.updateProfile(profile).subscribe((response) => {
+            this.authService.updateProfile(profile).subscribe(() => {
                 this.toastService.showSuccessToast("Profile Updated Sucessfully");
             });
         }
