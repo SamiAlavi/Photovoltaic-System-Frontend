@@ -23,8 +23,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
-        const token = localStorage.getItem(this.SESSION_KEY) ?? "{}";
-        const { accessToken, uid } = JSON.parse(token);
+        const { accessToken, uid } = this.sessionService.getSession();
 
         if (!(accessToken && uid)) {
             return next.handle(req);
