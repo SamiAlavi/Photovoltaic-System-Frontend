@@ -13,7 +13,7 @@
 </p-sidebar>
 
 <ng-template #TShowProducts>
-    <ng-container *ngIf="projectService.currentProject">
+    <ng-container *ngIf="projectService.currentProject?.products.length">
         <p-accordion [multiple]="true" (onOpen)="onAccordionTabOpen($event)" (onClose)="onAccordionTabClose()">
             <ng-container *ngFor="let product of projectService.currentProject.products; let index=index">
                 <p-accordionTab>
