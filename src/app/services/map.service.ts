@@ -125,11 +125,16 @@ export class MapService {
             accessToken: AppSettings.MapboxAccessToken,
             types: 'place,district',
             marker: false,
+            collapsed: false,
+            clearOnBlur: false,
+            enableEventLogging: false,
+
         });
         geocoder.on("result", ({ result }) => {
             const lngLat: [number, number] = result.geometry.coordinates;
             setTimeout(() => {
                 this.addNewProduct(lngLat[0], lngLat[1]);
+                geocoder.clear();
             }, 2000);
         });
 

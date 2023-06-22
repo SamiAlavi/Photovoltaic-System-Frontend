@@ -18,6 +18,10 @@ interface ICustomUserRecord {
     exp?: number,
 }
 
+interface ISuccessResponse {
+    message: "Success",
+}
+
 interface IProduct {
     id: string,
     model: string,
@@ -73,10 +77,9 @@ interface IReportJSON {
     daily: IReportJSONRow,
 }
 
-
-
 export {
     IUserCredentials,
+    ISuccessResponse,
     IProject,
     IProduct,
     IFactorRow,

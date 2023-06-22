@@ -2,7 +2,7 @@ import AppSettings from '../AppSettings';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { ICustomUserRecord, IProfile, IUserCredentials } from '../helpers/interfaces';
+import { ICustomUserRecord, IProfile, ISuccessResponse, IUserCredentials } from '../helpers/interfaces';
 import { SessionService } from './session.service';
 import { ProjectService } from './project.service';
 
@@ -23,14 +23,11 @@ export class AuthService {
     }
 
     signin(userCredentials: IUserCredentials): Observable<void> {
-        return this.http.post<ICustomUserRecord>(AppSettings.SigninUrl, userCredentials).pipe(map((response) => {
-            this.sessionService.saveSession(response);
-            return;
-        }));
+        return this.createProfile(userCredentials);
     }
 
     signout(): Observable<void> {
-        return this.http.delete(AppSettings.SignoutUrl).pipe(map(() => {
+        return this.http.delete<ISuccessResponse>(AppSettings.SignoutUrl).pipe(map(() => {
             this.sessionService.clearSession();
             this.projectService.clearProjects();
             return;
@@ -41,12 +38,19 @@ export class AuthService {
         return this.sessionService.isAuthenticated();
     }
 
-    updateProfile(profile: IProfile) {
-        return this.http.put(AppSettings.UpdateProfileUrl, profile);
+    private createProfile(userCredentials: IUserCredentials): Observable<void> {
+        return this.http.post<ICustomUserRecord>(AppSettings.SigninUrl, userCredentials).pipe(map((response) => {
+            this.sessionService.saveSession(response);
+            return;
+        }));
     }
 
-    deleteProfile() {
-        return this.http.delete(AppSettings.UpdateProfileUrl).pipe(map(() => {
+    updateProfile(profile: IProfile): Observable<ISuccessResponse> {
+        return this.http.put<ISuccessResponse>(AppSettings.UpdateProfileUrl, profile);
+    }
+
+    deleteProfile(): Observable<Observable<void>> {
+        return this.http.delete<ISuccessResponse>(AppSettings.UpdateProfileUrl).pipe(map(() => {
             return this.signout();
         }));
     }

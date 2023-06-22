@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 import AppSettings from '../AppSettings';
-import { IAddProductRequest, IDeleteProjectRequest, IProductDetail, IProject, IReportJSON } from '../helpers/interfaces';
+import { IAddProductRequest, IDeleteProjectRequest, IProductDetail, IProject, IReportJSON, ISuccessResponse } from '../helpers/interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +14,8 @@ export class ProjectService {
 
     constructor(private http: HttpClient) {
     }
+
+    // projects
 
     getProjects(): Observable<IProject[]> {
         if (this.projects.length) {
@@ -27,6 +29,20 @@ export class ProjectService {
         return this.http.post<IProject>(AppSettings.ProjectUrl, body);
     }
 
+    deleteProject(project: IProject): Observable<boolean> {
+        if (!this.currentProject) {
+            return of(false);
+        }
+        const body: IDeleteProjectRequest = {
+            projectId: project.id,
+        };
+        return this.http.delete<boolean>(AppSettings.ProjectUrl, { body: body }).pipe(map((response) => {
+            this.clearCache();
+            return response;
+        }));
+
+    }
+
     clearProjects() {
         this.projects = [];
         this.currentProject = null;
@@ -36,9 +52,11 @@ export class ProjectService {
         this.currentProject = selectedProject;
     }
 
-    clearCache() {
+    private clearCache() {
         this.currentProject = null;
     }
+
+    // product
 
     addProduct(product: IProductDetail): Observable<boolean> {
         if (!this.currentProject) {
@@ -48,10 +66,10 @@ export class ProjectService {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.post<void>(AppSettings.AddProductUrl, body).pipe(map((_) => {
+        return this.http.post<ISuccessResponse>(AppSettings.AddProductUrl, body).pipe(map((response) => {
             this.currentProject.products.push(product);
             this.cacheProject(this.currentProject);
-            return true;
+            return !!response;
         }));
     }
 
@@ -63,9 +81,9 @@ export class ProjectService {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.put<void>(AppSettings.AddProductUrl, body).pipe(map((_) => {
+        return this.http.put<ISuccessResponse>(AppSettings.AddProductUrl, body).pipe(map((response) => {
             this.updateLocalProduct(product);
-            return true;
+            return !!response;
         }));
     }
 
@@ -85,36 +103,24 @@ export class ProjectService {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.delete<void>(AppSettings.AddProductUrl, { body: body }).pipe(map((_) => {
+        return this.http.delete<ISuccessResponse>(AppSettings.AddProductUrl, { body: body }).pipe(map((response) => {
             this.currentProject.products = this.currentProject.products.filter((prod) => prod.id !== product.id);
             this.cacheProject(this.currentProject);
-            return true;
+            return !!response;
         }));
     }
 
-    deleteProject(project: IProject): Observable<boolean> {
+    generateProductReport(product: IProductDetail): Observable<IReportJSON> {
         if (!this.currentProject) {
-            return of(false);
-        }
-        const body: IDeleteProjectRequest = {
-            projectId: project.id,
-        };
-        return this.http.delete<boolean>(AppSettings.ProjectUrl, { body: body }).pipe(map((response) => {
-            this.clearCache();
-            return response;
-        }));
-
-    }
-
-    generateProductReport(product: IProductDetail): Observable<any> {
-        if (!this.currentProject) {
-            return of(false);
+            const tempData = { datetimes: [], electrictyProduced: [] };
+            const weatherData: IReportJSON = { hourly: tempData, daily: tempData };
+            return of(weatherData);
         }
         const body: IAddProductRequest = {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.post<any>(AppSettings.ProductReportUrl, body).pipe(map((weatherData: IReportJSON) => {
+        return this.http.post<IReportJSON>(AppSettings.ProductReportUrl, body).pipe(map((weatherData) => {
             if (weatherData) {
                 product.isActive = false;
                 product.report = weatherData;
