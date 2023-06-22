@@ -18,6 +18,7 @@ const keysMapper: { [key: string]: string; } = {
     isActive: "Status",
     num_panels: "Panels",
     model: "Model",
+    efficiency: "Efficiency",
 };
 
 export class Helpers {
