@@ -4,7 +4,7 @@
 <p-dropdown styleClass="w-full h-10 mb-1" placeholder="Product Type" [options]="productService.products"
     [(ngModel)]="selectedProduct" optionLabel="model" [filter]="true">
 </p-dropdown>
-<p-table *ngIf="selectedProduct" [value]="[selectedProduct]" styleClass="p-datatable-sm">
+<p-table *ngIf="selectedProduct" [value]="[selectedProduct]" styleClass="p-datatable-sm table-width-40">
     <ng-template pTemplate="body" let-product>
         <tr>
             <td><b>Company</b></td>

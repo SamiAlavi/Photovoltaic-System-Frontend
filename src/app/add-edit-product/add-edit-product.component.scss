@@ -7,6 +7,10 @@ $customWidth: calc(100% - 60px);
         }
     }
 
+    .table-width-40 td {
+        width: 40%;
+    }
+
     .width-custom {
         width: $customWidth;
     }
