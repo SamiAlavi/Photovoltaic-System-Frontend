@@ -41,7 +41,7 @@ export class MapService {
             style: MAPBOX_STYLEURI.LIGHT,
             center: this.STARTING_LOCATION,
             zoom: this.STARTING_ZOOM,
-            renderWorldCopies: true,
+            renderWorldCopies: false,
         });
 
         this.map.on('load', () => {
