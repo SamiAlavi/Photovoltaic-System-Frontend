@@ -9,6 +9,17 @@
             border-bottom-color: #56bdff;
             border-bottom-style: solid;
         }
+
+        .p-menubar-start,
+        .p-menubar-end {
+            height: 100%;
+        }
     }
 
+}
+
+.project-name {
+    display: inline-flex;
+    height: 100%;
+    align-items: center;
 }
