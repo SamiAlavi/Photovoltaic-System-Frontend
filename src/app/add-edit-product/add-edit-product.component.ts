@@ -26,6 +26,7 @@ export class AddEditProductComponent implements OnInit {
     numPanels!: number;
 
     isEditMode = false;
+    isReadonly = false;
 
     constructor(
         protected productService: ProductService,
@@ -41,6 +42,7 @@ export class AddEditProductComponent implements OnInit {
     ngOnInit() {
         const data: IProductDetail = this.config.data;
         if (data) {
+            this.isReadonly = !data.isActive;
             this.name = data.name;
             this.selectedProduct = this.productService.products.find((prod) => prod.model === data.model);
             this.selectedOrientation = data.orientation;
