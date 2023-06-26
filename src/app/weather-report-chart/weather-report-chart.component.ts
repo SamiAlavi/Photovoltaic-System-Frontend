@@ -3,6 +3,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { IReportJSON } from '../helpers/interfaces';
 import { Chart, ChartOptions } from 'chart.js';
 import { Helpers } from '../helpers/Helpers';
+import zoomPlugin from 'chartjs-plugin-zoom';
 
 @Component({
     selector: 'app-weather-report-chart',
@@ -15,7 +16,7 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
     reportData!: any;
     options!: ChartOptions;
     private data!: IReportJSON;
-    private canvas!: HTMLCanvasElement;
+    private chartInstance!: Chart;
 
     stateOptions = [{ label: 'Hourly', value: 'hourly' }, { label: 'Daily', value: 'daily' }];
     downloadOptions = [
@@ -30,6 +31,8 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
 
 
     ngOnInit() {
+        Chart.register(zoomPlugin);
+
         this.data = this.config.data;
         if (this.data) {
             this.data.hourly.datetimes = this.data.hourly.datetimes.map((val) => Helpers.convertDatetime(val));
@@ -38,8 +41,7 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        const chartInstance: Chart = this.chart.chart;
-        this.canvas = chartInstance.ctx.canvas;
+        this.chartInstance = this.chart.chart;
     }
 
     initChart() {
@@ -66,6 +68,21 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
                         color: textColor
                     }
                 },
+                zoom: {
+                    pan: {
+                        enabled: false,
+                        mode: 'xy',
+                    },
+                    zoom: {
+                        wheel: {
+                            enabled: false,
+                        },
+                        pinch: {
+                            enabled: false
+                        },
+                        mode: 'xy',
+                    }
+                }
             },
             scales: {
                 x: {
@@ -123,7 +140,7 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
                     label: 'Electricity Generated',
                     data: yAxis,
                     fill: true,
-                    tension: 0.2,
+                    tension: 0,
                     pointHoverRadius: 15,
                 },
             ]
@@ -138,10 +155,11 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
     }
 
     downloadCanvasAsPNG() {
-        if (!this.canvas) {
+        const canvas = this.chartInstance.ctx.canvas;
+        if (!canvas) {
             return;
         }
-        const dataUrl = this.canvas.toDataURL("image/png");
+        const dataUrl = canvas.toDataURL("image/png");
         this.downloadData(dataUrl, "png");
     }
 
