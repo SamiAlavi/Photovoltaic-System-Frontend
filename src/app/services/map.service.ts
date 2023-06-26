@@ -1,6 +1,6 @@
 import { ElementRef, Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { CameraOptions, LngLatLike, Map, Marker, MarkerOptions, NavigationControl, Popup, PopupOptions } from 'mapbox-gl';
+import { CameraOptions, LngLatLike, Map, MapboxOptions, Marker, MarkerOptions, NavigationControl, Popup, PopupOptions } from 'mapbox-gl';
 import geocoder from '@mapbox/mapbox-sdk/services/geocoding';
 import { IProductDetail } from '../helpers/interfaces';
 import { Helpers } from '../helpers/Helpers';
@@ -35,14 +35,15 @@ export class MapService {
     }
 
     initMap(container: ElementRef) {
-        this.map = new Map({
+        const mapOptions: MapboxOptions = {
             accessToken: AppSettings.MapboxAccessToken,
             container: container.nativeElement,
             style: MAPBOX_STYLEURI.LIGHT,
             center: this.STARTING_LOCATION,
             zoom: this.STARTING_ZOOM,
             renderWorldCopies: true,
-        });
+        };
+        this.map = new Map(mapOptions);
 
         this.map.on('load', () => {
             this.mapAddControls();
