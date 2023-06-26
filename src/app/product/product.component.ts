@@ -47,9 +47,9 @@ export class ProductComponent {
         });
     }
 
-    editProduct(product: IProductDetail) {
+    editViewProduct(product: IProductDetail) {
         this.dialogService.open(AddEditProductComponent, {
-            header: `Edit Product`,
+            header: product.isActive ? `Edit Product` : 'View Product',
             width: '70%',
             dismissableMask: true,
             contentStyle: { overflow: 'auto' },

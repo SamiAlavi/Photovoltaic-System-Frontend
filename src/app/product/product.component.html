@@ -85,11 +85,12 @@
                         </ng-template>
                     </p-table>
                     <div class="flex justify-center">
-                        <p-button icon="pi pi-eye" class="mx-3" pTooltip="View On Map" (onClick)="viewOnMap(product)"
+                        <p-button icon="pi pi-map-marker" class="mx-3" pTooltip="View On Map"
+                            (onClick)="viewOnMap(product)"
                             styleClass="p-button-rounded p-button-outlined p-button-primary"></p-button>
                         <ng-container *ngIf="product.isActive">
                             <p-button icon="pi pi-pencil" class="mx-3" pTooltip="Edit Product"
-                                (onClick)="editProduct(product)"
+                                (onClick)="editViewProduct(product)"
                                 styleClass="p-button-rounded p-button-outlined p-button-info"></p-button>
                             <p-button icon="pi pi-chart-line" class="mx-3" pTooltip="Generate Report"
                                 (onClick)="generateReport(product)"
@@ -99,6 +100,9 @@
                                 styleClass="p-button-rounded p-button-outlined p-button-danger"></p-button>
                         </ng-container>
                         <ng-container *ngIf="!product.isActive">
+                            <p-button icon="pi pi-eye" class="mx-3" pTooltip="View Product"
+                                (onClick)="editViewProduct(product)"
+                                styleClass="p-button-rounded p-button-outlined p-button-info"></p-button>
                             <p-button icon="pi pi-chart-line" class="mx-3" pTooltip="View Report"
                                 (onClick)="viewReport(product)"
                                 styleClass="p-button-rounded p-button-outlined p-button-warning"></p-button>

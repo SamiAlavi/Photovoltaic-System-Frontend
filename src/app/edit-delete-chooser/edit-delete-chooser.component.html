@@ -3,6 +3,9 @@
 </div>
 
 <div class="flex justify-center">
-    <p-button icon="pi pi-pencil" class="m-6" label="Edit" (onClick)="editProduct()"></p-button>
+    <p-button *ngIf="product.isActive" icon="pi pi-pencil" class="m-6" label="Edit"
+        (onClick)="editViewProduct()"></p-button>
+    <p-button *ngIf="!product.isActive" icon="pi pi-eye" class="m-6" label="View"
+        (onClick)="editViewProduct()"></p-button>
     <p-button icon="pi pi-trash" class="m-6" label="Delete" (onClick)="deleteProduct()"></p-button>
 </div>

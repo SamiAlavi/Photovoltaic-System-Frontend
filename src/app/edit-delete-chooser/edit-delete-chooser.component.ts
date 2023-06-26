@@ -30,20 +30,15 @@ export class EditDeleteChooserComponent implements OnInit {
         this.product = this.config.data;
     }
 
-    editProduct() {
-        if (this.product.isActive) {
-            this.dialogService.open(AddEditProductComponent, {
-                header: `Edit Product`,
-                width: '70%',
-                dismissableMask: true,
-                contentStyle: { overflow: 'auto' },
-                data: this.product,
-            });
-            this.ref.close();
-        }
-        else {
-            this.toastService.showErrorToast("Cannot edit product as it is readonly");
-        }
+    editViewProduct() {
+        this.dialogService.open(AddEditProductComponent, {
+            header: this.product.isActive ? `Edit Product` : `View Product`,
+            width: '70%',
+            dismissableMask: true,
+            contentStyle: { overflow: 'auto' },
+            data: this.product,
+        });
+        this.ref.close();
     }
 
     deleteProduct() {
