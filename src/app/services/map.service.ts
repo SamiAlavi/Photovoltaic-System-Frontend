@@ -1,7 +1,7 @@
 import { ElementRef, Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { CameraOptions, LngLatLike, Map, MapboxOptions, Marker, MarkerOptions, NavigationControl, Popup, PopupOptions } from 'mapbox-gl';
-import geocoder from '@mapbox/mapbox-sdk/services/geocoding';
+import geocoder, { GeocodeQueryType } from '@mapbox/mapbox-sdk/services/geocoding';
 import { IProductDetail } from '../helpers/interfaces';
 import { Helpers } from '../helpers/Helpers';
 import AppSettings from '../AppSettings';
@@ -25,6 +25,7 @@ export class MapService {
     };
     private readonly STARTING_LOCATION: LngLatLike = [12.9167, 50.8333]; // Chemnitz
     private readonly STARTING_ZOOM = 1;
+    private geocodePlaces: GeocodeQueryType[] = ['place', 'district'];
     isMarkerHovered = false;
 
     constructor(
@@ -124,11 +125,12 @@ export class MapService {
     private setupGeocoder() {
         const geocoder = new MapboxGeocoder({
             accessToken: AppSettings.MapboxAccessToken,
-            types: 'place,district',
+            types: this.geocodePlaces.join(','),
             marker: false,
             collapsed: false,
             clearOnBlur: false,
             enableEventLogging: false,
+            language: "en",
 
         });
         geocoder.on("result", ({ result }) => {
@@ -239,7 +241,7 @@ export class MapService {
         try {
             const response = await this.geocoder.reverseGeocode({
                 query: [lng, lat],
-                types: ['place', 'district'],
+                types: this.geocodePlaces,
                 limit: 1,
                 language: ['en'],
             }).send();
