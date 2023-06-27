@@ -1,0 +1,29 @@
+// mapbox
+@import "mapbox-gl/dist/mapbox-gl.css";
+
+// mapbox controls
+// @import "mapbox-gl-controls/lib/controls.css";
+@import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+@import '@watergis/mapbox-gl-export/css/styles.css';
+
+.mapbox-popup {
+    opacity: 0.7;
+
+    .mapboxgl-popup-content {
+        border-radius: 10px;
+        box-shadow: 2px 6px 3px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.mapboxgl-export-list {
+    color: black;
+
+    .print-table select {
+        background-color: white;
+        border: 1px solid black;
+    }
+
+    .generate-button {
+        background-color: gray !important;
+    }
+}

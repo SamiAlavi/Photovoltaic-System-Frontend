@@ -6,11 +6,12 @@ import { IProductDetail } from '../helpers/interfaces';
 import { Helpers } from '../helpers/Helpers';
 import AppSettings from '../AppSettings';
 import { AddEditProductComponent } from '../add-edit-product/add-edit-product.component';
-import { MAPBOX_STYLEURI } from '../helpers/enums';
+import { MAPBOX_STYLEURI, MapControlPosition } from '../helpers/enums';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ProjectService } from './project.service';
 import { EditDeleteChooserComponent } from '../edit-delete-chooser/edit-delete-chooser.component';
 import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import { MapboxExportControl, Size, PageOrientation, Format, DPI } from '@watergis/mapbox-gl-export';
 
 @Injectable({
     providedIn: 'root'
@@ -119,7 +120,17 @@ export class MapService {
             showCompass: true,
             showZoom: true,
             visualizePitch: true,
-        }), 'top-right');
+        }), MapControlPosition.TOP_RIGHT);
+
+        // this.map.addControl(new MapboxExportControl({
+        //     accessToken: AppSettings.MapboxAccessToken,
+        //     PageSize: Size.LETTER,
+        //     PageOrientation: PageOrientation.Landscape,
+        //     Format: Format.SVG,
+        //     DPI: DPI[96],
+        //     Crosshair: true,
+        //     PrintableArea: true,
+        // }), MapControlPosition.BOTTOM_RIGHT);
     }
 
     private setupGeocoder() {
@@ -141,7 +152,7 @@ export class MapService {
             }, 2000);
         });
 
-        this.map.addControl(geocoder, 'top-right');
+        this.map.addControl(geocoder, MapControlPosition.TOP_RIGHT);
 
         const geocoderContainer = document.querySelector('.mapboxgl-ctrl-geocoder');
         geocoderContainer.addEventListener('mouseenter', () => {

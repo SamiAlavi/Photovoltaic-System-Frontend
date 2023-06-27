@@ -1,10 +1,2 @@
 @import "./ngprime-overwrites.scss";
-
-// mapbox
-@import "mapbox-gl/dist/mapbox-gl.css";
-
-// mapbox controls
-// @import "mapbox-gl-controls/lib/controls.css";
-@import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
-// @import '@watergis/mapbox-gl-export/css/styles.css';
-// @import '@watergis/mapbox-gl-legend/css/styles.css';
+@import "./map-styles.scss";

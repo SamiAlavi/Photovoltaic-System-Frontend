@@ -23,8 +23,16 @@ enum ORIENTATION {
     WEST = "WEST",
 }
 
+enum MapControlPosition {
+    TOP_RIGHT = "top-right",
+    TOP_LEFT = "top-left",
+    BOTTOM_RIGHT = "bottom-right",
+    BOTTOM_LEFT = "bottom-left",
+}
+
 export {
     TOAST_SEVERITY,
     MAPBOX_STYLEURI,
     ORIENTATION,
+    MapControlPosition,
 };
