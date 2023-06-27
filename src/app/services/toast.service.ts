@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 import { TOAST_SEVERITY } from '../helpers/enums';
 
 @Injectable({
@@ -23,6 +23,10 @@ export class ToastService {
 
     showErrorToast(detail: string, duration = 3000) {
         this.showToast(TOAST_SEVERITY.ERROR, "Error", detail, duration);
+    }
+
+    showCustomToast(message: Message) {
+        this.messageService.add(message);
     }
 
     private showToast(severity: TOAST_SEVERITY, summary: string, detail: string, duration: number) {

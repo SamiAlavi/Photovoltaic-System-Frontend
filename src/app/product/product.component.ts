@@ -7,6 +7,7 @@ import { IProductDetail } from '../helpers/interfaces';
 import { AddEditProductComponent } from '../add-edit-product/add-edit-product.component';
 import { ConfirmationService } from 'primeng/api';
 import { WeatherReportChartComponent } from '../weather-report-chart/weather-report-chart.component';
+import { ToastService } from '../services/toast.service';
 
 @Component({
     selector: 'app-product',
@@ -22,6 +23,7 @@ export class ProductComponent {
         private mapService: MapService,
         private dialogService: DialogService,
         private confirmationService: ConfirmationService,
+        private toastService: ToastService,
     ) {
     }
 
@@ -78,7 +80,9 @@ export class ProductComponent {
             header: 'Generate Product Report',
             icon: 'pi pi-exclamation-triangle text-red-700',
             accept: () => {
+                this.toastService.showInfoToast(`Generating Report - ${product.name}`);
                 this.projectService.generateProductReport(product).subscribe((_) => {
+                    this.toastService.showSuccessToast(`Report Generated - ${product.name}`);
                     this.viewReport(product);
                     this.mapService.removeMarker(product.id);
                     this.mapService.addMarker(product);
