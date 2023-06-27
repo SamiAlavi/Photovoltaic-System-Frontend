@@ -6,6 +6,7 @@ import AppSettings from '../AppSettings';
 import { Helpers } from '../helpers/Helpers';
 import { ProjectService } from '../services/project.service';
 import { ToastService } from '../services/toast.service';
+import { Messages } from '../helpers/Messages';
 
 @Injectable({
     providedIn: 'root',
@@ -33,7 +34,7 @@ export class AuthGuard implements CanActivate {
             return true;
         }
         else {
-            this.toastService.showWarnToast("Please choose a project", 1000);
+            this.toastService.showWarnToast(Messages.ChooseProject, 1000);
             this.router.navigateByUrl(AppSettings.RouteProject);
             return false;
         }

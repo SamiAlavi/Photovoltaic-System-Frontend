@@ -8,6 +8,7 @@ import AppSettings from '../AppSettings';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../services/toast.service';
 import { Helpers } from '../helpers/Helpers';
+import { Messages } from '../helpers/Messages';
 
 @Component({
     selector: 'app-auth',
@@ -33,10 +34,10 @@ export class AuthComponent {
             password: ['', [Validators.required, Validators.minLength(6)]]
         });
         this.route = Helpers.getActivatedRoute(this.activatedRoute);
-        if (this.route === "signin") {
+        if (this.route === AppSettings.RouteSignin) {
             this.submitFn = this.authService.signin.bind(authService);
             this.nextFn = () => {
-                this.toastService.showSuccessToast("Signed In Successfully");
+                this.toastService.showSuccessToast(Messages.SigninSuccess);
                 this.navigateByUrl(AppSettings.RouteProject, 1000);
 
             };
@@ -45,7 +46,7 @@ export class AuthComponent {
         else {
             this.submitFn = this.authService.signup.bind(authService);
             this.nextFn = () => {
-                this.toastService.showSuccessToast("Signed Up Successfully");
+                this.toastService.showSuccessToast(Messages.SignupSuccess);
                 this.navigateByUrl(AppSettings.RouteSignin, 1000);
             };
             this.formType = "Up";

@@ -66,7 +66,7 @@ export class ProjectService {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.post<ISuccessResponse>(AppSettings.AddProductUrl, body).pipe(map((response) => {
+        return this.http.post<ISuccessResponse>(AppSettings.ProjectProductUrl, body).pipe(map((response) => {
             this.currentProject.products.push(product);
             this.cacheProject(this.currentProject);
             return !!response;
@@ -81,7 +81,7 @@ export class ProjectService {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.put<ISuccessResponse>(AppSettings.AddProductUrl, body).pipe(map((response) => {
+        return this.http.put<ISuccessResponse>(AppSettings.ProjectProductUrl, body).pipe(map((response) => {
             this.updateLocalProduct(product);
             return !!response;
         }));
@@ -103,7 +103,7 @@ export class ProjectService {
             projectId: this.currentProject.id,
             product: product,
         };
-        return this.http.delete<ISuccessResponse>(AppSettings.AddProductUrl, { body: body }).pipe(map((response) => {
+        return this.http.delete<ISuccessResponse>(AppSettings.ProjectProductUrl, { body: body }).pipe(map((response) => {
             this.currentProject.products = this.currentProject.products.filter((prod) => prod.id !== product.id);
             this.cacheProject(this.currentProject);
             return !!response;

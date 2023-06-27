@@ -8,6 +8,7 @@ import { MapService } from '../services/map.service';
 import { ToastService } from '../services/toast.service';
 import { ProjectService } from '../services/project.service';
 import { ProductService } from '../services/product.service';
+import { Messages } from '../helpers/Messages';
 
 @Component({
     selector: 'app-add-edit-product',
@@ -60,7 +61,7 @@ export class AddEditProductComponent implements OnInit {
 
     showInfoDialog(type: string, value: ORIENTATION | number) {
         this.dialogService.open(FactorInfoDialogComponent, {
-            header: `${type} Factor Information`,
+            header: `${type} ${Messages.FactorInformation}`,
             width: '70%',
             dismissableMask: true,
             contentStyle: { overflow: 'auto' },
@@ -109,7 +110,7 @@ export class AddEditProductComponent implements OnInit {
     async addProduct() {
         const region = await this.mapService.reverseGeocode(this.latitude, this.longitude);
         if (!region) {
-            const message = "This location has no region. Please choose a valid location.";
+            const message = Messages.InvalidLocationRegion;
             this.toastService.showErrorToast(message);
             return;
         }
@@ -134,12 +135,12 @@ export class AddEditProductComponent implements OnInit {
         this.showProductOnMap(product);
         this.projectService.addProduct(product).subscribe((isAdded) => {
             if (isAdded) {
-                const message = "Product Added Successfully";
+                const message = Messages.ProductAddSuccess;
                 this.toastService.showSuccessToast(message);
                 this.ref.close();
             }
             else {
-                const message = "Error Adding Product";
+                const message = Messages.ProductAddError;
                 this.toastService.showErrorToast(message);
             }
         });
@@ -163,12 +164,12 @@ export class AddEditProductComponent implements OnInit {
 
         this.projectService.editProduct(product).subscribe((isAdded) => {
             if (isAdded) {
-                const message = "Product Edited Successfully";
+                const message = Messages.ProductEditSuccess;
                 this.toastService.showSuccessToast(message);
                 this.ref.close();
             }
             else {
-                const message = "Error Editing Product";
+                const message = Messages.ProductEditError;
                 this.toastService.showErrorToast(message);
             }
         });

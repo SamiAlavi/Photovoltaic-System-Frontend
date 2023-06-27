@@ -7,6 +7,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ProjectService } from '../services/project.service';
 import { MapService } from '../services/map.service';
 import { WeatherReportChartComponent } from '../weather-report-chart/weather-report-chart.component';
+import { Messages } from '../helpers/Messages';
 
 @Component({
     selector: 'app-edit-delete-chooser',
@@ -34,7 +35,7 @@ export class EditDeleteChooserComponent implements OnInit {
 
     editViewProduct(product: IProductDetail) {
         this.dialogService.open(AddEditProductComponent, {
-            header: product.isActive ? `Edit Product` : 'View Product',
+            header: product.isActive ? Messages.HeaderProductEdit : Messages.HeaderProductView,
             width: '70%',
             dismissableMask: true,
             contentStyle: { overflow: 'auto' },
@@ -45,7 +46,7 @@ export class EditDeleteChooserComponent implements OnInit {
 
     generateReport(product: IProductDetail) {
         this.confirmationService.confirm({
-            message: 'Are you sure that you want to generate the report for last 30 days? The product will go into read-only state.',
+            message: Messages.ConfirmGenerateReport,
             header: 'Generate Product Report',
             icon: 'pi pi-exclamation-triangle text-red-700',
             accept: () => {
@@ -62,7 +63,7 @@ export class EditDeleteChooserComponent implements OnInit {
 
     viewReport(product: IProductDetail) {
         this.dialogService.open(WeatherReportChartComponent, {
-            header: `Electricity Generation Report - ${product.name} (${product.id})`,
+            header: `${Messages.HeaderElectrictyReport} - ${product.name} (${product.id})`,
             width: '100%',
             height: '100%',
             dismissableMask: true,
@@ -76,8 +77,8 @@ export class EditDeleteChooserComponent implements OnInit {
 
     deleteProduct(product: IProductDetail) {
         this.confirmationService.confirm({
-            message: 'Are you sure that you want to delete the product?',
-            header: 'Delete Product',
+            message: Messages.ConfirmProductDelete,
+            header: Messages.HeaderProductDelete,
             icon: 'pi pi-exclamation-triangle text-red-700',
             accept: () => {
                 this.projectService.deleteProduct(product).subscribe((_) => {
