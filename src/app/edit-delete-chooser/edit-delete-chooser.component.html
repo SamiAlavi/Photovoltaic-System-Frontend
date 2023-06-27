@@ -2,10 +2,20 @@
     <span>ID: {{product.id}}</span>
 </div>
 
+
 <div class="flex justify-center">
-    <p-button *ngIf="product.isActive" icon="pi pi-pencil" class="m-6" label="Edit"
-        (onClick)="editViewProduct()"></p-button>
-    <p-button *ngIf="!product.isActive" icon="pi pi-eye" class="m-6" label="View"
-        (onClick)="editViewProduct()"></p-button>
-    <p-button icon="pi pi-trash" class="m-6" label="Delete" (onClick)="deleteProduct()"></p-button>
+    <ng-container *ngIf="product.isActive">
+        <p-button icon="pi pi-pencil" class="mx-3" pTooltip="Edit Product" (onClick)="editViewProduct(product)"
+            styleClass="p-button-rounded p-button-outlined p-button-info"></p-button>
+        <p-button icon="pi pi-chart-line" class="mx-3" pTooltip="Generate Report" (onClick)="generateReport(product)"
+            styleClass="p-button-rounded p-button-outlined p-button-warning"></p-button>
+        <p-button icon="pi pi-trash" class="mx-3" pTooltip="Delete Product" (onClick)="deleteProduct(product)"
+            styleClass="p-button-rounded p-button-outlined p-button-danger"></p-button>
+    </ng-container>
+    <ng-container *ngIf="!product.isActive">
+        <p-button icon="pi pi-eye" class="mx-3" pTooltip="View Product" (onClick)="editViewProduct(product)"
+            styleClass="p-button-rounded p-button-outlined p-button-info"></p-button>
+        <p-button icon="pi pi-chart-line" class="mx-3" pTooltip="View Report" (onClick)="viewReport(product)"
+            styleClass="p-button-rounded p-button-outlined p-button-warning"></p-button>
+    </ng-container>
 </div>

@@ -6,6 +6,7 @@ import { ToastService } from '../services/toast.service';
 import { ConfirmationService } from 'primeng/api';
 import { ProjectService } from '../services/project.service';
 import { MapService } from '../services/map.service';
+import { WeatherReportChartComponent } from '../weather-report-chart/weather-report-chart.component';
 
 @Component({
     selector: 'app-edit-delete-chooser',
@@ -30,25 +31,57 @@ export class EditDeleteChooserComponent implements OnInit {
         this.product = this.config.data;
     }
 
-    editViewProduct() {
+
+    editViewProduct(product: IProductDetail) {
         this.dialogService.open(AddEditProductComponent, {
-            header: this.product.isActive ? `Edit Product` : `View Product`,
+            header: product.isActive ? `Edit Product` : 'View Product',
             width: '70%',
             dismissableMask: true,
             contentStyle: { overflow: 'auto' },
-            data: this.product,
+            data: product
         });
         this.ref.close();
     }
 
-    deleteProduct() {
+    generateReport(product: IProductDetail) {
+        this.confirmationService.confirm({
+            message: 'Are you sure that you want to generate the report for last 30 days? The product will go into read-only state.',
+            header: 'Generate Product Report',
+            icon: 'pi pi-exclamation-triangle text-red-700',
+            accept: () => {
+                this.projectService.generateProductReport(product).subscribe((_) => {
+                    this.viewReport(product);
+                    this.mapService.removeMarker(product.id);
+                    this.mapService.addMarker(product);
+                });
+            },
+            reject: () => {
+            }
+        });
+    }
+
+    viewReport(product: IProductDetail) {
+        this.dialogService.open(WeatherReportChartComponent, {
+            header: `Electricity Generation Report - ${product.name} (${product.id})`,
+            width: '100%',
+            height: '100%',
+            dismissableMask: true,
+            maximizable: true,
+            contentStyle: { overflow: 'auto' },
+            data: product.report
+        });
+        this.ref.close();
+    }
+
+
+    deleteProduct(product: IProductDetail) {
         this.confirmationService.confirm({
             message: 'Are you sure that you want to delete the product?',
             header: 'Delete Product',
             icon: 'pi pi-exclamation-triangle text-red-700',
             accept: () => {
-                this.projectService.deleteProduct(this.product).subscribe((_) => {
-                    this.mapService.removeMarker(this.product.id);
+                this.projectService.deleteProduct(product).subscribe((_) => {
+                    this.mapService.removeMarker(product.id);
                 });
             },
             reject: () => {
