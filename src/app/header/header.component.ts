@@ -4,6 +4,8 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import AppSettings from '../AppSettings';
 import { ProjectService } from '../services/project.service';
+import { HelpInfoComponent } from '../help-info/help-info.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
     selector: 'app-header',
@@ -18,6 +20,7 @@ export class HeaderComponent implements OnInit {
         private authService: AuthService,
         private router: Router,
         private projectService: ProjectService,
+        private dialogService: DialogService,
     ) {
 
     }
@@ -65,5 +68,14 @@ export class HeaderComponent implements OnInit {
 
     profilePage() {
         this.router.navigateByUrl(AppSettings.RouteProfile);
+    }
+
+    viewHelpDialog() {
+        this.dialogService.open(HelpInfoComponent, {
+            header: `Help`,
+            width: '70%',
+            dismissableMask: true,
+            contentStyle: { overflow: 'auto' },
+        });
     }
 }
