@@ -3,7 +3,7 @@
     <ng-template pTemplate="content">
         <p-scrollPanel>
             <div class="flex justify-center mb-6">
-                <p-button label="Add Product" icon="pi pi-plus" styleClass="p-button-sm"
+                <p-button *ngIf="isProjectActive" label="Add Product" icon="pi pi-plus" styleClass="p-button-sm"
                     (onClick)="addProduct()"></p-button>
             </div>
             <ng-container [ngTemplateOutlet]="TShowProducts"></ng-container>
@@ -13,9 +13,9 @@
 </p-sidebar>
 
 <ng-template #TShowProducts>
-    <ng-container *ngIf="projectService.currentProject?.products.length">
+    <ng-container>
         <p-accordion [multiple]="true" (onOpen)="onAccordionTabOpen($event)" (onClose)="onAccordionTabClose()">
-            <ng-container *ngFor="let product of projectService.currentProject.products; let index=index">
+            <ng-container *ngFor="let product of products; let index=index">
                 <p-accordionTab>
                     <ng-template pTemplate="header">
                         <div class="flex align-items-center w-full">
@@ -76,7 +76,7 @@
                             </tr>
                             <tr>
                                 <td>Created On</td>
-                                <td>{{ getFormattedDateTimeFromTimestamp(product.timestamp )}}</td>
+                                <td>{{ getFormattedDateTimeFromTimestamp(product.timestamp)}}</td>
                             </tr>
                             <tr>
                                 <td>Status</td>

@@ -18,13 +18,18 @@ export class ProductComponent {
     @Input() sidebarVisible = false;
     @Output() sidebarVisibleChange = new EventEmitter<any>();
 
+    readonly products: IProductDetail[];
+    readonly isProjectActive: boolean;
+
     constructor(
-        protected projectService: ProjectService,
+        private projectService: ProjectService,
         private mapService: MapService,
         private dialogService: DialogService,
         private confirmationService: ConfirmationService,
         private toastService: ToastService,
     ) {
+        this.products = projectService.currentProject?.products ?? [];
+        this.isProjectActive = projectService.currentProject?.isActive ?? false;
     }
 
     visibleChange(event: boolean) {

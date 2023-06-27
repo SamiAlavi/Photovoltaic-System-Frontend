@@ -47,8 +47,12 @@ export class HeaderComponent implements OnInit {
         this.router.navigateByUrl(route);
     };
 
-    get currentProjectId(): string | undefined {
-        return this.projectService.currentProject?.id;
+    get currentProjectId(): string {
+        return this.projectService.currentProject?.id ?? '';
+    }
+
+    get currentProjectStatus(): string {
+        return this.projectService.currentProject?.isActive ? 'Active' : 'Inactive';
     }
 
     signout() {
