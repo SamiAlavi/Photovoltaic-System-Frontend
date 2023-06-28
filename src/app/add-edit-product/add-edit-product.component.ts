@@ -42,19 +42,22 @@ export class AddEditProductComponent implements OnInit {
 
     ngOnInit() {
         const data: IProductDetail = this.config.data;
-        if (data) {
+        if (data?.name) {
             this.isReadonly = !data.isActive;
             this.name = data.name;
             this.selectedProduct = this.productService.products.find((prod) => prod.model === data.model);
             this.selectedOrientation = data.orientation;
             this.tiltAngle = data.tiltAngle;
+            this.numPanels = data.num_panels;
+        }
+
+        if (data.lng && data.lat) {
             this.longitude = data.lng;
             this.latitude = data.lat;
-            this.numPanels = data.num_panels;
+        }
 
-            if (this.isButtonEnabled()) {
-                this.isEditMode = true;
-            }
+        if (this.isButtonEnabled()) {
+            this.isEditMode = true;
         }
     }
 

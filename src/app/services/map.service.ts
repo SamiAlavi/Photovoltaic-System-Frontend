@@ -63,10 +63,13 @@ export class MapService {
             this.locPopup.popup.remove();
             if (this.locPopup.isVisible) {
                 const { lng, lat } = e.lngLat;
-                const html = `
+                let html = `
                     <span><b>Longitude:</b> ${lng}</span><br>
-                    <span><b>Latitude:</b> ${lat}</span><br>
+                    <span><b>Latitude:</b> ${lat}</span><br>`;
+                if (this.projectService.currentProject?.isActive) {
+                    html += `                    
                     <span>Click to add product to this location</span>`;
+                }
                 this.locPopup.popup = new Popup({
                     closeButton: false,
                     closeOnClick: true,
@@ -83,7 +86,7 @@ export class MapService {
 
     mapClick() {
         this.map.on('click', (e) => {
-            if (this.locPopup.isVisible) {
+            if (this.projectService.currentProject?.isActive && this.locPopup.isVisible) {
                 const lngLat = e.lngLat;
                 this.addNewProduct(lngLat.lng, lngLat.lat);
             }
