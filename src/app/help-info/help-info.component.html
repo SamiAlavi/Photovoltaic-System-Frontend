@@ -1,8 +1,54 @@
 <p-fieldset legend="Usage" [toggleable]="true" styleClass="mb-6">
     <div class="flex flex-row">
+        <ol class="list-decimal ml-3">
+            <li *ngFor="let step of steps">
+                {{step}}.
+            </li>
+        </ol>
     </div>
 </p-fieldset>
 <p-fieldset legend="Attribution" [toggleable]="true" styleClass="mb-6">
     <div class="flex flex-row">
+        <ul class="list-disc ml-3">
+            <li>
+                <a href="https://angular.io/" target="_blank">Angular</a>
+            </li>
+            <li>
+                <a href="https://www.chartjs.org/" target="_blank">Chart.js</a>
+            </li>
+            <li>
+                © <a href='https://www.mapbox.com/about/maps/'>Mapbox</a>
+                © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>
+                <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>
+            </li>
+            <li>
+                <a href="https://primeng.org/icons" target="_blank">Prime Icons</a>
+            </li>
+            <li>
+                <a href="https://primeng.org/" target="_blank">PrimeNG</a>
+            </li>
+            <li>
+                <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a>
+            </li>
+            <li>
+                <a href="https://nodejs.dev/en/" target="_blank">Node.js</a>
+            </li>
+            <li>
+                <a href="https://expressjs.com/" target="_blank">Express.js</a>
+            </li>
+            <li>
+                <a href="https://sendgrid.com/" target="_blank">TWILIO SendGrid</a>
+            </li>
+            <li>
+                <a href="https://firebase.google.com/" target="_blank">Built with Firebase</a>
+            </li>
+            <li>
+                <a href="https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html" target="_blank">JSON Web
+                    Token (JWT)</a>
+            </li>
+            <li>
+                <a href="https://www.visualcrossing.com/" target="_blank">Powered by Visual Crossing Weather</a>
+            </li>
+        </ul>
     </div>
 </p-fieldset>
