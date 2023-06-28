@@ -11,7 +11,6 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ProjectService } from './project.service';
 import { EditDeleteChooserComponent } from '../edit-delete-chooser/edit-delete-chooser.component';
 import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import { MapboxExportControl, Size, PageOrientation, Format, DPI } from '@watergis/mapbox-gl-export';
 
 @Injectable({
     providedIn: 'root'
