@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
         this.items = [
             {
                 label: 'Products',
-                icon: 'https://www.svgrepo.com/download/297104/solar-panel.svg',
+                icon: 'assets/solar-panel-svgrepo-com.svg',
                 command: this.toggleProductsDialog,
 
             },

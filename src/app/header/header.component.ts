@@ -40,6 +40,7 @@ export class HeaderComponent implements OnInit {
                 command: this.onClick.bind(null, AppSettings.RouteProject),
             },
         ];
+        //this.viewHelpDialog();
     }
 
     private isDisabled(route: string) {

@@ -1,10 +1,6 @@
 <p-fieldset legend="Usage" [toggleable]="true" styleClass="mb-6">
     <div class="flex flex-row">
-        <ol class="list-decimal ml-3">
-            <li *ngFor="let step of steps">
-                {{step}}.
-            </li>
-        </ol>
+        <app-usage></app-usage>
     </div>
 </p-fieldset>
 <p-fieldset legend="Attribution" [toggleable]="true" styleClass="mb-6">

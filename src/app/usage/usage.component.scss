@@ -1,0 +1,12 @@
+img.solar-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    transition: all 400ms;
+    background-color: rgba(110, 108, 108, 0.5);
+    border-radius: 5px;
+
+    &:hover {
+        transform: scale(1.5);
+    }
+}

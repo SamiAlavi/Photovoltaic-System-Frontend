@@ -22,6 +22,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { EditDeleteChooserComponent } from './edit-delete-chooser/edit-delete-chooser.component';
 import { WeatherReportChartComponent } from './weather-report-chart/weather-report-chart.component';
 import { HelpInfoComponent } from './help-info/help-info.component';
+import { UsageComponent } from './usage/usage.component';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import { HelpInfoComponent } from './help-info/help-info.component';
         EditDeleteChooserComponent,
         WeatherReportChartComponent,
         HelpInfoComponent,
+        UsageComponent,
     ],
     imports: [
         BrowserModule,
