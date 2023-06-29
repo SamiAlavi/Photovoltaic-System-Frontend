@@ -11,12 +11,15 @@ import zoomPlugin from 'chartjs-plugin-zoom';
     styleUrls: ['./weather-report-chart.component.scss']
 })
 export class WeatherReportChartComponent implements OnInit, AfterViewInit {
-    @ViewChild('chart') chart: any;
+    @ViewChild('hourlyChart') hourlyChart: any;
+    @ViewChild('dailyChart') dailyChart: any;
 
-    reportData!: any;
-    options!: ChartOptions;
+    hourlyReportData!: any;
+    dailyReportData!: any;
+    hourlyOptions!: ChartOptions;
+    dailyOptions!: ChartOptions;
+
     private data!: IReportJSON;
-    private chartInstance!: Chart;
 
     stateOptions = [{ label: 'Hourly', value: 'hourly' }, { label: 'Daily', value: 'daily' }];
     downloadOptions = [
@@ -24,6 +27,7 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
         { label: 'PNG', icon: 'pi pi-image', value: 'png', command: () => this.downloadCanvasAsPNG() }
     ];
     value = 'hourly';
+    animationDuration = 2000;
 
     constructor(
         private config: DynamicDialogConfig,
@@ -36,31 +40,57 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
         this.data = this.config.data;
         if (this.data) {
             this.data.hourly.datetimes = this.data.hourly.datetimes.map((val) => Helpers.convertDatetime(val));
-            this.initChart();
         }
     }
 
     ngAfterViewInit() {
-        this.chartInstance = this.chart.chart;
+        this.onStateChange();
     }
 
-    initChart() {
-        this.setOptions();
-        this.onStateChange("hourly");
-    };
+    setupChart1() {
+        this.hourlyReportData = {
+            labels: this.data.hourly.datetimes,
+            datasets: [
+                {
+                    label: 'Electricity Generated',
+                    data: this.data.hourly.electrictyProduced,
+                    fill: true,
+                    tension: 0,
+                    pointHoverRadius: 15,
+                },
+            ]
+        };
+        this.hourlyOptions = this.setOptions('Datetimes');
+    }
 
-    setOptions() {
+    setupChart2() {
+        this.dailyReportData = {
+            labels: this.data.daily.datetimes,
+            datasets: [
+                {
+                    label: 'Electricity Generated',
+                    data: this.data.daily.electrictyProduced,
+                    fill: true,
+                    tension: 0,
+                    pointHoverRadius: 15,
+                },
+            ]
+        };
+        this.dailyOptions = this.setOptions('Dates');
+    }
+
+    setOptions(xAxisLabel: string): ChartOptions {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-        this.options = {
+        return {
             responsive: true,
             maintainAspectRatio: false,
             aspectRatio: 0.6,
             animation: {
-                duration: 2000,
+                duration: this.animationDuration,
             },
             plugins: {
                 legend: {
@@ -70,15 +100,15 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
                 },
                 zoom: {
                     pan: {
-                        enabled: false,
+                        enabled: true,
                         mode: 'xy',
                     },
                     zoom: {
                         wheel: {
-                            enabled: false,
+                            enabled: true,
                         },
                         pinch: {
-                            enabled: false
+                            enabled: true
                         },
                         mode: 'xy',
                     }
@@ -88,7 +118,7 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
                 x: {
                     title: {
                         display: true,
-                        text: 'Datetime',
+                        text: xAxisLabel,
                         color: textColorSecondary,
                     },
                     ticks: {
@@ -121,30 +151,16 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
 
     }
 
-    onStateChange(type: string) {
-        if (type === "hourly") {
-            this.setXYData(this.data.hourly.datetimes, this.data.hourly.electrictyProduced);
-            this.options.scales['x']['title']['text'] = "Datetimes";
-        }
-        else if (type === "daily") {
-            this.setXYData(this.data.daily.datetimes, this.data.daily.electrictyProduced);
-            this.options.scales['x']['title']['text'] = "Dates";
-        }
+    onStateChange() {
+        setTimeout(() => {
+            this.setupChart1();
+            this.setupChart2();
+            this.animationDuration = 0;
+        }, 500);
     }
 
-    private setXYData(xAxis: string[], yAxis: number[]) {
-        this.reportData = {
-            labels: xAxis,
-            datasets: [
-                {
-                    label: 'Electricity Generated',
-                    data: yAxis,
-                    fill: true,
-                    tension: 0,
-                    pointHoverRadius: 15,
-                },
-            ]
-        };
+    getCurrentChartInstance(): Chart {
+        return this.value === "hourly" ? this.hourlyChart.chart : this.dailyChart.chart;
     }
 
     downloadJSON() {
@@ -155,7 +171,7 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
     }
 
     downloadCanvasAsPNG() {
-        const canvas = this.chartInstance.ctx.canvas;
+        const canvas = this.getCurrentChartInstance().ctx.canvas;
         if (!canvas) {
             return;
         }

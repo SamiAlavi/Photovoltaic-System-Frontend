@@ -1,6 +1,6 @@
 <div class="flex justify-between">
-    <p-selectButton [options]="stateOptions" [(ngModel)]="value" (ngModelChange)="onStateChange($event)"
-        optionLabel="label" optionValue="value"></p-selectButton>
+    <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" (ngModelChange)="onStateChange()"
+        optionValue="value"></p-selectButton>
     <span class="p-buttonset">
         <ng-container *ngFor="let item of downloadOptions">
             <p-button [icon]="item.icon" [label]="item.label" (onClick)="item.command()"
@@ -8,4 +8,6 @@
         </ng-container>
     </span>
 </div>
-<p-chart #chart type="line" [data]="reportData" [options]="options"></p-chart>
+<p-chart #hourlyChart type="line" [data]="hourlyReportData" [options]="hourlyOptions"
+    *ngIf="value === 'hourly'"></p-chart>
+<p-chart #dailyChart type="line" [data]="dailyReportData" [options]="dailyOptions" *ngIf="value === 'daily'"></p-chart>
