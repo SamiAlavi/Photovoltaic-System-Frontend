@@ -17,8 +17,8 @@ import { ToastService } from '../services/toast.service';
 export class ProductComponent {
     @Input() sidebarVisible = false;
     @Output() sidebarVisibleChange = new EventEmitter<any>();
+    products: IProductDetail[];
 
-    readonly products: IProductDetail[];
     readonly isProjectActive: boolean;
 
     private readonly currentTimestamp = Date.now();
@@ -73,6 +73,7 @@ export class ProductComponent {
             icon: 'pi pi-exclamation-triangle text-red-700',
             accept: () => {
                 this.projectService.deleteProduct(product).subscribe((_) => {
+                    this.products = this.projectService.currentProject.products;
                     this.mapService.removeMarker(product.id);
                 });
             },
