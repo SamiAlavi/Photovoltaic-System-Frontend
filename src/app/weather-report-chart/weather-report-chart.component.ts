@@ -40,6 +40,8 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
         this.data = this.config.data;
         if (this.data) {
             this.data.hourly.datetimes = this.data.hourly.datetimes.map((val) => Helpers.convertDatetime(val));
+            // this.data.hourly.electrictyProduced = this.data.hourly.electrictyProduced.map((val) => +val.toFixed(5));
+            // this.data.daily.electrictyProduced = this.data.daily.electrictyProduced.map((val) => +val.toFixed(5));
         }
     }
 
