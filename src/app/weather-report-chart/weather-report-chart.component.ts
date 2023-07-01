@@ -156,7 +156,7 @@ export class WeatherReportChartComponent implements OnInit, AfterViewInit {
             this.setupChart1();
             this.setupChart2();
             this.animationDuration = 0;
-        }, 500);
+        }, 1000);
     }
 
     getCurrentChartInstance(): Chart {

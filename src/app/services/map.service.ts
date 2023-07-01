@@ -1,6 +1,6 @@
 import { ElementRef, Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { CameraOptions, LngLatLike, Map, MapboxOptions, Marker, MarkerOptions, NavigationControl, Popup, PopupOptions } from 'mapbox-gl';
+import { CameraOptions, GeolocateControl, LngLatLike, Map, MapboxOptions, Marker, MarkerOptions, NavigationControl, Popup, PopupOptions, ScaleControl } from 'mapbox-gl';
 import geocoder, { GeocodeQueryType } from '@mapbox/mapbox-sdk/services/geocoding';
 import { IProductDetail } from '../helpers/interfaces';
 import { Helpers } from '../helpers/Helpers';
@@ -123,6 +123,20 @@ export class MapService {
             showZoom: true,
             visualizePitch: true,
         }), MapControlPosition.TOP_RIGHT);
+
+        this.map.addControl(new GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: false,
+            },
+            showAccuracyCircle: true,
+            showUserLocation: true,
+            showUserHeading: false,
+            trackUserLocation: false,
+        }), MapControlPosition.TOP_RIGHT);
+
+        this.map.addControl(new ScaleControl({
+            unit: "metric",
+        }), MapControlPosition.BOTTOM_RIGHT);
 
         // this.map.addControl(new MapboxExportControl({
         //     accessToken: AppSettings.MapboxAccessToken,
