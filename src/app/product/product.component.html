@@ -82,6 +82,10 @@
                                 <td>Created On</td>
                                 <td>{{ getFormattedDateTimeFromTimestamp(product.timestamp)}}</td>
                             </tr>
+                            <tr *ngIf="product.isActive">
+                                <td>Report Generation In</td>
+                                <td>{{ getReportGenerationTimeLeft(product.timestamp)}}</td>
+                            </tr>
                             <tr>
                                 <td>Status</td>
                                 <td>{{ product.isActive ? 'Active' : 'Inactive'}}</td>

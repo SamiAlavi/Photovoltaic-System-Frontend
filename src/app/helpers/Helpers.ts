@@ -21,6 +21,8 @@ const keysMapper: { [key: string]: string; } = {
     efficiency: "Efficiency",
 };
 
+const MS_DAYS = 1000 * 60 * 60 * 24;
+
 export class Helpers {
     private static skipKeys = ["report"];
     static getActivatedRoute(activatedRoute: ActivatedRoute | ActivatedRouteSnapshot): string {
@@ -90,5 +92,10 @@ export class Helpers {
 
     static convertDatetime(datetimeString: string | number): string {
         return `${datetimeString}`.replace(":00:00", ":00");
+    }
+
+    static formatDuration(ms: number): string {
+        const days = Math.floor(ms / MS_DAYS);
+        return (days > 0 ? `${days} day${days > 1 ? 's' : ''}` : '');
     }
 }

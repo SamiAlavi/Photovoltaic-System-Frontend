@@ -21,6 +21,8 @@ export class ProductComponent {
     readonly products: IProductDetail[];
     readonly isProjectActive: boolean;
 
+    private readonly currentTimestamp = Date.now();
+
     constructor(
         private projectService: ProjectService,
         private mapService: MapService,
@@ -116,5 +118,11 @@ export class ProductComponent {
 
     onAccordionTabClose() {
         this.mapService.resetMapStartingView();
+    }
+
+    getReportGenerationTimeLeft(timestamp: number): string {
+        const reportGenerateOn = new Date(timestamp);
+        reportGenerateOn.setDate(reportGenerateOn.getDate() + 30);
+        return Helpers.formatDuration(reportGenerateOn.getTime() - this.currentTimestamp);
     }
 }
