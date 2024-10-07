@@ -10,8 +10,6 @@ updates:
       interval: "weekly"
       day: "sunday"
       time: "23:00"
-    commit-message:
-      include: "scope"
     groups:
       deps:
         patterns:
