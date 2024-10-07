@@ -1,0 +1,24 @@
+# Basic `dependabot.yml` file with
+# minimum configuration for two package managers
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "23:00"
+    commit-message:
+      include: "scope"
+    groups:
+      deps:
+        patterns:
+          - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    labels:
+      - "npm"
+      - "dependencies"
